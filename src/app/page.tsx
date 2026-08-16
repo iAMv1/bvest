@@ -10,7 +10,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
       {/* The section itself is relative so the absolutely-positioned collage stays inside it */}
-      <section className="relative overflow-hidden bg-background pt-8 md:pt-12 pb-0 transition-colors duration-200">
+      <section className="relative overflow-hidden bg-background pt-2 md:pt-4 pb-0 transition-colors duration-200">
 
         {/* SDG box collage — decorative background, bottom-right, z-0 */}
         <SDGBoxCollage />
@@ -18,10 +18,6 @@ export default function Home() {
         {/* Hero copy — z-10 keeps it above the collage */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 pointer-events-none">
           <div className="max-w-xl pb-28 md:pb-40 pointer-events-auto">
-            <span className="font-heading text-xs tracking-[0.2em] text-gray-500 dark:text-gray-400 font-bold uppercase mb-6 inline-block">
-              BVCOE Annual Tech Fest &middot; UN SDG Theme
-            </span>
-
             {/* Typographic logo wordmark as the hero heading */}
             <div className="mb-8 text-gray-900 dark:text-white">
               <BvestLogo size={240} showSubtitle={true} />
