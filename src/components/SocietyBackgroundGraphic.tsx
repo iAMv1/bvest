@@ -43,7 +43,12 @@ export const SocietyBackgroundGraphic: React.FC = () => {
   const row2 = [...NON_TECHNICAL_SOCIETIES, ...TECHNICAL_SOCIETIES];
   const row3 = [...TECHNICAL_SOCIETIES].reverse();
   const row4 = [...NON_TECHNICAL_SOCIETIES].reverse();
-  const row5 = [...allSocieties].sort(() => 0.5 - Math.random());
+  const row5 = [
+    ...TECHNICAL_SOCIETIES.slice(5),
+    ...NON_TECHNICAL_SOCIETIES.slice(4),
+    ...TECHNICAL_SOCIETIES.slice(0, 5),
+    ...NON_TECHNICAL_SOCIETIES.slice(0, 4),
+  ];
 
   return (
     <div
