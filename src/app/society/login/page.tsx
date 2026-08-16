@@ -149,22 +149,7 @@ export default async function LoginPage({ searchParams }: Props) {
             </button>
           </form>
 
-          {/* Featured Society Categories Preview */}
-          <div className="mt-8 pt-6 border-t border-gray-800/80">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-3">
-              Societies of BVCOE Delhi
-            </p>
-            <div className="flex flex-wrap gap-1.5 text-[11px]">
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">IEEE</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">ACM</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">DSC</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">CSI</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">TEDx</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">DANCE</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">MUSIC</span>
-              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">+ 20 more</span>
-            </div>
-          </div>
+
         </div>
 
         <p className="text-center text-xs text-gray-500 mt-6">
