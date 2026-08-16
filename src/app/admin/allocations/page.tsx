@@ -48,16 +48,16 @@ export default async function AdminAllocationsPage() {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
-              {societies.map((society: any) => {
+              {societies.map((society: { id: string; name: string; locked: boolean; submittedAt: Date | null; preferences: { rank: number; domainId: string }[] }, idx) => {
                 const getDomainName = (rank: number) => {
-                  const pref = society.preferences.find((p: any) => p.rank === rank);
+                  const pref = society.preferences.find((p: { rank: number; domainId: string }) => p.rank === rank);
                   if (!pref) return "-";
-                  const domain = domains.find((d: any) => d.id === pref.domainId);
+                  const domain = domains.find((d) => d.id === pref.domainId);
                   return domain ? domain.name : pref.domainId;
                 };
 
                 return (
-                  <tr key={society.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <tr key={society.id} className="animate-rise-in hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" style={{ animationDelay: `${Math.min(idx * 50, 400)}ms` }}>
                     <td className="px-6 py-4 font-mono text-xs text-gray-600 dark:text-gray-400">{society.id}</td>
                     <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{society.name}</td>
                     <td className="px-6 py-4">

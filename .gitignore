@@ -46,3 +46,9 @@ dev.db
 *.db
 *.db-journal
 test-results/
+
+# generated design/exploration artifacts
+designs/
+
+# e2e screenshot evidence (regenerate via e2e/flow-test.js)
+e2e/shots/

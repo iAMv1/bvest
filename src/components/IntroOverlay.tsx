@@ -9,21 +9,20 @@ export const IntroOverlay = () => {
   const [showSkip, setShowSkip] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
+  const dismiss = () => {
+    setVisible(false);
+  };
+
   useEffect(() => {
     if (shouldReduceMotion) {
-      setVisible(false);
-      return;
+      const raf = requestAnimationFrame(() => setVisible(false));
+      return () => cancelAnimationFrame(raf);
     }
     const skipTimer = setTimeout(() => setShowSkip(true), 1000);
     // Slide in + display animation ~4s + exit
     const doneTimer = setTimeout(dismiss, 2000);
     return () => { clearTimeout(skipTimer); clearTimeout(doneTimer); };
   }, [shouldReduceMotion]);
-
-  const dismiss = () => {
-    
-    setVisible(false);
-  };
 
   return (
     <AnimatePresence>

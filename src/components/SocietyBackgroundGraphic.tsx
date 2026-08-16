@@ -60,7 +60,7 @@ export const SocietyBackgroundGraphic: React.FC = () => {
       <div className="absolute bottom-1/3 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/20 rounded-full blur-[140px]" />
 
       {/* Row 1 */}
-      <div className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-gray-400 dark:text-gray-500">
+      <div style={{ animationDuration: "38s" }} className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-gray-400 dark:text-gray-500">
         {row1.concat(row1).map((name, i) => (
           <span key={`r1-${i}`} className="inline-flex items-center gap-6">
             <span className="hover:text-white transition-colors">{name}</span>
@@ -70,7 +70,7 @@ export const SocietyBackgroundGraphic: React.FC = () => {
       </div>
 
       {/* Row 2 */}
-      <div className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-2xl md:text-4xl font-black tracking-wider uppercase text-gray-500 dark:text-gray-400">
+      <div style={{ animationDuration: "52s" }} className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-2xl md:text-4xl font-black tracking-wider uppercase text-gray-500 dark:text-gray-400">
         {row2.concat(row2).map((name, i) => (
           <span key={`r2-${i}`} className="inline-flex items-center gap-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 dark:from-gray-300 dark:to-gray-600">
@@ -82,7 +82,7 @@ export const SocietyBackgroundGraphic: React.FC = () => {
       </div>
 
       {/* Row 3 */}
-      <div className="flex gap-10 whitespace-nowrap animate-marquee font-heading text-lg md:text-2xl font-bold tracking-widest uppercase text-gray-400 dark:text-gray-500">
+      <div style={{ animationDuration: "46s" }} className="flex gap-10 whitespace-nowrap animate-marquee font-heading text-lg md:text-2xl font-bold tracking-widest uppercase text-gray-400 dark:text-gray-500">
         {row3.concat(row3).map((name, i) => (
           <span key={`r3-${i}`} className="inline-flex items-center gap-6">
             <span>{name}</span>
@@ -92,7 +92,7 @@ export const SocietyBackgroundGraphic: React.FC = () => {
       </div>
 
       {/* Row 4 */}
-      <div className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-3xl md:text-5xl font-black tracking-widest uppercase text-gray-600 dark:text-gray-300">
+      <div style={{ animationDuration: "34s" }} className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-3xl md:text-5xl font-black tracking-widest uppercase text-gray-600 dark:text-gray-300">
         {row4.concat(row4).map((name, i) => (
           <span key={`r4-${i}`} className="inline-flex items-center gap-6">
             <span>{name}</span>
@@ -102,7 +102,7 @@ export const SocietyBackgroundGraphic: React.FC = () => {
       </div>
 
       {/* Row 5 */}
-      <div className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-gray-400 dark:text-gray-500">
+      <div style={{ animationDuration: "58s" }} className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-gray-400 dark:text-gray-500">
         {row5.concat(row5).map((name, i) => (
           <span key={`r5-${i}`} className="inline-flex items-center gap-6">
             <span>{name}</span>

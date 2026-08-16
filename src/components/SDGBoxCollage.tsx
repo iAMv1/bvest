@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { sdgData } from "@/lib/sdg-data";
 import { useIntro } from "@/components/IntroContext";
@@ -46,7 +47,7 @@ export const SDGBoxCollage: React.FC = () => {
 
   return (
     // Fills the entire hero container; boxes use absolute positioning inside this div.
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Subtle decorative dot-grid background */}
       <div className="hero-dot-grid" />
 
@@ -59,12 +60,13 @@ export const SDGBoxCollage: React.FC = () => {
             initial={{ opacity: 0, scale: 0.75, rotate: box.rotate }}
             animate={introDone ? { opacity: box.opacity, scale: 1, rotate: box.rotate } : { opacity: 0, scale: 0.75, rotate: box.rotate }}
             whileHover={{
-              scale: 1.12,
+              scale: 1.1,
               rotate: 0,
               zIndex: 30,
-              boxShadow: "0 12px 36px rgba(0,0,0,0.25)",
+              boxShadow: `0 16px 48px ${sdg.hex}55`,
               transition: { duration: 0.25, ease: "easeOut" }
             }}
+            whileTap={{ scale: 0.96 }}
             transition={{
               delay: i * 0.025,          // tight 25 ms stagger across all 17
               duration: 0.45,
@@ -81,16 +83,28 @@ export const SDGBoxCollage: React.FC = () => {
               boxShadow: "0 6px 24px rgba(0,0,0,0.14)",
               overflow: "hidden",
             }}
-            className="hidden lg:block pointer-events-auto cursor-pointer"
+            className="group hidden lg:block"
           >
-            <Image
-              src={sdg.imageUrl}
-              alt={`SDG ${sdg.number}: ${sdg.name}`}
-              fill
-              sizes={`${box.w}px`}
-              className="object-cover"
-              priority={i < 6}  // eagerly load the prominent bottom-right cluster
-            />
+            <Link
+              href={`/events/${sdg.number}`}
+              aria-label={`SDG ${sdg.number}: ${sdg.name}`}
+              className="absolute inset-0 block pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            >
+              <Image
+                src={sdg.imageUrl}
+                alt=""
+                fill
+                sizes={`${box.w}px`}
+                className="object-cover transition-transform duration-500 ease-fluid group-hover:scale-105"
+                priority={i < 6}  // eagerly load the prominent bottom-right cluster
+              />
+              {/* Arrow chip — appears on hover */}
+              <span className="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-black/55 backdrop-blur-md border border-white/25 flex items-center justify-center text-white opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-fluid">
+                <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9L9 3M4 3h5v5" />
+                </svg>
+              </span>
+            </Link>
           </motion.div>
         );
       })}
@@ -104,7 +118,7 @@ export const SDGBoxCollage: React.FC = () => {
             key={`mobile-${sdg.number}`}
             initial={{ opacity: 0, scale: 0.75, rotate: box.rotate }}
             animate={introDone ? { opacity: box.opacity * 0.85, scale: 1, rotate: box.rotate } : { opacity: 0, scale: 0.75, rotate: box.rotate }}
-            whileTap={{ scale: 0.95, zIndex: 10 }}
+            whileTap={{ scale: 0.93, zIndex: 10 }}
             transition={{ delay: i * 0.05, duration: 0.4, ease: "easeOut" }}
             style={{
               position: "absolute",
@@ -117,15 +131,21 @@ export const SDGBoxCollage: React.FC = () => {
               boxShadow: "0 4px 14px rgba(0,0,0,0.12)",
               overflow: "hidden",
             }}
-            className="block lg:hidden pointer-events-auto cursor-pointer"
+            className="group block lg:hidden"
           >
-            <Image
-              src={sdg.imageUrl}
-              alt={`SDG ${sdg.number}`}
-              fill
-              sizes={`${mobileSize}px`}
-              className="object-cover"
-            />
+            <Link
+              href={`/events/${sdg.number}`}
+              aria-label={`SDG ${sdg.number}: ${sdg.name}`}
+              className="absolute inset-0 block pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            >
+              <Image
+                src={sdg.imageUrl}
+                alt=""
+                fill
+                sizes={`${mobileSize}px`}
+                className="object-cover"
+              />
+            </Link>
           </motion.div>
         );
       })}

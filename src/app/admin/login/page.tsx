@@ -32,10 +32,18 @@ async function login(formData: FormData) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { SocietyBackgroundGraphic } from "@/components/SocietyBackgroundGraphic";
+import { PasswordInput } from "@/components/PasswordInput";
+import { SubmitButton } from "@/components/SubmitButton";
 
 interface Props {
   searchParams: Promise<{ error?: string }>;
 }
+
+const STATUS_LINES = [
+  { label: "SOCIETIES REGISTERED", value: "30+", live: true },
+  { label: "ALLOCATION ENGINE", value: "STANDBY", live: true },
+  { label: "SESSION", value: "AUTH REQUIRED", live: false },
+];
 
 export default async function AdminLoginPage({ searchParams }: Props) {
   const { error } = await searchParams;
@@ -44,86 +52,125 @@ export default async function AdminLoginPage({ searchParams }: Props) {
     error === "missing"
       ? "Please enter the admin password."
       : error === "invalid"
-      ? "Invalid password. Please try again."
+      ? "Access denied — invalid master password."
       : null;
 
   return (
-    <div className="relative flex-1 h-[calc(100vh-4rem)] flex items-center justify-center px-4 overflow-hidden bg-black">
+    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-black">
       {/* Dynamic Tilted Society Names Background Graphic */}
       <SocietyBackgroundGraphic />
 
-      <div className="relative z-10 w-full max-w-md">
-        {/* Card */}
-        <div className="bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-800 p-8 md:p-10 relative overflow-hidden">
-          {/* Subtle top accent gradient line */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500" />
-
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[11px] font-bold uppercase tracking-widest mb-3">
-              <span>Admin Access</span>
-            </div>
-            <h1 className="font-heading text-3xl font-bold text-white mb-2">
-              Admin Portal
+      <div className="relative z-10 w-full max-w-5xl grid lg:grid-cols-2 gap-10 items-center">
+        {/* ── Left: console panel ── */}
+        <div className="hidden lg:flex flex-col gap-10 pr-6">
+          <div className="flex flex-col gap-6">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-300 island-glass w-fit font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+              system // access
+            </span>
+            <h1 className="font-heading text-4xl font-bold text-white leading-tight">
+              Allocation
+              <br />
+              <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                Console
+              </span>
             </h1>
-            <p className="text-sm text-gray-400 leading-relaxed">
+            <p className="text-sm text-gray-400 leading-relaxed max-w-sm font-mono">
               Review, manage, and monitor society domain allocations across technical & non-technical societies of BVCOE Delhi.
             </p>
           </div>
 
-          <form action={login} className="space-y-5">
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5"
-              >
-                Admin Master Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                placeholder="••••••••"
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-800 bg-black/60 text-white placeholder:text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-              />
-            </div>
-
-            {/* Error */}
-            {errorMessage && (
+          {/* Console status readouts */}
+          <div className="flex flex-col divide-y divide-white/5 border border-white/10 rounded-2xl bg-black/40 backdrop-blur-sm overflow-hidden">
+            {STATUS_LINES.map((line, i) => (
               <div
-                role="alert"
-                className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800 text-red-300 text-sm"
+                key={line.label}
+                className="flex items-center justify-between px-5 py-3.5 font-mono text-xs transition-colors duration-200 ease-fluid hover:bg-white/5"
+                style={{ animationDelay: `${i * 90}ms` }}
               >
-                <svg
-                  className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {errorMessage}
+                <span className="tracking-widest text-gray-500">{line.label}</span>
+                <span className="flex items-center gap-2 text-gray-200">
+                  <span className="text-violet-300">{line.value}</span>
+                  <span className={`w-1.5 h-1.5 rounded-full ${line.live ? "bg-emerald-400 animate-pulse" : "bg-gray-600"}`} />
+                </span>
               </div>
-            )}
+            ))}
+          </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              id="login-submit"
-              className="w-full py-3.5 px-6 bg-white text-black hover:bg-gray-200 font-bold rounded-xl transition-all hover:-translate-y-0.5 shadow-lg duration-200 text-sm cursor-pointer"
-            >
-              Authenticate & Access &rarr;
-            </button>
-          </form>
+          <p className="text-[11px] text-gray-600 font-mono tracking-widest">
+            AUTHORIZED PERSONNEL ONLY &middot; BVEST ADMIN CONSOLE
+          </p>
         </div>
 
-        <p className="text-center text-xs text-gray-500 mt-6">
-          Authorized personnel only &middot; BVEST Admin Console
-        </p>
+        {/* ── Right: glass login card ── */}
+        <div className="w-full max-w-md lg:justify-self-center">
+          <div className="animate-card-in hard-shell !rounded-[2rem] bg-gradient-to-b from-white/10 to-white/[0.02] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+            <div className={`hard-core !rounded-[calc(2rem-1.5px)] bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
+              {/* Subtle top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent" />
+
+              <div className="mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 text-violet-300 text-[11px] font-bold uppercase tracking-widest mb-3">
+                  {/* Lock icon */}
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                  </svg>
+                  <span>Admin Access</span>
+                </div>
+                <h1 className="font-heading text-3xl font-bold text-white mb-2">
+                  Admin Portal
+                </h1>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Authenticate to open the allocation console.
+                </p>
+              </div>
+
+              <form action={login} className="space-y-5">
+                {/* Password */}
+                <PasswordInput
+                  id="password"
+                  name="password"
+                  label="Master Password"
+                  mono
+                />
+
+                {/* Error */}
+                {errorMessage && (
+                  <div
+                    role="alert"
+                    className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800/60 text-red-300 text-sm"
+                  >
+                    <svg
+                      className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {errorMessage}
+                  </div>
+                )}
+
+                {/* Submit — pending spinner + nested arrow */}
+                <SubmitButton
+                  label="Authenticate & Access"
+                  pendingLabel="Authenticating…"
+                  variant="console"
+                />
+              </form>
+            </div>
+          </div>
+
+          {/* Mobile fallback hint */}
+          <p className="lg:hidden text-center text-xs text-gray-600 mt-6 font-mono tracking-widest">
+            AUTHORIZED PERSONNEL ONLY
+          </p>
+        </div>
       </div>
     </div>
   );

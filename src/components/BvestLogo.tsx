@@ -32,6 +32,7 @@ export const BvestLogo: React.FC<BvestLogoProps> = ({
         src="/logo.png"
         alt="BVEST Logo"
         fill
+        sizes={`${Math.ceil(calculatedWidth)}px`}
         className="object-contain"
         priority
       />

@@ -41,10 +41,19 @@ async function login(formData: FormData) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { SocietyBackgroundGraphic } from "@/components/SocietyBackgroundGraphic";
+import { BvestLogo } from "@/components/BvestLogo";
+import { PasswordInput } from "@/components/PasswordInput";
+import { SubmitButton } from "@/components/SubmitButton";
 
 interface Props {
   searchParams: Promise<{ error?: string }>;
 }
+
+const STEPS = [
+  { n: "01", title: "Select", desc: "Pick your society's 3 domain preferences" },
+  { n: "02", title: "Review", desc: "Rank-order and review before submitting" },
+  { n: "03", title: "Lock", desc: "Submit — choices are final and locked" },
+];
 
 export default async function LoginPage({ searchParams }: Props) {
   const { error } = await searchParams;
@@ -57,104 +66,129 @@ export default async function LoginPage({ searchParams }: Props) {
       : null;
 
   return (
-    <div className="relative flex-1 h-[calc(100vh-4rem)] flex items-center justify-center px-4 overflow-hidden bg-black">
+    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-black">
       {/* Dynamic Tilted Society Names Background Graphic */}
       <SocietyBackgroundGraphic />
 
-      <div className="relative z-10 w-full max-w-md">
-        {/* Card */}
-        <div className="bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-800 p-8 md:p-10 relative overflow-hidden">
-          {/* Subtle top accent gradient line */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-emerald-500 to-rose-500" />
-
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-bold uppercase tracking-widest mb-3">
-              <span>BVCOE Societies</span>
-            </div>
-            <h1 className="font-heading text-3xl font-bold text-white mb-2">
-              Society Portal Login
-            </h1>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Sign in with your society credentials to lock in your official BVEST 2026 UN SDG domain preferences.
+      <div className="relative z-10 w-full max-w-5xl grid lg:grid-cols-2 gap-10 items-center">
+        {/* ── Left: brand flow panel ── */}
+        <div className="hidden lg:flex flex-col gap-10 pr-6">
+          <div className="flex flex-col gap-6">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-300 island-glass w-fit">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Society Portal
+            </span>
+            <BvestLogo size={120} />
+            <p className="text-2xl font-heading font-semibold text-white leading-snug max-w-md">
+              Your society&apos;s voice in{" "}
+              <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
+                BVEST 2026
+              </span>
+            </p>
+            <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+              Sign in with your society credentials to lock in your official UN SDG domain preferences.
             </p>
           </div>
 
-          <form action={login} className="space-y-5">
-            {/* Society ID */}
-            <div>
-              <label
-                htmlFor="societyId"
-                className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5"
-              >
-                Society ID
-              </label>
-              <input
-                id="societyId"
-                name="societyId"
-                type="text"
-                autoComplete="username"
-                required
-                placeholder="e.g. corebvest, ieee, etc."
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-800 bg-black/60 text-white placeholder:text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                placeholder="••••••••"
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-800 bg-black/60 text-white placeholder:text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
-            </div>
-
-            {/* Error */}
-            {errorMessage && (
+          {/* Three-step flow */}
+          <div className="flex flex-col gap-4">
+            {STEPS.map((step, i) => (
               <div
-                role="alert"
-                className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800 text-red-300 text-sm"
+                key={step.n}
+                className="group flex items-center gap-4 transition-transform duration-300 ease-fluid hover:translate-x-1.5 motion-reduce:hover:translate-x-0"
+                style={{ animationDelay: `${i * 90}ms` }}
               >
-                <svg
-                  className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {errorMessage}
+                <span className="outline-text font-heading text-3xl font-black tabular-nums w-12 shrink-0 transition-colors duration-300 ease-fluid group-hover:[-webkit-text-stroke:1px_rgba(255,255,255,0.35)]">
+                  {step.n}
+                </span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm font-semibold text-white">{step.title}</span>
+                  <span className="text-xs text-gray-500">{step.desc}</span>
+                </div>
+                <span className="ml-auto h-px w-10 bg-gradient-to-r from-white/25 to-transparent transition-all duration-300 ease-fluid group-hover:w-16 group-hover:from-sdg6/80" />
               </div>
-            )}
+            ))}
+          </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              id="login-submit"
-              className="w-full py-3.5 px-6 bg-white text-black hover:bg-gray-200 font-bold rounded-xl transition-all hover:-translate-y-0.5 shadow-lg duration-200 text-sm cursor-pointer"
-            >
-              Sign In to Portal &rarr;
-            </button>
-          </form>
-
-
+          <p className="text-[11px] text-gray-600">
+            Credentials are issued by the BVEST organizing committee.
+          </p>
         </div>
 
-        <p className="text-center text-xs text-gray-500 mt-6">
-          Credentials are issued by the BVEST organizing committee.
-        </p>
+        {/* ── Right: glass login card ── */}
+        <div className="w-full max-w-md lg:justify-self-center">
+          <div className="animate-card-in hard-shell !rounded-[2rem] bg-gradient-to-b from-white/10 to-white/[0.02] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+            <div className={`hard-core !rounded-[calc(2rem-1.5px)] bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
+              {/* Subtle top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+
+              <div className="mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-300 text-[11px] font-bold uppercase tracking-widest mb-3">
+                  <span>BVCOE Societies</span>
+                </div>
+                <h1 className="font-heading text-3xl font-bold text-white mb-2">
+                  Society Portal Login
+                </h1>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  Sign in to continue to the domain preference flow.
+                </p>
+              </div>
+
+              <form action={login} className="space-y-5">
+                {/* Society ID */}
+                <div>
+                  <label
+                    htmlFor="societyId"
+                    className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                  >
+                    Society ID
+                  </label>
+                  <input
+                    id="societyId"
+                    name="societyId"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    placeholder="e.g. corebvest, ieee, etc."
+                    className="w-full px-4 py-3.5 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-gray-500 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400/40 transition-all duration-200 ease-fluid"
+                  />
+                </div>
+
+                {/* Password */}
+                <PasswordInput id="password" name="password" label="Password" />
+
+                {/* Error */}
+                {errorMessage && (
+                  <div
+                    role="alert"
+                    className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800/60 text-red-300 text-sm"
+                  >
+                    <svg
+                      className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {errorMessage}
+                  </div>
+                )}
+
+                {/* Submit — pending spinner + nested arrow */}
+                <SubmitButton label="Sign In to Portal" pendingLabel="Signing in…" />
+              </form>
+            </div>
+          </div>
+
+          {/* Mobile fallback hint */}
+          <p className="lg:hidden text-center text-xs text-gray-600 mt-6">
+            Credentials are issued by the BVEST organizing committee.
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -21,8 +21,10 @@
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
@@ -31,7 +33,7 @@
 }
 
 .dark {
-  --background: #000000;
+  --background: #050505;
   --foreground: #F3F4F6;
 }
 
@@ -40,6 +42,32 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-error-in,
+  .animate-pop-in,
+  .animate-card-in,
+  .animate-rise-in,
+  .animate-shake {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  .animate-drift,
+  .animate-drift-slow,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+
+  .btn-shine::before {
+    display: none;
+  }
 }
 
 /* Subtle decorative background dot-grid for hero section */
@@ -76,4 +104,171 @@ body {
 
 .animate-marquee-reverse {
   animation: marquee-reverse 40s linear infinite;
+}
+
+/* ── Premium shell utilities ─────────────────────────────────────────────── */
+
+/* Custom scrollbar + selection — detail polish */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  border: 2px solid #050505;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+::selection {
+  background: rgba(38, 189, 226, 0.4);
+  color: #fff;
+}
+
+/* Ghost outline display text (editorial splash behind headings) */
+.outline-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  color: transparent;
+}
+
+/* Fine dot grid backdrop — decorative section atmosphere */
+.bg-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Button shine sweep — primary islands */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(0, 0, 0, 0.08) 45%,
+    rgba(255, 255, 255, 0.4) 55%,
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.55s cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+
+.btn-shine:hover::before {
+  left: 120%;
+}
+
+/* Error shake — wrong credentials feedback */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 360ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Slow ambient drift for glow orbs */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(30px, -20px, 0) scale(1.08); }
+}
+
+.animate-drift {
+  animation: drift 14s ease-in-out infinite;
+}
+
+.animate-drift-slow {
+  animation: drift 22s ease-in-out infinite reverse;
+}
+
+/* Fixed film-grain overlay — applied once in root layout, never on scroll containers */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hairline double-bezel shell for premium cards (outer ring + inner core) */
+.hard-shell {
+  border-radius: 1.75rem;
+  padding: 1.5px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+}
+
+.dark .hard-shell {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+}
+
+.hard-shell > .hard-core {
+  border-radius: calc(1.75rem - 1.5px);
+}
+
+/* Floating island glass pill (nav, CTAs) */
+.island-glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Entrance: instant error alerts fade in — opacity only, text being read */
+@keyframes error-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-error-in {
+  animation: error-in 200ms ease-out both;
+}
+
+/* Entrance: rare-state delight (success checkmark, rank badges) */
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-pop-in {
+  animation: pop-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Entrance: premium card (login portals) — soft rise + settle */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.animate-card-in {
+  animation: card-in 450ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Entrance: soft fade-up for lists (rare tier) */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.animate-rise-in {
+  animation: rise-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
