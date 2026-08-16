@@ -57,7 +57,7 @@ export default async function LoginPage({ searchParams }: Props) {
       : null;
 
   return (
-    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 overflow-hidden bg-black">
+    <div className="relative flex-1 h-[calc(100vh-4rem)] flex items-center justify-center px-4 overflow-hidden bg-black">
       {/* Dynamic Tilted Society Names Background Graphic */}
       <SocietyBackgroundGraphic />
 
