@@ -40,6 +40,8 @@ async function login(formData: FormData) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { SocietyBackgroundGraphic } from "@/components/SocietyBackgroundGraphic";
+
 interface Props {
   searchParams: Promise<{ error?: string }>;
 }
@@ -55,16 +57,25 @@ export default async function LoginPage({ searchParams }: Props) {
       : null;
 
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-md">
+    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 overflow-hidden bg-black">
+      {/* Dynamic Tilted Society Names Background Graphic */}
+      <SocietyBackgroundGraphic />
+
+      <div className="relative z-10 w-full max-w-md">
         {/* Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 p-8 md:p-10">
+        <div className="bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-800 p-8 md:p-10 relative overflow-hidden">
+          {/* Subtle top accent gradient line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-emerald-500 to-rose-500" />
+
           <div className="mb-8">
-            <h1 className="font-heading text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Society Login
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-bold uppercase tracking-widest mb-3">
+              <span>BVCOE Societies</span>
+            </div>
+            <h1 className="font-heading text-3xl font-bold text-white mb-2">
+              Society Portal Login
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Use the credentials issued to your society by the BVEST team.
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Sign in with your society credentials to lock in your official BVEST 2026 UN SDG domain preferences.
             </p>
           </div>
 
@@ -73,7 +84,7 @@ export default async function LoginPage({ searchParams }: Props) {
             <div>
               <label
                 htmlFor="societyId"
-                className="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-1.5"
+                className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5"
               >
                 Society ID
               </label>
@@ -83,8 +94,8 @@ export default async function LoginPage({ searchParams }: Props) {
                 type="text"
                 autoComplete="username"
                 required
-                placeholder="e.g. corebvest"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all"
+                placeholder="e.g. corebvest, ieee, etc."
+                className="w-full px-4 py-3.5 rounded-xl border border-gray-800 bg-black/60 text-white placeholder:text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -92,7 +103,7 @@ export default async function LoginPage({ searchParams }: Props) {
             <div>
               <label
                 htmlFor="password"
-                className="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-1.5"
+                className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5"
               >
                 Password
               </label>
@@ -103,7 +114,7 @@ export default async function LoginPage({ searchParams }: Props) {
                 autoComplete="current-password"
                 required
                 placeholder="••••••••"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all"
+                className="w-full px-4 py-3.5 rounded-xl border border-gray-800 bg-black/60 text-white placeholder:text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -111,10 +122,10 @@ export default async function LoginPage({ searchParams }: Props) {
             {errorMessage && (
               <div
                 role="alert"
-                className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-400 text-sm"
+                className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800 text-red-300 text-sm"
               >
                 <svg
-                  className="w-4 h-4 mt-0.5 shrink-0"
+                  className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -132,14 +143,31 @@ export default async function LoginPage({ searchParams }: Props) {
             <button
               type="submit"
               id="login-submit"
-              className="w-full py-3 px-6 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg duration-200 text-sm"
+              className="w-full py-3.5 px-6 bg-white text-black hover:bg-gray-200 font-bold rounded-xl transition-all hover:-translate-y-0.5 shadow-lg duration-200 text-sm cursor-pointer"
             >
-              Sign In
+              Sign In to Portal &rarr;
             </button>
           </form>
+
+          {/* Featured Society Categories Preview */}
+          <div className="mt-8 pt-6 border-t border-gray-800/80">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-3">
+              Societies of BVCOE Delhi
+            </p>
+            <div className="flex flex-wrap gap-1.5 text-[11px]">
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">IEEE</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">ACM</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">DSC</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">CSI</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">TEDx</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">DANCE</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">MUSIC</span>
+              <span className="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 border border-gray-700/50">+ 20 more</span>
+            </div>
+          </div>
         </div>
 
-        <p className="text-center text-xs text-gray-400 dark:text-gray-600 mt-6">
+        <p className="text-center text-xs text-gray-500 mt-6">
           Credentials are issued by the BVEST organizing committee.
         </p>
       </div>
