@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
+  --color-sdg1: #E5243B;
+  --color-sdg2: #DDA63A;
+  --color-sdg3: #4C9F38;
+  --color-sdg4: #C5192D;
+  --color-sdg5: #FF3A21;
+  --color-sdg6: #26BDE2;
+  --color-sdg7: #FCC30B;
+  --color-sdg8: #A21942;
+  --color-sdg9: #FD6925;
+  --color-sdg10: #DD1367;
+  --color-sdg11: #FD9D24;
+  --color-sdg12: #BF8B2E;
+  --color-sdg13: #3F7E44;
+  --color-sdg14: #0A97D9;
+  --color-sdg15: #56C02B;
+  --color-sdg16: #00689D;
+  --color-sdg17: #19486A;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #FAFAF8;
+  --foreground: #1A1A1A;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #F3F4F6;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Subtle decorative background dot-grid for hero section */
+.hero-dot-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* Faint dot pattern: small dots (2px), spaced 20px apart */
+  background-image: radial-gradient(rgba(26, 26, 26, 0.15) 2px, transparent 2px);
+  background-size: 20px 20px;
+  /* Fade out towards the top-left (so hero text has zero competition) */
+  mask-image: radial-gradient(circle at bottom right, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at bottom right, black 40%, transparent 80%);
+}
+
+.dark .hero-dot-grid {
+  background-image: radial-gradient(rgba(243, 244, 246, 0.15) 2px, transparent 2px);
 }
