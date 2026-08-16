@@ -10,7 +10,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
       {/* The section itself is relative so the absolutely-positioned collage stays inside it */}
-      <section className="relative overflow-hidden bg-background pt-32 pb-0 transition-colors duration-200">
+      <section className="relative overflow-hidden bg-background pt-8 md:pt-12 pb-0 transition-colors duration-200">
 
         {/* SDG box collage — decorative background, bottom-right, z-0 */}
         <SDGBoxCollage />
