@@ -188,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* 6. Footer */}
-      <footer className="bg-white dark:bg-black pt-20 mt-auto border-t border-gray-100 dark:border-gray-900 transition-colors duration-200">
+      <footer id="contact" className="bg-white dark:bg-black pt-20 mt-auto border-t border-gray-100 dark:border-gray-900 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-6 mb-20 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left flex flex-col items-center md:items-start text-gray-900 dark:text-white">
             <BvestLogo size={88} />

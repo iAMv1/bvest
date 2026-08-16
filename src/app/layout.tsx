@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/#featured-events" className="hover:text-gray-900 dark:hover:text-white transition-colors">Events</Link>
                 <Link href="/society/login" className="hover:text-gray-900 dark:hover:text-white transition-colors">Society Portal</Link>
                 <Link href="/admin/login" className="hover:text-gray-900 dark:hover:text-white transition-colors">Admin Portal</Link>
-                <a href="mailto:contact@bvest.edu" className="hover:text-gray-900 dark:hover:text-white transition-colors">Contact</a>
+                <Link href="/#contact" className="hover:text-gray-900 dark:hover:text-white transition-colors">Contact</Link>
               </nav>
               <div className="flex items-center gap-4">
                 <Link
