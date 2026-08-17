@@ -5,11 +5,12 @@ import * as fs from "fs";
 import * as path from "path";
 
 // ── Add more societies here — id must be unique ──────────────────────────────
-const SOCIETIES: { id: string; name: string; password: string }[] = [
+const SOCIETIES: { id: string; name: string; password: string; kind?: string }[] = [
   {
     id: "corebvest",
     name: "Core BVEST",
     password: "Bvest2026!",  // plaintext — will be hashed before storing
+    kind: "GROUP",           // participating units are groups only
   },
 ];
 // ─────────────────────────────────────────────────────────────────────────────
@@ -32,8 +33,8 @@ async function main() {
 
       await prisma.society.upsert({
         where: { id: society.id },
-        update: { name: society.name, password: hashed, locked: false, submittedAt: null },
-        create: { id: society.id, name: society.name, password: hashed, locked: false },
+        update: { name: society.name, password: hashed, locked: false, submittedAt: null, kind: society.kind },
+        create: { id: society.id, name: society.name, password: hashed, locked: false, kind: society.kind },
       });
 
       const line = `id: ${society.id}  |  password: ${society.password}`;
@@ -42,7 +43,7 @@ async function main() {
     }
 
     // Write plaintext credentials to a gitignored file for safe offline reference
-    const outPath = path.join(__dirname, "seeds-plaintext.txt");
+    const outPath = path.join(__dirname, "..", "docs", "seeds-plaintext.txt");
     fs.writeFileSync(outPath, plaintextLog.join("\n") + "\n");
     console.log("\nPlaintext credentials saved to:", outPath, "(gitignored — do not commit)");
   } finally {

@@ -2,7 +2,7 @@ const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
 const { PrismaClient } = require("@prisma/client");
 
 (async () => {
-  const adapter = new PrismaBetterSqlite3({ url: "file:./dev.db" });
+  const adapter = new PrismaBetterSqlite3({ url: "file:./prisma/dev.db" });
   const prisma = new PrismaClient({ adapter });
   await prisma.preference.deleteMany();
   await prisma.society.updateMany({ data: { locked: false, submittedAt: null } });

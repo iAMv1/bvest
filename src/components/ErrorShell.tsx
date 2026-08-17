@@ -52,8 +52,8 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
         {code}
       </span>
 
-      <div className="relative text-center max-w-xl mx-auto">
-        <span className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-400 bg-white/5 border border-white/10 mb-8">
+      <div className="relative text-center max-w-xl mx-auto animate-rise-in">
+        <span className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-400 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-8">
           <span className={`w-1 h-1 rounded-full ${accentDot}`} />
           {eyebrow}
         </span>
@@ -65,7 +65,7 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
           </span>
         </h1>
 
-        <p className="text-lg text-gray-400 leading-relaxed mb-12 max-w-lg mx-auto">{copy}</p>
+        <p className="text-lg text-stone-950 dark:text-gray-400 leading-relaxed mb-12 max-w-lg mx-auto">{copy}</p>
 
         <div className="flex flex-wrap justify-center gap-4">
           {primaryHref && (
@@ -90,7 +90,7 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
           {secondaryHref && (
             <Link
               href={secondaryHref}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/5 text-white text-sm font-semibold transition-all duration-300 ease-fluid hover:bg-white/10 active:scale-[0.97] motion-reduce:active:scale-100"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 text-stone-950 dark:text-white text-sm font-semibold transition-all duration-300 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 active:scale-[0.97] motion-reduce:active:scale-100"
             >
               {secondaryLabel}
             </Link>

@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 
 (async () => {
-  const adapter = new PrismaBetterSqlite3({ url: "file:./dev.db" });
+  const adapter = new PrismaBetterSqlite3({ url: "file:./prisma/dev.db" });
   const prisma = new PrismaClient({ adapter });
   const societies = await prisma.society.findMany();
   console.log("societies:", JSON.stringify(societies.map((s) => ({ id: s.id, locked: s.locked, passLen: s.password.length }))));

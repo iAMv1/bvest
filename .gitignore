@@ -41,7 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 # society seed credentials (never commit)
-prisma/seeds-plaintext.txt
+docs/seeds-plaintext.txt
 dev.db
 *.db
 *.db-journal

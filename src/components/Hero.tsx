@@ -17,7 +17,7 @@ export const Hero: React.FC = () => {
   if (shouldReduceMotion) {
     return (
       <div className="max-w-xl pb-24 md:pb-40 pointer-events-auto">
-        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-300 island-glass mb-8">
+        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-300 island-glass mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           BVCOE · Annual Technical Fest
         </span>
@@ -26,18 +26,18 @@ export const Hero: React.FC = () => {
           <BvestLogo size={200} showSubtitle={true} />
         </div>
 
-        <p className="text-xl md:text-2xl text-gray-300 max-w-lg mb-10 leading-relaxed font-medium">
+        <p className="text-xl md:text-2xl text-stone-950 dark:text-gray-300 max-w-lg mb-10 leading-relaxed font-medium">
           The Annual Technical Fest themed around the UN Sustainable Development Goals.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-start gap-4 text-gray-400 mb-12 text-sm font-medium">
+        <div className="flex flex-col sm:flex-row items-start gap-4 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
           <div className="flex items-center gap-2.5">
-            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-gray-300">Date</span>
-            <span>October 24 &ndash; 26, 2026 (Placeholder)</span>
+            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Date</span>
+            <span>October 24 &ndash; 26, 2026</span>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-gray-300">Venue</span>
-            <span>BVCOE Campus (Placeholder)</span>
+            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Venue</span>
+            <span>BVCOE Campus</span>
           </div>
         </div>
 
@@ -45,7 +45,7 @@ export const Hero: React.FC = () => {
           <Magnetic strength={0.25}>
             <Link
               href="#goals"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
             >
               Explore the 17 Goals
               <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
@@ -58,10 +58,10 @@ export const Hero: React.FC = () => {
           <Magnetic strength={0.25}>
             <Link
               href="/society/login"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-white transition-all duration-300 ease-fluid hover:bg-white/10 active:scale-[0.97]"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-300 ease-fluid hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.97]"
             >
               Society Portal
-              <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
+              <span className="w-7 h-7 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
             </Link>
           </Magnetic>
         </div>
@@ -84,7 +84,7 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 16 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
         }}
-        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-300 island-glass mb-8"
+        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-300 island-glass mb-8"
       >
         <motion.span
           className="w-1.5 h-1.5 rounded-full bg-emerald-400"
@@ -109,7 +109,7 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 20 },
           show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE_OUT_EXPO } },
         }}
-        className="text-xl md:text-2xl text-gray-300 max-w-lg mb-10 leading-relaxed font-medium"
+        className="text-xl md:text-2xl text-stone-950 dark:text-gray-300 max-w-lg mb-10 leading-relaxed font-medium"
       >
         The Annual Technical Fest themed around the UN Sustainable Development Goals.
       </motion.p>
@@ -119,15 +119,15 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 18 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
         }}
-        className="flex flex-col sm:flex-row items-start gap-4 text-gray-400 mb-12 text-sm font-medium"
+        className="flex flex-col sm:flex-row items-start gap-4 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium"
       >
         <div className="flex items-center gap-2.5">
-          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-gray-300">Date</span>
-          <span>October 24 &ndash; 26, 2026 (Placeholder)</span>
+          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Date</span>
+          <span>October 24 &ndash; 26, 2026</span>
         </div>
         <div className="flex items-center gap-2.5">
-          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-gray-300">Venue</span>
-          <span>BVCOE Campus (Placeholder)</span>
+          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Venue</span>
+          <span>BVCOE Campus</span>
         </div>
       </motion.div>
 
@@ -141,7 +141,7 @@ export const Hero: React.FC = () => {
         <Magnetic strength={0.25}>
           <Link
             href="#goals"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
           >
             Explore the 17 Goals
             <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
@@ -154,10 +154,10 @@ export const Hero: React.FC = () => {
         <Magnetic strength={0.25}>
           <Link
             href="/society/login"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-white transition-all duration-300 ease-fluid hover:bg-white/10 active:scale-[0.97]"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-300 ease-fluid hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.97]"
           >
             Society Portal
-            <span className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
+            <span className="w-7 h-7 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
           </Link>
         </Magnetic>
       </motion.div>

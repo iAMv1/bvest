@@ -19,7 +19,15 @@ export default function GlobalError({
     <html
       lang="en"
       className="h-full antialiased dark"
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=localStorage.getItem("bvest-theme")||"system";var t=p==="system"?(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):p;var r=document.documentElement;r.classList.toggle("dark",t==="dark");r.style.colorScheme=t;}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full bg-[var(--background)] font-sans">
         <div className="noise-overlay" aria-hidden="true" />
         <ErrorShell

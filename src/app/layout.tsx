@@ -3,6 +3,8 @@ import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import { IntroOverlay } from "@/components/IntroOverlay";
 import { IntroProvider } from "@/components/IntroContext";
 import { SiteNav } from "@/components/SiteNav";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { BackToTop } from "@/components/BackToTop";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -25,19 +27,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=localStorage.getItem("bvest-theme")||"system";var t=p==="system"?(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):p;var r=document.documentElement;r.classList.toggle("dark",t==="dark");r.style.colorScheme=t;}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
-        <IntroProvider>
-          <IntroOverlay />
+        <ThemeProvider>
+          <IntroProvider>
+            <IntroOverlay />
 
-          {/* Floating island navigation */}
-          <SiteNav />
+            {/* Floating island navigation */}
+            <SiteNav />
 
-          {children}
+            {children}
 
-          {/* Fixed film grain — pointer-events-none, never on scrolling content */}
-          <div className="noise-overlay" aria-hidden="true" />
-        </IntroProvider>
+            {/* Back-to-top launcher — appears after scroll, shows page progress ring */}
+            <BackToTop />
+
+            {/* Fixed film grain — pointer-events-none, never on scrolling content */}
+            <div className="noise-overlay" aria-hidden="true" />
+          </IntroProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

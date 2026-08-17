@@ -75,11 +75,11 @@ export const IntroOverlay = () => {
             >
               {/* Desktop Logo */}
               <div className="hidden sm:block">
-                <BvestLogo size={240} showSubtitle={true} animated={true} />
+                <BvestLogo size={240} showSubtitle={true} animated={true} variant="dark-on-dark" />
               </div>
               {/* Mobile Logo */}
               <div className="block sm:hidden">
-                <BvestLogo size={140} showSubtitle={true} animated={true} />
+                <BvestLogo size={140} showSubtitle={true} animated={true} variant="dark-on-dark" />
               </div>
             </motion.div>
           </motion.div>

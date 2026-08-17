@@ -12,7 +12,10 @@ model Society {
   password    String
   locked      Boolean      @default(false)
   submittedAt DateTime?
+  kind        String       @default("SOCIETY") // SOCIETY | GROUP (combined collab group for an event)
+  memberIds   String?      // JSON array of member society ids when kind = GROUP
   preferences Preference[]
+  events      Event[]      @relation("EventHost")
 }
 
 model Preference {
@@ -24,4 +27,20 @@ model Preference {
 
   @@unique([societyId, rank])
   @@unique([societyId, domainId])
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  hostSocietyId   String?
+  hostSociety     Society? @relation("EventHost", fields: [hostSocietyId], references: [id])
+  sdgDomainId     String
+  description     String
+  venue           String?
+  startDate       DateTime?
+  endDate         DateTime?
+  registrationUrl String?
+  status          String   @default("DRAFT") // DRAFT | PENDING | CONFIRMED | LIVE | COMPLETED
+  createdAt       DateTime @default(now())
 }

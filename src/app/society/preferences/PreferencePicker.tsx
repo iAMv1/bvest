@@ -83,7 +83,7 @@ export function PreferencePicker({ domains }: Props) {
       {/* Sticky rank summary bar */}
       <div className="sticky top-4 z-30 island-glass rounded-2xl py-3 mb-8 -mx-1 px-3">
         <div className="max-w-5xl mx-auto flex flex-wrap items-center gap-3">
-          <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider mr-1">
+          <span className="text-xs font-semibold text-stone-950 dark:text-gray-300 uppercase tracking-wider mr-1">
             Your selections:
           </span>
           {[0, 1, 2].map((i) => {
@@ -94,8 +94,8 @@ export function PreferencePicker({ domains }: Props) {
                 key={i}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ease-fluid ${
                   domain
-                    ? "bg-white/10 text-white border border-white/10"
-                    : "bg-white/[0.03] text-gray-500 border border-dashed border-white/15"
+                    ? "bg-stone-950/10 dark:bg-white/10 text-stone-950 dark:text-white border border-black/15 dark:border-white/10"
+                    : "bg-black/5 dark:bg-white/[0.03] text-stone-950 dark:text-gray-500 border border-dashed border-black/15 dark:border-white/15"
                 }`}
               >
                 <span
@@ -112,11 +112,45 @@ export function PreferencePicker({ domains }: Props) {
         </div>
       </div>
 
-      {/* Persistent indicator */}
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-sm font-medium text-gray-400">
-          {selectedCount} of 3 domains selected
-        </span>
+      {/* Progress rail — rank slots R1→R2→R3 */}
+      <div className="flex items-stretch gap-2 mb-6" aria-live="polite">
+        {[0, 1, 2].map((i) => {
+          const domainId = selections[i];
+          const domain = domains.find((d) => d.id === domainId);
+          return (
+            <div key={i} className="flex-1 flex items-center gap-2">
+              <div
+                className={`flex-1 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border transition-all duration-300 ease-fluid ${
+                  domain
+                    ? "bg-black/[0.04] dark:bg-white/[0.05] border-black/15 dark:border-white/15"
+                    : "bg-black/[0.02] dark:bg-white/[0.02] border-dashed border-black/15 dark:border-white/15"
+                }`}
+              >
+                <span
+                  className={`shrink-0 w-7 h-7 rounded-full text-[11px] font-bold flex items-center justify-center ${
+                    domain ? "text-white" : "bg-black/10 dark:bg-white/10 text-stone-950 dark:text-gray-400"
+                  }`}
+                  style={domain ? { backgroundColor: domain.colorToken, boxShadow: `0 4px 14px ${domain.colorToken}55` } : undefined}
+                >
+                  {i + 1}
+                </span>
+                <span className="min-w-0">
+                  <span className={`block text-[9px] font-bold uppercase tracking-[0.2em] ${domain ? "text-stone-950 dark:text-gray-300" : "text-stone-950 dark:text-gray-500"}`}>
+                    {i === 0 ? "1st Choice" : i === 1 ? "2nd Choice" : "3rd Choice"}
+                  </span>
+                  <span className={`block text-xs font-medium truncate ${domain ? "text-stone-800 dark:text-white" : "text-stone-950 dark:text-gray-500"}`}>
+                    {domain ? domain.name : "Awaiting selection"}
+                  </span>
+                </span>
+              </div>
+              {i < 2 && (
+                <svg className="w-4 h-4 shrink-0 text-black/25 dark:text-white/25" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Domain cards grid */}
@@ -147,7 +181,8 @@ export function PreferencePicker({ domains }: Props) {
               id={`domain-card-${domain.id}`}
               onClick={() => !isDisabled && handleCardClick(domain.id)}
               disabled={isDisabled}
-              className={`group relative block w-full text-left transition-all duration-200 ease-fluid active:scale-[0.98] rounded-[1.75rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+              aria-pressed={isSelected}
+              className={`group relative block w-full text-left transition-all duration-200 ease-fluid active:scale-[0.98] rounded-[1.75rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-sdg6/60 dark:focus-visible:ring-white/50 ${
                 isDisabled ? "opacity-35 cursor-not-allowed" : "cursor-pointer"
               }`}
             >
@@ -163,10 +198,10 @@ export function PreferencePicker({ domains }: Props) {
                 <span
                   className={`relative block rounded-[calc(1.75rem-0.375rem)] border p-5 overflow-hidden transition-all duration-200 ease-fluid ${
                     isSelected
-                      ? "bg-[#101012] border-white/25"
+                      ? "bg-stone-950 dark:bg-[#101012] border-stone-950/25 dark:border-white/25"
                       : isDisabled
-                        ? "bg-[#0B0B0C] border-white/5"
-                        : "bg-[#0B0B0C] border-white/10 group-hover:border-white/20"
+                        ? "bg-white dark:bg-[#0B0B0C] border-black/5 dark:border-white/5"
+                        : "bg-white dark:bg-[#0B0B0C] border-black/10 dark:border-white/10 group-hover:border-black/20 dark:group-hover:border-white/20"
                   }`}
                 >
                   {/* Color stripe on the left */}
@@ -174,6 +209,11 @@ export function PreferencePicker({ domains }: Props) {
                     className="absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-200 ease-fluid group-hover:w-2"
                     style={{ backgroundColor: domain.colorToken }}
                   />
+
+                  {/* Console domain id tag */}
+                  <span className="absolute right-4 top-4 font-mono text-[9px] uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 opacity-50">
+                    {domain.id}
+                  </span>
 
                   <span className="relative block pl-5 pr-4 py-5">
                     {/* Rank badge */}
@@ -198,10 +238,10 @@ export function PreferencePicker({ domains }: Props) {
                       )}
                     </AnimatePresence>
 
-                    <span className="block font-heading font-semibold text-sm text-white leading-snug mb-1.5">
+                    <span className="block font-heading font-semibold text-sm text-stone-950 dark:text-white leading-snug mb-1.5">
                       {domain.name}
                     </span>
-                    <span className="block text-xs text-gray-400 leading-relaxed">
+                    <span className="block text-xs text-stone-950 dark:text-gray-400 leading-relaxed">
                       {domain.description}
                     </span>
                   </span>
@@ -246,7 +286,7 @@ export function PreferencePicker({ domains }: Props) {
           className={`group inline-flex items-center gap-3 px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ease-fluid active:scale-[0.97] ${
             selectedCount === 3 && !isPending
               ? "bg-white text-gray-950 hover:bg-gray-200 cursor-pointer shadow-[0_12px_40px_rgba(255,255,255,0.15)]"
-              : "bg-white/[0.06] text-gray-500 border border-white/10 cursor-not-allowed"
+              : "bg-black/5 dark:bg-white/[0.06] text-stone-950 dark:text-gray-500 border border-black/10 dark:border-white/10 cursor-not-allowed"
           }`}
         >
           {isPending ? "Submitting…" : "Submit Preferences"}
@@ -266,7 +306,7 @@ export function PreferencePicker({ domains }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="text-sm text-gray-400"
+              className="text-sm text-stone-950 dark:text-gray-400"
             >
               {3 - selectedCount} more selection{3 - selectedCount !== 1 ? "s" : ""} needed
             </motion.span>
@@ -293,21 +333,21 @@ export function PreferencePicker({ domains }: Props) {
               aria-labelledby="confirm-title"
               initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
+              exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.15, ease: "easeOut" } }}
               transition={{ duration: 0.25, ease: EASE_OUT }}
               onClick={(e) => e.stopPropagation()}
-              className="hard-shell w-full max-w-md bg-gradient-to-b from-white/10 to-white/[0.03] shadow-[0_32px_100px_rgba(0,0,0,0.7)]"
+              className="hard-shell w-full max-w-md bg-gradient-to-b from-black/10 to-black/[0.03] dark:from-white/10 dark:to-white/[0.03] shadow-[0_32px_100px_rgba(0,0,0,0.7)]"
             >
-              <div className="hard-core bg-[#0B0B0C] p-6 md:p-8">
-                <h3 id="confirm-title" className="font-heading text-xl font-bold text-white mb-2">Confirm your choices?</h3>
-                <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+              <div className="hard-core bg-white dark:bg-[#0B0B0C] p-6 md:p-8">
+                <h3 id="confirm-title" className="font-heading text-xl font-bold text-stone-950 dark:text-white mb-2">Confirm your choices?</h3>
+                <p className="text-sm text-stone-950 dark:text-gray-400 mb-6 leading-relaxed">
                   You are about to submit your society&apos;s domain preferences. This action cannot be undone and will lock your choices. Are you sure you want to proceed?
                 </p>
                 <div className="flex items-center justify-end gap-3">
                   <button
                     onClick={() => setShowConfirm(false)}
                     disabled={isPending}
-                    className="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 border border-white/10 transition-colors duration-200"
+                    className="px-4 py-2 rounded-full text-sm font-medium text-stone-950 dark:text-gray-400 hover:text-sdg6 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-black/10 dark:border-white/10 transition-colors duration-200"
                   >
                     Cancel
                   </button>

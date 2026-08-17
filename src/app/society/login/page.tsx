@@ -30,6 +30,10 @@ async function login(formData: FormData) {
     redirect("/society/login?error=invalid");
   }
 
+  if (society.kind !== "GROUP") {
+    redirect("/society/login?error=group-only");
+  }
+
   // Set session cookie
   const cookieStore = await cookies();
   const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
@@ -63,29 +67,31 @@ export default async function LoginPage({ searchParams }: Props) {
       ? "Please enter your Society ID and password."
       : error === "invalid"
       ? "Invalid Society ID or password. Please try again."
-      : null;
+      : error === "group-only"
+        ? "Member societies don't participate directly — log in with your collaboration group's ID & password."
+        : null;
 
   return (
-    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-black">
+    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-[#EAF4F7] dark:bg-black">
       {/* Dynamic Tilted Society Names Background Graphic */}
       <SocietyBackgroundGraphic />
 
       <div className="relative z-10 w-full max-w-5xl grid lg:grid-cols-2 gap-10 items-center">
         {/* ── Left: brand flow panel ── */}
-        <div className="hidden lg:flex flex-col gap-10 pr-6">
+        <div className="hidden lg:flex flex-col gap-10 pr-6 animate-rise-in">
           <div className="flex flex-col gap-6">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-300 island-glass w-fit">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.25em] text-stone-900 dark:text-gray-300 island-glass w-fit">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Society Portal
             </span>
             <BvestLogo size={120} />
-            <p className="text-2xl font-heading font-semibold text-white leading-snug max-w-md">
+            <p className="text-2xl font-heading font-semibold text-stone-950 dark:text-white leading-snug max-w-md">
               Your society&apos;s voice in{" "}
               <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
                 BVEST 2026
               </span>
             </p>
-            <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+            <p className="text-sm text-stone-950 dark:text-gray-400 leading-relaxed max-w-sm">
               Sign in with your society credentials to lock in your official UN SDG domain preferences.
             </p>
           </div>
@@ -95,41 +101,41 @@ export default async function LoginPage({ searchParams }: Props) {
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
-                className="group flex items-center gap-4 transition-transform duration-300 ease-fluid hover:translate-x-1.5 motion-reduce:hover:translate-x-0"
+                className="group animate-rise-in flex items-center gap-4 transition-transform duration-300 ease-fluid hover:translate-x-1.5 motion-reduce:hover:translate-x-0"
                 style={{ animationDelay: `${i * 90}ms` }}
               >
-                <span className="outline-text font-heading text-3xl font-black tabular-nums w-12 shrink-0 transition-colors duration-300 ease-fluid group-hover:[-webkit-text-stroke:1px_rgba(255,255,255,0.35)]">
+                <span className="outline-text font-heading text-3xl font-black tabular-nums w-12 shrink-0 transition-all duration-300 ease-fluid group-hover:[-webkit-text-stroke:1px_rgba(23,21,15,0.35)] dark:group-hover:[-webkit-text-stroke:1px_rgba(255,255,255,0.35)]">
                   {step.n}
                 </span>
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-sm font-semibold text-white">{step.title}</span>
-                  <span className="text-xs text-gray-500">{step.desc}</span>
+                  <span className="text-sm font-semibold text-stone-950 dark:text-white">{step.title}</span>
+                  <span className="text-xs text-stone-950 dark:text-gray-500">{step.desc}</span>
                 </div>
-                <span className="ml-auto h-px w-10 bg-gradient-to-r from-white/25 to-transparent transition-all duration-300 ease-fluid group-hover:w-16 group-hover:from-sdg6/80" />
+                <span className="ml-auto h-px w-10 bg-gradient-to-r from-black/25 dark:from-white/25 to-transparent transition-all duration-300 ease-fluid group-hover:w-16 group-hover:from-sdg6/80 dark:group-hover:from-sdg6/80" />
               </div>
             ))}
           </div>
 
-          <p className="text-[11px] text-gray-600">
+          <p className="text-[11px] text-stone-950 dark:text-gray-600 animate-rise-in" style={{ animationDelay: "270ms" }}>
             Credentials are issued by the BVEST organizing committee.
           </p>
         </div>
 
         {/* ── Right: glass login card ── */}
         <div className="w-full max-w-md lg:justify-self-center">
-          <div className="animate-card-in hard-shell !rounded-[2rem] bg-gradient-to-b from-white/10 to-white/[0.02] shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
-            <div className={`hard-core !rounded-[calc(2rem-1.5px)] bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
+          <div className="animate-card-in hard-shell !rounded-[2rem] bg-gradient-to-b from-black/10 to-black/[0.02] dark:from-white/10 dark:to-white/[0.02] shadow-[0_24px_80px_rgba(23,21,15,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+            <div className={`hard-core !rounded-[calc(2rem-1.5px)] bg-white/85 dark:bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
               {/* Subtle top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sdg6/60 dark:via-blue-400/50 to-transparent" />
 
               <div className="mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-300 text-[11px] font-bold uppercase tracking-widest mb-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-600 dark:text-blue-300 text-[11px] font-bold uppercase tracking-widest mb-3">
                   <span>BVCOE Societies</span>
                 </div>
-                <h1 className="font-heading text-3xl font-bold text-white mb-2">
+                <h1 className="font-heading text-3xl font-bold text-stone-950 dark:text-white mb-2">
                   Society Portal Login
                 </h1>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <p className="text-sm text-stone-950 dark:text-gray-400 leading-relaxed">
                   Sign in to continue to the domain preference flow.
                 </p>
               </div>
@@ -139,7 +145,7 @@ export default async function LoginPage({ searchParams }: Props) {
                 <div>
                   <label
                     htmlFor="societyId"
-                    className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                    className="block text-xs font-semibold text-stone-900 dark:text-gray-300 uppercase tracking-wider mb-2"
                   >
                     Society ID
                   </label>
@@ -150,7 +156,7 @@ export default async function LoginPage({ searchParams }: Props) {
                     autoComplete="username"
                     required
                     placeholder="e.g. corebvest, ieee, etc."
-                    className="w-full px-4 py-3.5 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-gray-500 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400/40 transition-all duration-200 ease-fluid"
+                    className="w-full px-4 py-3.5 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 text-stone-950 dark:text-white placeholder:text-stone-700 dark:placeholder:text-gray-500 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400/40 transition-all duration-200 ease-fluid"
                   />
                 </div>
 
@@ -161,10 +167,10 @@ export default async function LoginPage({ searchParams }: Props) {
                 {errorMessage && (
                   <div
                     role="alert"
-                    className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-950/50 border border-red-800/60 text-red-300 text-sm"
+                    className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 text-sm"
                   >
                     <svg
-                      className="w-4 h-4 mt-0.5 shrink-0 text-red-400"
+                      className="w-4 h-4 mt-0.5 shrink-0 text-red-500 dark:text-red-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -185,7 +191,7 @@ export default async function LoginPage({ searchParams }: Props) {
           </div>
 
           {/* Mobile fallback hint */}
-          <p className="lg:hidden text-center text-xs text-gray-600 mt-6">
+          <p className="lg:hidden text-center text-xs text-stone-950 dark:text-gray-600 mt-6">
             Credentials are issued by the BVEST organizing committee.
           </p>
         </div>

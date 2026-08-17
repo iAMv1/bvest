@@ -26,7 +26,7 @@ const colorClasses: Record<number, string> = {
 };
 
 export const SDGBadge: React.FC<SDGBadgeProps> = ({ sdg }) => {
-  const badgeClasses = colorClasses[sdg.number] || "text-gray-500 border-gray-500 bg-gray-500/10";
+  const badgeClasses = colorClasses[sdg.number] || "text-stone-950 border-stone-900 bg-stone-900/10";
 
   return (
     <span

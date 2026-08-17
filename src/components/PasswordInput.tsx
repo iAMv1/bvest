@@ -25,7 +25,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
     <div>
       <label
         htmlFor={id}
-        className={`block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 ${mono ? "font-mono tracking-widest" : ""}`}
+        className={`block text-xs font-semibold text-stone-900 dark:text-gray-300 uppercase tracking-wider mb-2 ${mono ? "font-mono tracking-widest" : ""}`}
       >
         {label}
       </label>
@@ -37,13 +37,13 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           autoComplete="current-password"
           required
           placeholder={placeholder}
-          className={`w-full px-4 py-3.5 pr-12 rounded-2xl border border-white/10 bg-white/5 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 transition-all duration-200 ease-fluid ${ACCENT} ${mono ? "font-mono" : ""}`}
+          className={`w-full px-4 py-3.5 pr-12 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 text-stone-950 dark:text-white placeholder:text-stone-700 dark:placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 transition-all duration-200 ease-fluid ${ACCENT} ${mono ? "font-mono" : ""}`}
         />
         <button
           type="button"
           onClick={() => setShow((v) => !v)}
           aria-label={show ? "Hide password" : "Show password"}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-fluid active:scale-90"
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-stone-950 dark:text-gray-400 hover:text-sdg6 dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 ease-fluid active:scale-90"
         >
           {show ? (
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">

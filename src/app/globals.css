@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Theme toggle drives `.dark` on <html> — wire Tailwind's `dark:` variant to the class.
+   Without this, `dark:` follows prefers-color-scheme (OS), so stored theme ≠ rendered theme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 emits gradient position as `to right in oklab` — older browsers
+   (Chrome/Edge <111, Firefox <113, Safari <16.4) reject the whole declaration,
+   which blanks every bg-clip-text text-transparent headline. Re-emit classic
+   2-stop gradients: universally supported, visually identical without via- stops. */
+@layer utilities {
+  .bg-gradient-to-r {
+    --tw-gradient-position: to right;
+  }
+  .bg-gradient-to-b {
+    --tw-gradient-position: to bottom;
+  }
+  .bg-gradient-to-t {
+    --tw-gradient-position: to top;
+  }
+}
+
 @theme inline {
   --color-sdg1: #E5243B;
   --color-sdg2: #DDA63A;
@@ -28,13 +48,54 @@
 }
 
 :root {
-  --background: #FAFAF8;
-  --foreground: #1A1A1A;
+  --background: #F5F6F8;
+  --foreground: #17150F;
+  /* SDG-inspired light design system */
+  --accent: #26BDE2;          /* sdg6 primary accent */
+  --accent-warm: #FCC30B;     /* sdg7 warm highlight */
+  --accent-rose: #DD1367;     /* sdg10 alert */
+  --surface: #FFFFFF;
+  --surface-subtle: #EDEFF2;
+  --screen: #F5F6F8;
+  --ink: #17150F;
+  --ink-soft: #57534E;
+  --stroke: rgba(23, 21, 15, 0.1);
+  --stroke-strong: rgba(23, 21, 15, 0.18);
+  --glass: rgba(255, 255, 255, 0.85);
+  --glass-stroke: rgba(23, 21, 15, 0.18);
+  /* Dot grid + ghost text ink */
+  --dots: rgba(23, 21, 15, 0.1);
+  --ghost-stroke: rgba(23, 21, 15, 0.28);
+  --ghost-faint-stroke: rgba(23, 21, 15, 0.08);
+  /* Hairline double-bezel (light = ink tint) */
+  --bezel: linear-gradient(180deg, rgba(23, 21, 15, 0.14), rgba(23, 21, 15, 0.05));
+  --island-shadow: 0 8px 32px rgba(23, 21, 15, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --ring-track: rgba(23, 21, 15, 0.08);
+  --grid-line: rgba(23, 21, 15, 0.05);
 }
 
 .dark {
   --background: #050505;
   --foreground: #F3F4F6;
+  --accent: #26BDE2;
+  --accent-warm: #FCC30B;
+  --accent-rose: #DD1367;
+  --surface: #0B0B0C;
+  --surface-subtle: #101012;
+  --screen: #050505;
+  --ink: #F3F4F6;
+  --ink-soft: #9CA3AF;
+  --stroke: rgba(255, 255, 255, 0.1);
+  --stroke-strong: rgba(255, 255, 255, 0.18);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-stroke: rgba(255, 255, 255, 0.1);
+  --dots: rgba(243, 244, 246, 0.07);
+  --ghost-stroke: rgba(255, 255, 255, 0.22);
+  --ghost-faint-stroke: rgba(255, 255, 255, 0.08);
+  --bezel: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  --island-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --ring-track: rgba(255, 255, 255, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.06);
 }
 
 body {
@@ -114,34 +175,70 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--stroke-strong);
   border-radius: 999px;
-  border: 2px solid #050505;
+  border: 2px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--ink-soft);
 }
 
 ::selection {
-  background: rgba(38, 189, 226, 0.4);
-  color: #fff;
+  background: rgba(38, 189, 226, 0.3);
+  color: var(--ink);
 }
 
 /* Ghost outline display text (editorial splash behind headings) */
 .outline-text {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1px var(--ghost-stroke);
+  color: transparent;
+}
+
+/* Faint watermark variant — giant background wordmarks stay subtle */
+.ghost-faint {
+  -webkit-text-stroke: 1px var(--ghost-faint-stroke);
   color: transparent;
 }
 
 /* Fine dot grid backdrop — decorative section atmosphere */
 .bg-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 28px 28px;
+}
+
+/* Fine engineering grid — technical-trade backdrop for data sections */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Concentric signal rings — radar/ripple motif, pure radial gradients */
+.bg-rings {
+  background-image:
+    radial-gradient(circle, transparent 54%, var(--dots) 55%, transparent 56%),
+    radial-gradient(circle, transparent 68%, var(--dots) 69%, transparent 70%);
+  background-size: 720px 720px;
+  background-position: 60% 40%;
+}
+
+/* Gentle idle float for SDG collage tiles (wrapper-level, so framer-motion's
+   entrance/hover transforms on the inner element never conflict) */
+@keyframes sdg-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.sdg-bob {
+  animation: sdg-bob 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sdg-bob { animation: none; }
 }
 
 /* Button shine sweep — primary islands */
@@ -213,11 +310,11 @@ body {
 .hard-shell {
   border-radius: 1.75rem;
   padding: 1.5px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  background: var(--bezel);
 }
 
-.dark .hard-shell {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+.hard-core {
+  background: var(--surface);
 }
 
 .hard-shell > .hard-core {
@@ -226,9 +323,9 @@ body {
 
 /* Floating island glass pill (nav, CTAs) */
 .island-glass {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: var(--glass);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: var(--island-shadow);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }

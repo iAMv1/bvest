@@ -32,10 +32,10 @@ export const StatCounter: React.FC<StatCounterProps> = ({ value, label, classNam
 
   return (
     <div ref={ref} className={`flex flex-col items-center gap-1 ${className}`}>
-      <span className={`font-heading text-4xl md:text-5xl font-bold text-white tabular-nums ${mono ? "font-mono" : ""}`}>
+      <span className={`font-heading text-4xl md:text-5xl font-bold text-stone-950 dark:text-white tabular-nums ${mono ? "font-mono" : ""}`}>
         {display}
       </span>
-      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-500">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500">
         {label}
       </span>
     </div>

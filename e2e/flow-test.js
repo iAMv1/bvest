@@ -13,10 +13,10 @@ async function main() {
   });
 
   // ── Pre-warm routes (first Turbopack compile is slow) ─────────────────
-  for (const p of ["/society/login", "/society/preferences", "/admin/login", "/admin/allocations"]) {
-    await page.goto(BASE + p, { waitUntil: "domcontentloaded" }).catch(() => {});
-    await page.waitForTimeout(800);
+  for (const p of ["/", "/society/login", "/society/preferences", "/admin/login", "/admin/allocations"]) {
+    await fetch(BASE + p, { redirect: "manual" }).catch(() => {});
   }
+  await page.waitForTimeout(600);
 
   const ok = (s) => console.log("PASS:", s);
   const fail = (s) => console.log("FAIL:", s);

@@ -1,6 +1,6 @@
 # BVEST — Admin & Future Capabilities Roadmap
 
-Status: **NOT IMPLEMENTED — future reference only.**
+Status: **PARTIALLY IMPLEMENTED (2026-08-17)** — landing auto-update, results, leaderboard, CSV import still open. Implemented below: society registry (admin-created credentials + collab groups), Event model + admin program manager, admin sub-nav.
 
 Covers: dynamic admin navigation, event management + result rollout, student-facing leaderboard (side quest), and platform-collaboration registration (Devfolio / GfG).
 
@@ -163,6 +163,15 @@ Or reuse `EventRegistration` + `EventResult.points` when registrations flow in. 
 
 ## 5. Recommended Build Order
 
+Status 2026-08-17:
+- 1. ~~Society registry~~ **DONE (simplified)**: admin creates societies/groups (`/admin/societies`, bcrypt, reset password). Dynamic Page-model nav NOT built (build order adapted to client need).
+- 2. **PARTIAL**: `Event` model + `/admin/events` CRUD DONE. Landing auto-update (goals grid + featured cards from DB) OPEN.
+- 3. `/events/{n}` dynamic page (needed by #2; replaces the 404 links point at today)
+- 4. `EventResult` + publish flow + Results badges/pages
+- 5. Registration URLs on events (zero-build win) → CSV import
+- 6. `ScoreEntry` + admin score push + `/leaderboard` with motion spec above
+
+Original order:
 1. `Page` model + dynamic nav + admin Pages manager (unblocks everything else)
 2. `Event` model + admin CRUD + landing auto-update (client-requested results flow)
 3. `/events/{n}` dynamic page (needed by #2; replaces the 404 links point at today)

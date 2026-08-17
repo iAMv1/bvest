@@ -55,36 +55,43 @@ export const SDGBoxCollage: React.FC = () => {
       {BOXES.map((box, i) => {
         const sdg = sdgData[box.sdgIndex];
         return (
-          <motion.div
+          <div
             key={sdg.number}
-            initial={{ opacity: 0, scale: 0.75, rotate: box.rotate }}
-            animate={introDone ? { opacity: box.opacity, scale: 1, rotate: box.rotate } : { opacity: 0, scale: 0.75, rotate: box.rotate }}
-            whileHover={{
-              scale: 1.1,
-              rotate: 0,
-              zIndex: 30,
-              boxShadow: `0 16px 48px ${sdg.hex}55`,
-              transition: { duration: 0.25, ease: "easeOut" }
-            }}
-            whileTap={{ scale: 0.96 }}
-            transition={{
-              delay: i * 0.025,          // tight 25 ms stagger across all 17
-              duration: 0.45,
-              ease: [0.22, 1, 0.36, 1],  // custom ease-out-expo
-            }}
+            className="sdg-bob hidden lg:block"
             style={{
               position: "absolute",
               right: box.right,
               bottom: box.bottom,
               width: box.w,
               height: box.h,
-              backgroundColor: sdg.hex,  // color fallback while image loads
-              borderRadius: 8,
-              boxShadow: "0 6px 24px rgba(0,0,0,0.14)",
-              overflow: "hidden",
+              animationDuration: `${5.5 + (i % 4)}s`,
+              animationDelay: `${(i % 9) * 0.4}s`,
             }}
-            className="group hidden lg:block"
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.75, rotate: box.rotate }}
+              animate={introDone ? { opacity: box.opacity, scale: 1, rotate: box.rotate } : { opacity: 0, scale: 0.75, rotate: box.rotate }}
+              whileHover={{
+                scale: 1.1,
+                rotate: 0,
+                zIndex: 30,
+                boxShadow: `0 16px 48px ${sdg.hex}55`,
+                transition: { duration: 0.25, ease: "easeOut" }
+              }}
+              whileTap={{ scale: 0.96 }}
+              transition={{
+                delay: i * 0.025,          // tight 25 ms stagger across all 17
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],  // custom ease-out-expo
+              }}
+              className="group relative h-full w-full"
+              style={{
+                backgroundColor: sdg.hex,  // color fallback while image loads
+                borderRadius: 8,
+                boxShadow: "0 6px 24px rgba(0,0,0,0.14)",
+                overflow: "hidden",
+              }}
+            >
             <Link
               href={`/events/${sdg.number}`}
               aria-label={`SDG ${sdg.number}: ${sdg.name}`}
@@ -106,6 +113,7 @@ export const SDGBoxCollage: React.FC = () => {
               </span>
             </Link>
           </motion.div>
+          </div>
         );
       })}
 
