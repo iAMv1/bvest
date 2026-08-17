@@ -1,0 +1,50 @@
+// PRODUCTION SCHEMA (Neon Postgres) — kept in sync with schema.prisma (SQLite, local dev/e2e).
+// Vercel build swaps this file over schema.prisma (see package.json "vercel-build").
+// Diff rule: every model/field change in schema.prisma MUST be mirrored here.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Society {
+  id          String       @id
+  name        String
+  password    String
+  locked      Boolean      @default(false)
+  submittedAt DateTime?
+  kind        String       @default("SOCIETY") // SOCIETY | GROUP (combined collab group for an event)
+  memberIds   String?      // JSON array of member society ids when kind = GROUP
+  preferences Preference[]
+  events      Event[]      @relation("EventHost")
+}
+
+model Preference {
+  id        Int     @id @default(autoincrement())
+  societyId String
+  society   Society @relation(fields: [societyId], references: [id])
+  domainId  String
+  rank      Int
+
+  @@unique([societyId, rank])
+  @@unique([societyId, domainId])
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  hostSocietyId   String?
+  hostSociety     Society? @relation("EventHost", fields: [hostSocietyId], references: [id])
+  sdgDomainId     String
+  description     String
+  venue           String?
+  startDate       DateTime?
+  endDate         DateTime?
+  registrationUrl String?
+  status          String   @default("DRAFT") // DRAFT | PENDING | CONFIRMED | LIVE | COMPLETED
+  createdAt       DateTime @default(now())
+}

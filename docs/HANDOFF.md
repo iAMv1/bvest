@@ -160,6 +160,19 @@ e2e/                   Playwright harness (clone-original, kept):
 - Contrast complaints resolved via: near-black ink text, token strokes 0.1+, glass 0.85 white, oklab-free gradients. Do not soften.
 - $150k-agency-tier target: no template look, everything behavior-gated, both themes verified per component.
 
+## 12. Deployment — Vercel (live since 2026-08-17)
+
+- **URL**: https://bvest-demo.vercel.app · project `mereproject/bvest-demo` (scope itzpratham) · linked via `.vercel/` (run `npx vercel link --yes --project bvest-demo` to re-link).
+- **Database**: Neon Postgres (pooled URL in Vercel env `DATABASE_URL` for production + preview). Local dev/e2e unchanged — SQLite `prisma/dev.db`.
+- **Dual-schema mechanism**: `package.json` `vercel-build` = `cp prisma/schema.pg.prisma prisma/schema.prisma && npm run build` → Vercel compiles with the Postgres twin schema (`provider = "postgresql"`), local keeps SQLite schema. **DRIFT RULE: every schema.prisma model change MUST be mirrored in schema.pg.prisma** (schema diff rule noted at top of file).
+- **Adapter branch**: `src/lib/db.ts` + `prisma/seed.ts` — `DATABASE_URL` starting `postgres` → `PrismaNeon({ connectionString })` (`@prisma/adapter-neon`, clone-shipped), else `PrismaBetterSqlite3`. Do not remove the sqlite branch (local dev + e2e depend on it).
+- **Vercel envs**: `DATABASE_URL` (Neon), `ADMIN_PASSWORD` (demo: `admin12345`), `SESSION_SECRET` (fresh hex, generated at env setup).
+- **Seed remote Neon**: swap schema → `prisma generate` → `DATABASE_URL=<neon> npm run prisma:seed` → restore sqlite schema + `prisma generate`. (Neon serverless driver direct SQL for ad-hoc: `e2e/db-neon-*.js` pattern, tagged-template `sql\`...\`` — plain `sql("...")` throws.)
+- **Live verify (2026-08-17)**: browser probe 7/7 — home 200; admin login → allocations reads Neon; society login → 12 cards; submit → "Preferences Submitted"; admin shows Locked chip; Neon state post-write `locked=true, submittedAt ts, 3 Preference rows`. Write-through CONFIRMED. Screenshots vision-checked: no error/blank/overlap.
+- **Demo reset**: `UPDATE "Society" SET locked=false, "submittedAt"=NULL; DELETE FROM "Preference";`
+- **Demo creds**: admin `admin12345` · society `corebvest` / `Bvest2026!`.
+- Note: Neon cold start makes first request slow (~seconds); SQLite writes do NOT work on Vercel (read-only FS) — never point the Vercel env at a local file path.
+
 ## 11. Verification Checklist (before declaring done)
 
 1. `npm run lint` 0 errors · `npx tsc --noEmit` clean · `npm run build` succeeds
