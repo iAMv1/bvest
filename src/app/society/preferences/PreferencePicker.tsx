@@ -211,7 +211,7 @@ export function PreferencePicker({ domains }: Props) {
                   />
 
                   {/* Console domain id tag */}
-                  <span className="absolute right-4 top-4 font-mono text-[9px] uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 opacity-50">
+                  <span className={`absolute right-4 top-4 font-mono text-[9px] uppercase tracking-[0.2em] opacity-50 ${isSelected ? "text-white/60" : "text-stone-950 dark:text-gray-500"}`}>
                     {domain.id}
                   </span>
 
@@ -238,10 +238,10 @@ export function PreferencePicker({ domains }: Props) {
                       )}
                     </AnimatePresence>
 
-                    <span className="block font-heading font-semibold text-sm text-stone-950 dark:text-white leading-snug mb-1.5">
+                    <span className={`block font-heading font-semibold text-sm leading-snug mb-1.5 ${isSelected ? "text-white" : "text-stone-950 dark:text-white"}`}>
                       {domain.name}
                     </span>
-                    <span className="block text-xs text-stone-950 dark:text-gray-400 leading-relaxed">
+                    <span className={`block text-xs leading-relaxed ${isSelected ? "text-gray-300 dark:text-gray-400" : "text-stone-950 dark:text-gray-400"}`}>
                       {domain.description}
                     </span>
                   </span>
