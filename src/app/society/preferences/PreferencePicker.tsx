@@ -198,11 +198,12 @@ export function PreferencePicker({ domains }: Props) {
                 <span
                   className={`relative block rounded-[calc(1.75rem-0.375rem)] border p-5 overflow-hidden transition-all duration-200 ease-fluid ${
                     isSelected
-                      ? "bg-stone-950 dark:bg-[#101012] border-stone-950/25 dark:border-white/25"
+                      ? "bg-white dark:bg-[#101012] border-2"
                       : isDisabled
                         ? "bg-white dark:bg-[#0B0B0C] border-black/5 dark:border-white/5"
                         : "bg-white dark:bg-[#0B0B0C] border-black/10 dark:border-white/10 group-hover:border-black/20 dark:group-hover:border-white/20"
                   }`}
+                  style={isSelected ? { borderColor: domain.colorToken } : undefined}
                 >
                   {/* Color stripe on the left */}
                   <span
@@ -211,7 +212,7 @@ export function PreferencePicker({ domains }: Props) {
                   />
 
                   {/* Console domain id tag */}
-                  <span className={`absolute right-4 top-4 font-mono text-[9px] uppercase tracking-[0.2em] opacity-50 ${isSelected ? "text-white/60" : "text-stone-950 dark:text-gray-500"}`}>
+                  <span className={`absolute right-4 top-4 font-mono text-[9px] uppercase tracking-[0.2em] opacity-50 text-stone-950 dark:text-gray-500`}>
                     {domain.id}
                   </span>
 
@@ -238,10 +239,10 @@ export function PreferencePicker({ domains }: Props) {
                       )}
                     </AnimatePresence>
 
-                    <span className={`block font-heading font-semibold text-sm leading-snug mb-1.5 ${isSelected ? "text-white" : "text-stone-950 dark:text-white"}`}>
+                    <span className="block font-heading font-semibold text-sm text-stone-950 dark:text-white leading-snug mb-1.5">
                       {domain.name}
                     </span>
-                    <span className={`block text-xs leading-relaxed ${isSelected ? "text-gray-300 dark:text-gray-400" : "text-stone-950 dark:text-gray-400"}`}>
+                    <span className="block text-xs text-stone-950 dark:text-gray-400 leading-relaxed">
                       {domain.description}
                     </span>
                   </span>
