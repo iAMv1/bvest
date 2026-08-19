@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Theme toggle drives `.dark` on <html> — wire Tailwind's `dark:` variant to the class.
    Without this, `dark:` follows prefers-color-scheme (OS), so stored theme ≠ rendered theme. */
 @custom-variant dark (&:where(.dark, .dark *));

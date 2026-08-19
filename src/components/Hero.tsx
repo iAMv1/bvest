@@ -2,10 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { BvestLogo } from "@/components/BvestLogo";
 import { Magnetic } from "@/components/Magnetic";
 import { useIntro } from "@/components/IntroContext";
+import { sdgData } from "@/lib/sdg-data";
+
 
 const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as const;
 
@@ -17,11 +20,6 @@ export const Hero: React.FC = () => {
   if (shouldReduceMotion) {
     return (
       <div className="max-w-xl pb-24 md:pb-40 pointer-events-auto">
-        <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-300 island-glass mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          BVCOE · Annual Technical Fest
-        </span>
-
         <div className="mb-8 text-gray-900 dark:text-white">
           <BvestLogo size={200} showSubtitle={true} />
         </div>
@@ -30,13 +28,13 @@ export const Hero: React.FC = () => {
           The Annual Technical Fest themed around the UN Sustainable Development Goals.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-start gap-4 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
-          <div className="flex items-center gap-2.5">
-            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Date</span>
+        <div className="flex flex-col sm:flex-row items-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
             <span>October 24 &ndash; 26, 2026</span>
           </div>
-          <div className="flex items-center gap-2.5">
-            <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Venue</span>
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Venue:</span>
             <span>BVCOE Campus</span>
           </div>
         </div>
@@ -79,21 +77,6 @@ export const Hero: React.FC = () => {
         show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
       }}
     >
-      <motion.span
-        variants={{
-          hidden: { opacity: 0, y: 16 },
-          show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
-        }}
-        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-300 island-glass mb-8"
-      >
-        <motion.span
-          className="w-1.5 h-1.5 rounded-full bg-emerald-400"
-          animate={{ opacity: [1, 0.35, 1] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        />
-        BVCOE · Annual Technical Fest
-      </motion.span>
-
       <motion.div
         variants={{
           hidden: { opacity: 0, y: 24 },
@@ -119,14 +102,14 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 18 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
         }}
-        className="flex flex-col sm:flex-row items-start gap-4 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium"
+        className="flex flex-col sm:flex-row items-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium"
       >
-        <div className="flex items-center gap-2.5">
-          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Date</span>
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
           <span>October 24 &ndash; 26, 2026</span>
         </div>
-        <div className="flex items-center gap-2.5">
-          <span className="text-[10px] uppercase tracking-widest px-2.5 py-1.5 rounded-full island-glass text-stone-950 dark:text-gray-300">Venue</span>
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Venue:</span>
           <span>BVCOE Campus</span>
         </div>
       </motion.div>

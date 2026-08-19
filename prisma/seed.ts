@@ -8,12 +8,26 @@ import * as path from "path";
 // ── Add more societies here — id must be unique ──────────────────────────────
 const SOCIETIES: { id: string; name: string; password: string; kind?: string }[] = [
   {
-    id: "corebvest",
-    name: "Core BVEST",
-    password: "Bvest2026!",  // plaintext — will be hashed before storing
-    kind: "GROUP",           // participating units are groups only
+    id: "core-tech",
+    name: "Core Tech Team",
+    password: "TechCore2026!",
+    kind: "GROUP",
+  },
+  {
+    id: "core-events",
+    name: "Core Events Team",
+    password: "EventsCore2026!",
+    kind: "GROUP",
+  },
+  {
+    id: "core-media",
+    name: "Core Media Team",
+    password: "MediaCore2026!",
+    kind: "GROUP",
   },
 ];
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 async function main() {

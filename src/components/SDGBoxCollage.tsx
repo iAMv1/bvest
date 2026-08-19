@@ -117,46 +117,7 @@ export const SDGBoxCollage: React.FC = () => {
         );
       })}
 
-      {/* ── Mobile: simplified 5-box fan with images ── */}
-      {BOXES.slice(0, 5).map((box, i) => {
-        const sdg = sdgData[box.sdgIndex];
-        const mobileSize = Math.round((52 + i * 6) * 1.4); // 72.8 → 106.4 px (40% increase)
-        return (
-          <motion.div
-            key={`mobile-${sdg.number}`}
-            initial={{ opacity: 0, scale: 0.75, rotate: box.rotate }}
-            animate={introDone ? { opacity: box.opacity * 0.85, scale: 1, rotate: box.rotate } : { opacity: 0, scale: 0.75, rotate: box.rotate }}
-            whileTap={{ scale: 0.93, zIndex: 10 }}
-            transition={{ delay: i * 0.05, duration: 0.4, ease: "easeOut" }}
-            style={{
-              position: "absolute",
-              right: `${3 + i * 15}%`,
-              bottom: `${2 + i * 5}%`,
-              width: mobileSize,
-              height: mobileSize,
-              backgroundColor: sdg.hex,
-              borderRadius: 8,
-              boxShadow: "0 4px 14px rgba(0,0,0,0.12)",
-              overflow: "hidden",
-            }}
-            className="group block lg:hidden"
-          >
-            <Link
-              href={`/events/${sdg.number}`}
-              aria-label={`SDG ${sdg.number}: ${sdg.name}`}
-              className="absolute inset-0 block pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-            >
-              <Image
-                src={sdg.imageUrl}
-                alt=""
-                fill
-                sizes={`${mobileSize}px`}
-                className="object-cover"
-              />
-            </Link>
-          </motion.div>
-        );
-      })}
     </div>
   );
 };
+

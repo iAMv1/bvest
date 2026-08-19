@@ -10,6 +10,7 @@ import { useTheme } from "@/components/ThemeProvider";
 const NAV_LINKS = [
   { href: "/#goals", label: "Goals" },
   { href: "/#featured-events", label: "Events" },
+  { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
   { href: "/admin/login", label: "Admin" },
   { href: "/#contact", label: "Contact" },
@@ -26,6 +27,22 @@ export const SiteNav: React.FC = () => {
   const { scrollYProgress } = useScroll();
 
   const toggleTheme = () => setPreference(theme === "dark" ? "light" : "dark");
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setOpen(false);
+    if (href.startsWith("/#")) {
+      const targetId = href.replace("/#", "");
+      if (pathname === "/") {
+        e.preventDefault();
+        const elem = document.getElementById(targetId);
+        if (elem) {
+          elem.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", `#${targetId}`);
+        }
+      }
+    }
+  };
+
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -67,9 +84,9 @@ export const SiteNav: React.FC = () => {
 
       <div className="fixed inset-x-0 top-4 z-40 flex justify-center px-4 pointer-events-none">
         <motion.div
-          animate={{ y: hidden || open ? -120 : 0 }}
+          animate={{ y: hidden && !open ? -120 : 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className={`island-glass rounded-full pl-4 pr-4 py-2 flex items-center gap-5 pointer-events-auto w-full max-w-5xl md:w-auto transition-shadow duration-300 ease-fluid ${
+          className={`island-glass rounded-full pl-4 pr-4 py-2 flex items-center justify-between md:justify-start gap-5 pointer-events-auto w-full max-w-5xl md:w-auto transition-shadow duration-300 ease-fluid ${
             scrolled
               ? "shadow-[0_12px_44px_rgba(23,21,15,0.14),inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[0_12px_44px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]"
               : ""
@@ -84,7 +101,7 @@ export const SiteNav: React.FC = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="relative transition-colors duration-200 ease-fluid hover:text-sdg6 dark:hover:text-white after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-stone-900/60 dark:after:bg-white/60 after:transition-transform after:duration-300 after:ease-fluid hover:after:scale-x-100"
               >
                 {link.label}
@@ -96,6 +113,7 @@ export const SiteNav: React.FC = () => {
             {!onPortal && (
               <Link
                 href="/#featured-events"
+                onClick={(e) => handleNavClick(e, "/#featured-events")}
                 className={`btn-shine hidden lg:inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white text-gray-950 dark:text-gray-950 rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-gray-200 dark:hover:bg-gray-200 active:scale-[0.96] group`}
               >
               Explore Events
@@ -107,11 +125,11 @@ export const SiteNav: React.FC = () => {
             </Link>
             )}
 
-            {/* Theme toggle — sits at the outer edge, after the CTA */}
+            {/* Theme toggle — desktop */}
             <button
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="relative shrink-0 w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-colors duration-200 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 active:scale-90"
+              className="hidden md:flex relative shrink-0 w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 items-center justify-center transition-colors duration-200 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 active:scale-90"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -136,6 +154,7 @@ export const SiteNav: React.FC = () => {
               </AnimatePresence>
             </button>
 
+            {/* Hamburger button — mobile */}
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -158,56 +177,91 @@ export const SiteNav: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile full-screen menu drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
             key="site-nav-overlay"
-            className="fixed inset-0 z-50 md:hidden"
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 md:hidden flex flex-col bg-[#F4F1F8]/95 dark:bg-black/95 backdrop-blur-3xl"
+            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            <div
-              className="absolute inset-0 bg-white/90 backdrop-blur-3xl dark:bg-black/85"
-              onClick={() => setOpen(false)}
-            />
-            <div className="relative h-full flex flex-col items-center justify-center gap-2 px-8">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full max-w-sm"
+            {/* Drawer top header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-black/10 dark:border-white/10">
+              <Link href="/" onClick={() => setOpen(false)} aria-label="BVEST home">
+                <BvestLogo size={36} />
+              </Link>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={toggleTheme}
+                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                  className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center justify-center text-stone-950 dark:text-white"
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between px-6 py-4 rounded-2xl text-2xl font-heading font-semibold text-stone-950 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/5 hover:text-stone-900 dark:hover:text-white transition-colors duration-200 ease-fluid active:scale-[0.98]"
+                  {theme === "dark" ? (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                  )}
+                </button>
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                  className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center justify-center text-stone-950 dark:text-white"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Menu Items */}
+            <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col justify-between gap-6">
+              <div className="flex flex-col gap-2">
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-stone-500 dark:text-gray-400 px-3 mb-2 font-mono">
+                  Navigation
+                </p>
+                {NAV_LINKS.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={shouldReduceMotion ? false : { opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    {link.label}
-                    <span className="text-stone-500 dark:text-white/30 text-lg">&rarr;</span>
-                  </Link>
-                </motion.div>
-              ))}
-              {!onPortal && (
-                <motion.div
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + NAV_LINKS.length * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full max-w-sm mt-4"
-                >
+                    <Link
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="flex items-center justify-between px-5 py-4 rounded-2xl text-xl font-heading font-semibold text-stone-950 dark:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 active:scale-[0.98] transition-all"
+                    >
+                      <span>{link.label}</span>
+                      <span className="text-stone-400 dark:text-white/30 text-base">&rarr;</span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Bottom CTA block */}
+              <div className="flex flex-col gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                {!onPortal && (
                   <Link
                     href="/#featured-events"
-                    className="flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-white text-gray-950 font-semibold transition-all duration-200 ease-fluid active:scale-[0.98]"
+                    onClick={(e) => handleNavClick(e, "/#featured-events")}
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-sdg6 to-sdg3 text-white font-semibold text-base shadow-lg active:scale-[0.98]"
                   >
-                    Explore Events
-                    <span aria-hidden="true">&rarr;</span>
+                    Explore Events &rarr;
                   </Link>
-                </motion.div>
-              )}
+                )}
+                <p className="text-center text-xs text-stone-500 dark:text-gray-500 font-mono tracking-widest uppercase">
+                  BVCOE Delhi &middot; BVEST 2026
+                </p>
+              </div>
             </div>
           </motion.div>
         )}

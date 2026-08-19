@@ -9,6 +9,7 @@ import { Hero } from '@/components/Hero';
 import { BackdropAurora } from '@/components/BackdropAurora';
 import { FestTicker } from '@/components/FestTicker';
 import { StatCounter } from '@/components/StatCounter';
+import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { sdgData } from '@/lib/sdg-data';
 
 export default function Home() {
@@ -56,10 +57,6 @@ export default function Home() {
 
         <div className="relative max-w-4xl mx-auto px-6 text-center">
         <Reveal className="relative">
-          <span className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-400 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-8">
-            <span className="w-1 h-1 rounded-full bg-sdg6" />
-            01 · About BVEST
-          </span>
           <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white tracking-tight">
             Innovating for a{" "}
             <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
@@ -101,10 +98,6 @@ export default function Home() {
             {/* Ghost display splash */}
             <span className="outline-text pointer-events-none select-none absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 font-heading text-[6rem] md:text-[11rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
               17 Goals
-            </span>
-            <span className="relative inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-400 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-6">
-              <span className="w-1 h-1 rounded-full bg-sdg9" />
-              02 · 17 Domains
             </span>
             <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">
               The{" "}
@@ -195,10 +188,6 @@ export default function Home() {
             <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
               Events
             </span>
-            <span className="relative inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-400 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-6">
-              <span className="w-1 h-1 rounded-full bg-sdg10" />
-              03 · Sneak Peek
-            </span>
             <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">Featured{" "}
               <span className="bg-gradient-to-r from-sdg10 to-sdg6 bg-clip-text text-transparent">
                 Events
@@ -259,7 +248,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Sponsors/Partners Strip */}
+      {/* 5. Core Team Section */}
+      <CoreTeamSection />
+
+      {/* 6. Sponsors/Partners Strip */}
       <section className="relative py-16 md:py-20 px-6 bg-sdg11/[0.09] dark:bg-white/[0.02] border-y border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden">
         {/* Backdrop: low center glow */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -269,9 +261,8 @@ export default function Home() {
 
         <div className="relative max-w-6xl mx-auto text-center">
           <Reveal>
-            <h2 className="inline-flex items-center gap-2.5 text-sm font-bold tracking-widest uppercase text-stone-950 dark:text-gray-400 mb-12">
-              <span className="w-1 h-1 rounded-full bg-sdg11" />
-              04 · Supported by our amazing partners
+            <h2 className="text-sm font-bold tracking-widest uppercase text-stone-950 dark:text-gray-400 mb-12">
+              Supported by our amazing partners
             </h2>
             <div className="flex flex-wrap justify-center items-center gap-16 md:gap-24 opacity-40 grayscale">
               <div className="text-2xl font-heading font-bold text-stone-950 dark:text-gray-400">[Sponsor Logo 1]</div>

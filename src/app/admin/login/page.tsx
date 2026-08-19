@@ -64,10 +64,6 @@ export default async function AdminLoginPage({ searchParams }: Props) {
         {/* ── Left: console panel ── */}
         <div className="hidden lg:flex flex-col gap-10 pr-6 animate-rise-in">
           <div className="flex flex-col gap-6">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-700 dark:text-violet-300 island-glass w-fit font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400 animate-pulse" />
-              system // access
-            </span>
             <h1 className="font-heading text-4xl font-bold text-stone-950 dark:text-white leading-tight">
               Allocation
               <br />
@@ -110,14 +106,6 @@ export default async function AdminLoginPage({ searchParams }: Props) {
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 dark:via-violet-400/50 to-transparent" />
 
               <div className="mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 text-violet-600 dark:text-violet-300 text-[11px] font-bold uppercase tracking-widest mb-3">
-                  {/* Lock icon */}
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                    <path d="M7 11V7a5 5 0 0110 0v4" />
-                  </svg>
-                  <span>Admin Access</span>
-                </div>
                 <h1 className="font-heading text-3xl font-bold text-stone-950 dark:text-white mb-2">
                   Admin Portal
                 </h1>

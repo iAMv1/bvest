@@ -80,10 +80,6 @@ export default async function LoginPage({ searchParams }: Props) {
         {/* ── Left: brand flow panel ── */}
         <div className="hidden lg:flex flex-col gap-10 pr-6 animate-rise-in">
           <div className="flex flex-col gap-6">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.25em] text-stone-900 dark:text-gray-300 island-glass w-fit">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Society Portal
-            </span>
             <BvestLogo size={120} />
             <p className="text-2xl font-heading font-semibold text-stone-950 dark:text-white leading-snug max-w-md">
               Your society&apos;s voice in{" "}
@@ -129,9 +125,6 @@ export default async function LoginPage({ searchParams }: Props) {
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sdg6/60 dark:via-blue-400/50 to-transparent" />
 
               <div className="mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-600 dark:text-blue-300 text-[11px] font-bold uppercase tracking-widest mb-3">
-                  <span>BVCOE Societies</span>
-                </div>
                 <h1 className="font-heading text-3xl font-bold text-stone-950 dark:text-white mb-2">
                   Society Portal Login
                 </h1>

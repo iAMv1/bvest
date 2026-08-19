@@ -53,10 +53,7 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
       </span>
 
       <div className="relative text-center max-w-xl mx-auto animate-rise-in">
-        <span className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-400 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-8">
-          <span className={`w-1 h-1 rounded-full ${accentDot}`} />
-          {eyebrow}
-        </span>
+
 
         <h1 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">
           {title}{" "}
