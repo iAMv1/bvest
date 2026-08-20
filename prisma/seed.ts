@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 import bcrypt from "bcryptjs";
 import * as fs from "fs";
 import * as path from "path";
+
+neonConfig.webSocketConstructor = ws;
 
 // ── Add more societies here — id must be unique ──────────────────────────────
 const SOCIETIES: { id: string; name: string; password: string; kind?: string }[] = [
