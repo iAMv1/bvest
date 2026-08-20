@@ -12,9 +12,9 @@ const NAV_LINKS = [
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
-  { href: "/admin/login", label: "Admin" },
   { href: "/#contact", label: "Contact" },
 ];
+// Admin is hidden from public nav by design — access only via direct /admin/login (share privately)
 
 export const SiteNav: React.FC = () => {
   const [open, setOpen] = useState(false);
