@@ -22,3 +22,9 @@ export async function getSession(): Promise<IronSession<SessionData>> {
   const cookieStore = await cookies();
   return getIronSession<SessionData>(cookieStore, sessionOptions);
 }
+
+export async function destroySession(): Promise<void> {
+  const cookieStore = await cookies();
+  const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
+  await session.destroy();
+}

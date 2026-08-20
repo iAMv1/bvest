@@ -1,14 +1,21 @@
 export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getIronSession } from "iron-session";
 import type { SessionData } from "@/lib/session";
 import { sessionOptions } from "@/lib/session";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // ── Server Action ─────────────────────────────────────────────────────────────
 async function login(formData: FormData) {
   "use server";
+
+  // Rate limit: 5 attempts / 15 min per IP
+  const h = await headers();
+  const ip = (h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown").slice(0, 64);
+  const rl = checkRateLimit(`admin-login:${ip}`, 5, 15 * 60 * 1000);
+  if (!rl.allowed) redirect("/admin/login?error=rate_limited");
 
   const password = (formData.get("password") as string | null) ?? "";
   const correctPassword = process.env.ADMIN_PASSWORD;
@@ -21,11 +28,14 @@ async function login(formData: FormData) {
     redirect("/admin/login?error=invalid");
   }
 
-  // Set session cookie
+  // Regenerate session to prevent fixation
   const cookieStore = await cookies();
   const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-  session.isAdmin = true;
-  await session.save();
+  // iron-session: destroy clears old cookie
+  await session.destroy();
+  const fresh = await getIronSession<SessionData>(cookieStore, sessionOptions);
+  fresh.isAdmin = true;
+  await fresh.save();
 
   redirect("/admin/allocations");
 }
@@ -53,6 +63,10 @@ export default async function AdminLoginPage({ searchParams }: Props) {
       ? "Please enter the admin password."
       : error === "invalid"
       ? "Access denied — invalid master password."
+      : error === "unauthorized"
+      ? "Unauthorized — please sign in as admin."
+      : error === "rate_limited"
+      ? "Too many attempts — try again in a few minutes."
       : null;
 
   return (

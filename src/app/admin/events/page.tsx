@@ -5,6 +5,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
 import { AdminNav } from "../AdminNav";
+import { LogoutButton } from "@/components/LogoutButton";
 import { createEvent } from "./actions";
 
 interface Props {
@@ -47,7 +48,10 @@ export default async function AdminEventsPage({ searchParams }: Props) {
       </div>
 
       <div className="relative max-w-6xl mx-auto">
-        <AdminNav active="events" />
+        <div className="flex justify-between items-start gap-4">
+          <AdminNav active="events" />
+          <LogoutButton label="Admin log out" />
+        </div>
 
         <div className="animate-rise-in mb-8">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-700 dark:text-violet-300 font-mono bg-violet-500/10 border border-violet-500/25 mb-4">
@@ -58,7 +62,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
             Event <span className="bg-gradient-to-r from-sdg7 to-sdg9 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent">Program</span>
           </h1>
           <p className="text-stone-950 dark:text-gray-400 text-sm max-w-2xl font-mono">
-            EVENTS &middot; HOSTED BY COLLABORATION GROUPS ONLY &middot; {events.length} ON FILE
+            EVENTS &middot; HOSTED BY ORGANISATIONS &middot; {events.length} ON FILE
           </p>
         </div>
 
@@ -78,7 +82,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
           <div className="hard-core bg-white/70 dark:bg-[#0B0B0C]/80 backdrop-blur-sm p-6 md:p-8">
             <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-1">Register an event</h2>
             <p className="text-xs text-stone-950 dark:text-gray-400 mb-6 font-mono">
-              Host = the collaboration group (participating registry account) running it.
+              Host = the organisation (participating group registry account) running it.
             </p>
             <form action={createEvent} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -107,7 +111,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
               </label>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <label className="block">
-                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Host group (participating)</span>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Host organisation (participating)</span>
                   <select name="hostSocietyId" className="w-full rounded-xl px-4 py-2.5 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60">
                     <option value="">— unassigned —</option>
                     {societies.filter((s) => s.kind === "GROUP").map((s) => (

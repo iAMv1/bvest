@@ -5,6 +5,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { domains } from "@/lib/domains";
 import { PreferencePicker } from "./PreferencePicker";
+import { LogoutButton } from "@/components/LogoutButton";
 
 export default async function PreferencesPage() {
   const session = await getSession();
@@ -156,6 +157,7 @@ export default async function PreferencesPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-sdg6 animate-pulse" />
               Portal // {society.id.toUpperCase()}
             </span>
+            <LogoutButton label="Log out" />
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-stone-950 dark:text-gray-400 font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
               session // active
             </span>

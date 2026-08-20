@@ -25,11 +25,13 @@ export const SiteNav: React.FC = () => {
   const onPortal = pathname.startsWith("/society") || pathname.startsWith("/admin");
   const { theme, setPreference } = useTheme();
   const { scrollYProgress } = useScroll();
+  const [bottomActive, setBottomActive] = useState<string>(NAV_LINKS[0].href);
 
   const toggleTheme = () => setPreference(theme === "dark" ? "light" : "dark");
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setOpen(false);
+    setBottomActive(href);
     if (href.startsWith("/#")) {
       const targetId = href.replace("/#", "");
       if (pathname === "/") {
@@ -42,6 +44,9 @@ export const SiteNav: React.FC = () => {
       }
     }
   };
+
+  // Bottom capsule: curated 5, fits pill (Contact lives in footer)
+  const BOTTOM_LINKS = NAV_LINKS.filter((l) => l.href !== "/#contact");
 
 
   useEffect(() => {
@@ -125,11 +130,11 @@ export const SiteNav: React.FC = () => {
             </Link>
             )}
 
-            {/* Theme toggle — desktop */}
+            {/* Theme toggle — visible on all sizes */}
             <button
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="hidden md:flex relative shrink-0 w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 items-center justify-center transition-colors duration-200 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 active:scale-90"
+              className="relative shrink-0 w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-colors duration-200 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 active:scale-90"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -154,7 +159,7 @@ export const SiteNav: React.FC = () => {
               </AnimatePresence>
             </button>
 
-            {/* Hamburger button — mobile */}
+            {/* Hamburger — mobile (kept for test compat + overflow menu alongside bottom capsule) */}
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -162,22 +167,52 @@ export const SiteNav: React.FC = () => {
               className="md:hidden relative shrink-0 w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-colors duration-200 hover:bg-black/10 dark:hover:bg-white/10"
             >
               <span className="relative block w-4 h-3">
-                <span
-                  className={`absolute left-0 top-0 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-300 ease-fluid ${open ? "top-1/2 -translate-y-1/2 rotate-45" : ""}`}
-                />
-                <span
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-200 ease-fluid ${open ? "opacity-0" : "opacity-100"}`}
-                />
-                <span
-                  className={`absolute left-0 bottom-0 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-300 ease-fluid ${open ? "bottom-1/2 translate-y-1/2 -rotate-45" : ""}`}
-                />
+                <span className={`absolute left-0 top-0 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-300 ease-fluid ${open ? "top-1/2 -translate-y-1/2 rotate-45" : ""}`} />
+                <span className={`absolute left-0 top-1/2 -translate-y-1/2 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-200 ease-fluid ${open ? "opacity-0" : "opacity-100"}`} />
+                <span className={`absolute left-0 bottom-0 h-[1.5px] w-full bg-stone-950 dark:bg-white rounded-full transition-all duration-300 ease-fluid ${open ? "bottom-1/2 translate-y-1/2 -rotate-45" : ""}`} />
               </span>
             </button>
           </div>
         </motion.div>
       </div>
 
-      {/* Mobile full-screen menu drawer */}
+      {/* Bottom capsule nav — mobile only (Apple / WhatsApp capsule) */}
+      <div className="md:hidden fixed inset-x-3 bottom-3 z-40 flex justify-center pointer-events-none" style={{ paddingBottom: "max(0px, env(safe-area-inset-bottom))" }}>
+        <nav
+          aria-label="Mobile navigation"
+          className="island-glass rounded-full p-1.5 flex items-center gap-1 pointer-events-auto w-full max-w-[360px] shadow-[0_12px_44px_rgba(23,21,15,0.14),inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[0_12px_44px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]"
+        >
+          {BOTTOM_LINKS.map((link) => {
+            const isActive = bottomActive === link.href;
+            const isPortal = link.href.startsWith("/society") || link.href.startsWith("/admin");
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                aria-current={isActive ? "page" : undefined}
+                className={`flex-1 flex items-center justify-center px-2 py-2.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.97] ${
+                  isActive
+                    ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900 shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
+                    : isPortal
+                    ? "text-stone-950 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5"
+                    : "text-stone-600 dark:text-white/60 hover:text-stone-900 dark:hover:text-white"
+                }`}
+              >
+                {link.label === "Goals" && (
+                  <svg className="w-3.5 h-3.5 mr-1 hidden sm:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+                )}
+                {link.label === "Events" && (
+                  <svg className="w-3.5 h-3.5 mr-1 hidden sm:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                )}
+                <span className="truncate">{link.label.replace(" Portal", "")}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+
+      {/* Mobile full-screen drawer — kept for edge case (deep links), now unreachable via UI but still accessible if open state forced externally */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -188,41 +223,20 @@ export const SiteNav: React.FC = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            {/* Drawer top header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-black/10 dark:border-white/10">
               <Link href="/" onClick={() => setOpen(false)} aria-label="BVEST home">
                 <BvestLogo size={36} />
               </Link>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={toggleTheme}
-                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                  className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center justify-center text-stone-950 dark:text-white"
-                >
-                  {theme === "dark" ? (
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="4" />
-                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-                    </svg>
-                  ) : (
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                    </svg>
-                  )}
-                </button>
-                <button
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                  className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center justify-center text-stone-950 dark:text-white"
-                >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+                className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center justify-center text-stone-950 dark:text-white"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-
-            {/* Menu Items */}
             <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-2">
                 <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-stone-500 dark:text-gray-400 px-3 mb-2 font-mono">
@@ -246,8 +260,6 @@ export const SiteNav: React.FC = () => {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Bottom CTA block */}
               <div className="flex flex-col gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                 {!onPortal && (
                   <Link

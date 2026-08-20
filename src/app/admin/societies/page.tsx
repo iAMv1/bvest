@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { AdminNav } from "../AdminNav";
+import { LogoutButton } from "@/components/LogoutButton";
 import { createSociety, resetPassword } from "./actions";
 
 interface Props {
@@ -14,7 +15,7 @@ const ERRORS: Record<string, string> = {
   id: "Society ID must be 2–40 chars, lowercase letters / numbers / dashes.",
   name: "Name must be at least 2 characters.",
   password: "Password must be at least 6 characters.",
-  members: "A collaboration group needs at least one member society.",
+  members: "An organisation needs at least one member society.",
   duplicate: "That society ID already exists.",
 };
 
@@ -37,7 +38,10 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
       </div>
 
       <div className="relative max-w-6xl mx-auto">
-        <AdminNav active="societies" />
+        <div className="flex justify-between items-start gap-4">
+          <AdminNav active="societies" />
+          <LogoutButton label="Admin log out" />
+        </div>
 
         <div className="animate-rise-in mb-8">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-700 dark:text-violet-300 font-mono bg-violet-500/10 border border-violet-500/25 mb-4">
@@ -66,9 +70,9 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
         {/* Create form */}
         <div className="animate-rise-in hard-shell mb-8">
           <div className="hard-core bg-white/70 dark:bg-[#0B0B0C]/80 backdrop-blur-sm p-6 md:p-8">
-            <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-1">Register a society or group</h2>
+            <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-1">Register an organisation or member society</h2>
             <p className="text-xs text-stone-950 dark:text-gray-400 mb-6 font-mono">
-              Participating units are <strong>groups</strong> — one ID + password shared by the member societies of an event. Member societies are recorded for the pool only and don&apos;t participate directly.
+              Organisations are the participating units — one ID + password shared by the member societies running an event together. Member societies are the pool; they don&apos;t log in.
             </p>
             <form action={createSociety} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -107,12 +111,12 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
                 <label className="block">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Type</span>
                   <select name="kind" className="w-full rounded-xl px-4 py-2.5 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60">
-                    <option value="GROUP">Collaboration group — participates</option>
-                    <option value="SOCIETY">Member society — pool only, no login</option>
+                    <option value="GROUP">Organisation — participates &amp; runs events</option>
+                    <option value="SOCIETY">Member society — belongs to an organisation, no login</option>
                   </select>
                 </label>
                 <label className="block">
-                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Member societies (groups only)</span>
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Member societies (organisations only — pick any number)</span>
                   <select name="memberIds" multiple size={4} className="w-full rounded-xl px-4 py-2 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 font-mono">
                     {societies.filter((s) => s.kind !== "GROUP").map((s) => (
                       <option key={s.id} value={s.id}>
@@ -120,6 +124,11 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
                       </option>
                     ))}
                   </select>
+                  {societies.filter((s) => s.kind !== "GROUP").length === 0 && (
+                    <span className="block mt-1.5 text-[11px] text-amber-700 dark:text-amber-400 font-mono">
+                      No member societies on file yet — create them first, then build the organisation from them.
+                    </span>
+                  )}
                 </label>
               </div>
               <button type="submit" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-stone-950 text-white dark:bg-white dark:text-stone-950 hover:opacity-90 transition-all duration-200 ease-fluid active:scale-[0.97] motion-reduce:active:scale-100">
@@ -157,7 +166,7 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
                           {society.kind === "GROUP" ? (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold font-mono uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-400 bg-fuchsia-500/10 border border-fuchsia-500/20">
                               <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse" />
-                              Group
+                              Organisation
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold font-mono uppercase tracking-wider text-violet-700 dark:text-violet-300 bg-violet-500/10 border border-violet-500/20">

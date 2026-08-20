@@ -1,18 +1,24 @@
 export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getIronSession } from "iron-session";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import type { SessionData } from "@/lib/session";
 import { sessionOptions } from "@/lib/session";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 // ── Server Action ─────────────────────────────────────────────────────────────
 async function login(formData: FormData) {
   "use server";
 
-  const societyId = (formData.get("societyId") as string | null)?.trim() ?? "";
+  const h = await headers();
+  const ip = (h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown").slice(0, 64);
+  const rl = checkRateLimit(`society-login:${ip}`, 8, 15 * 60 * 1000);
+  if (!rl.allowed) redirect("/society/login?error=rate_limited");
+
+  const societyId = ((formData.get("societyId") as string | null)?.trim() ?? "").toLowerCase();
   const password = (formData.get("password") as string | null) ?? "";
 
   if (!societyId || !password) {
@@ -22,6 +28,8 @@ async function login(formData: FormData) {
   const society = await prisma.society.findUnique({ where: { id: societyId } });
 
   if (!society) {
+    // still burn bcrypt to keep timing uniform (≈ 12 rounds)
+    await bcrypt.compare(password, "$2a$12$aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     redirect("/society/login?error=invalid");
   }
 
@@ -34,11 +42,13 @@ async function login(formData: FormData) {
     redirect("/society/login?error=group-only");
   }
 
-  // Set session cookie
+  // Regenerate session to prevent fixation
   const cookieStore = await cookies();
   const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-  session.societyId = society.id;
-  await session.save();
+  await session.destroy();
+  const fresh = await getIronSession<SessionData>(cookieStore, sessionOptions);
+  fresh.societyId = society.id;
+  await fresh.save();
 
   redirect("/society/preferences");
 }
@@ -69,7 +79,9 @@ export default async function LoginPage({ searchParams }: Props) {
       ? "Invalid Society ID or password. Please try again."
       : error === "group-only"
         ? "Member societies don't participate directly — log in with your collaboration group's ID & password."
-        : null;
+        : error === "rate_limited"
+          ? "Too many attempts — try again in a few minutes."
+          : null;
 
   return (
     <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-[#EAF4F7] dark:bg-black">

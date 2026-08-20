@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
+import { domains } from "@/lib/domains";
 
 interface Selection {
   domainId: string;
@@ -25,6 +26,11 @@ export async function submitPreferences(
   const ranks = selections.map((s) => s.rank).sort();
   if (JSON.stringify(ranks) !== JSON.stringify([1, 2, 3])) {
     return { ok: false, error: "Ranks must be 1, 2, and 3." };
+  }
+
+  const allowed = new Set(domains.map((d) => d.id));
+  for (const s of selections) {
+    if (!allowed.has(s.domainId)) return { ok: false, error: "Invalid domain selected." };
   }
 
   const society = await prisma.society.findUnique({

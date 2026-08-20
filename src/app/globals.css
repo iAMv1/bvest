@@ -109,6 +109,13 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Bottom capsule nav: reserve space on mobile so footer/content not hidden */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 88px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
