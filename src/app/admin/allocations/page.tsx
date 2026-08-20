@@ -5,8 +5,6 @@ import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { domains } from "@/lib/domains";
-import { AdminNav } from "../AdminNav";
-import { LogoutButton } from "@/components/LogoutButton";
 import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 
 interface Props {
@@ -71,11 +69,6 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
       </div>
 
       <div className="relative max-w-6xl mx-auto">
-        <div className="flex justify-between items-start gap-4">
-          <AdminNav active="console" />
-          <LogoutButton label="Admin log out" />
-        </div>
-
         {/* Page header */}
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">

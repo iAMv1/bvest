@@ -3,8 +3,6 @@ export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
-import { AdminNav } from "../AdminNav";
-import { LogoutButton } from "@/components/LogoutButton";
 import { AdminSocietyForm } from "@/components/AdminSocietyForm";
 import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 import { createSociety, resetPassword } from "./actions";
@@ -41,10 +39,6 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
       </div>
 
       <div className="relative max-w-6xl mx-auto">
-        <div className="flex justify-between items-start gap-4">
-          <AdminNav active="societies" />
-          <LogoutButton label="Admin log out" />
-        </div>
 
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">

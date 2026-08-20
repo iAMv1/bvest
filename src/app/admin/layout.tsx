@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { AdminNavbar } from "@/components/AdminNavbar";
 
 export const metadata: Metadata = {
   title: "Admin Portal | BVEST",
-  description: "Admin portal for BVEST.",
+  description: "Admin portal for BVEST — societies, events, allocations.",
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="absolute bottom-1/3 -left-32 w-[26rem] h-[26rem] bg-sdg9/10 rounded-full blur-[160px]" />
       </div>
 
+      <div className="relative z-10">
+        <AdminNavbar />
+      </div>
       <main className="flex-1 flex flex-col relative z-10">{children}</main>
     </div>
   );

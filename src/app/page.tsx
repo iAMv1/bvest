@@ -12,8 +12,17 @@ import { StatCounter } from '@/components/StatCounter';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { Footer } from '@/components/Footer';
 import { sdgData } from '@/lib/sdg-data';
+import { getLandingEvents, eventForSdg, featuredEvents } from '@/lib/events';
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  let landingEvents: Awaited<ReturnType<typeof getLandingEvents>> = [];
+  try {
+    landingEvents = await getLandingEvents();
+  } catch {
+    landingEvents = [];
+  }
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
@@ -161,10 +170,15 @@ export default function Home() {
                       {sdg.name}
                     </h3>
 
-                    <div className="mt-auto pt-5 w-full border-t border-black/10 dark:border-white/10">
-                      <p className="text-xs text-stone-950 dark:text-gray-400 mb-2"><span className="font-semibold text-stone-800 dark:text-gray-300">Hosted by:</span> BVCOE Student Societies</p>
-                      <p className="text-xs text-stone-950 dark:text-gray-400"><span className="font-semibold text-stone-800 dark:text-gray-300">Event:</span> Confirmed &mdash; reveal soon</p>
-                    </div>
+                    {(() => {
+                      const ev = eventForSdg(landingEvents, sdg.number);
+                      return (
+                        <div className="mt-auto pt-5 w-full border-t border-black/10 dark:border-white/10">
+                          <p className="text-xs text-stone-950 dark:text-gray-400 mb-2"><span className="font-semibold text-stone-800 dark:text-gray-300">Hosted by:</span> {ev?.hostSociety?.name ?? "BVCOE Student Societies"}</p>
+                          <p className="text-xs text-stone-950 dark:text-gray-400"><span className="font-semibold text-stone-800 dark:text-gray-300">Event:</span> {ev ? ev.title : "Confirmed — reveal soon"}</p>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </Link>
               </Reveal>
@@ -203,11 +217,17 @@ export default function Home() {
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-          {[
-            { sdg: sdgData[3], title: "Code4Ed Hackathon", host: "Tech Society", desc: "Build innovative ed-tech solutions to make quality education accessible to everyone in remote areas." },
-            { sdg: sdgData[6], title: "Renewable Robotics", host: "Robotics Club", desc: "Design and race autonomous robots powered entirely by alternative energy sources." },
-            { sdg: sdgData[12], title: "Climate Data Challenge", host: "Data Science Group", desc: "Analyze massive environmental datasets to predict and visualize local climate impact over the next decade." },
-          ].map((event, i) => (
+          {(featuredEvents(landingEvents).length
+            ? featuredEvents(landingEvents).map((ev) => {
+                const sdg = sdgData.find((s) => String(s.number) === ev.sdgDomainId) ?? sdgData[3];
+                return { sdg, title: ev.title, host: ev.hostSociety?.name ?? "BVCOE Student Societies", desc: ev.description, slug: ev.slug };
+              })
+            : ([
+                { sdg: sdgData[3], title: "Code4Ed Hackathon", host: "Tech Society", desc: "Build innovative ed-tech solutions to make quality education accessible to everyone in remote areas.", slug: null as string | null },
+                { sdg: sdgData[6], title: "Renewable Robotics", host: "Robotics Club", desc: "Design and race autonomous robots powered entirely by alternative energy sources.", slug: null as string | null },
+                { sdg: sdgData[12], title: "Climate Data Challenge", host: "Data Science Group", desc: "Analyze massive environmental datasets to predict and visualize local climate impact over the next decade.", slug: null as string | null },
+              ] as const)
+          ).map((event, i) => (
             <Reveal key={event.title} delay={i * 0.1}>
               <div className="hard-shell h-full transition-all duration-300 ease-fluid hover:-translate-y-1.5 hover:bg-white/20">
                 <div className="hard-core relative bg-white dark:bg-[#0B0B0C] p-8 h-full flex flex-col overflow-hidden">
@@ -237,10 +257,17 @@ export default function Home() {
                   <h3 className="font-heading text-2xl font-bold mb-3 text-gray-900 dark:text-white">{event.title}</h3>
                   <p className="text-sm font-medium text-stone-950 dark:text-gray-400 mb-6">{event.host}</p>
                   <p className="text-stone-950 dark:text-gray-400 text-base leading-relaxed mb-8">{event.desc}</p>
-                  <button className="group/btn mt-auto inline-flex items-center gap-2 text-sm font-semibold text-stone-950 dark:text-white hover:text-sdg6 dark:hover:text-gray-300 transition-all duration-200 ease-fluid active:scale-[0.97] motion-reduce:active:scale-100 w-fit">
-                    Learn more
-                    <span className="w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 ease-fluid group-hover/btn:translate-x-1 group-hover/btn:bg-black/10 dark:group-hover/btn:bg-white/10" aria-hidden="true">&rarr;</span>
-                  </button>
+                  {event.slug ? (
+                    <Link href={`/events/${event.slug}`} className="group/btn mt-auto inline-flex items-center gap-2 text-sm font-semibold text-stone-950 dark:text-white hover:text-sdg6 dark:hover:text-gray-300 transition-all duration-200 ease-fluid active:scale-[0.97] motion-reduce:active:scale-100 w-fit">
+                      Learn more
+                      <span className="w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 ease-fluid group-hover/btn:translate-x-1 group-hover/btn:bg-black/10 dark:group-hover/btn:bg-white/10" aria-hidden="true">&rarr;</span>
+                    </Link>
+                  ) : (
+                    <span className="group/btn mt-auto inline-flex items-center gap-2 text-sm font-semibold text-stone-500 dark:text-white/40 w-fit">
+                      Learn more
+                      <span className="w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center" aria-hidden="true">&rarr;</span>
+                    </span>
+                  )}
                 </div>
               </div>
             </Reveal>

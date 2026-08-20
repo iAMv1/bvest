@@ -45,7 +45,11 @@ export const SiteNav: React.FC = () => {
     }
   };
 
-  // Bottom capsule: curated 5, fits pill (Contact lives in footer)
+  // Public nav hidden on admin — admin has its own AdminNavbar (separate session, separate chrome)
+  const isAdminRoute = pathname.startsWith("/admin");
+  if (isAdminRoute) return null;
+
+  // Bottom capsule: curated, fits pill (Contact lives in footer, Admin hidden by design)
   const BOTTOM_LINKS = NAV_LINKS.filter((l) => l.href !== "/#contact");
 
 
