@@ -10,6 +10,7 @@ import { BackdropAurora } from '@/components/BackdropAurora';
 import { FestTicker } from '@/components/FestTicker';
 import { StatCounter } from '@/components/StatCounter';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
+import { Footer } from '@/components/Footer';
 import { sdgData } from '@/lib/sdg-data';
 
 export default function Home() {
@@ -274,37 +275,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Footer — follows the theme (warm canvas in light, black in dark) */}
-      <footer id="contact" className="relative bg-[#EBEEF2] dark:bg-black pt-24 md:pt-32 mt-auto border-t border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden scroll-mt-24">
-        {/* Backdrop: SDG-tinted radial + giant ghost wordmark (ink stroke in light, white in dark) */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[50rem] h-[24rem] bg-sdg6/10 dark:bg-white/4 rounded-full blur-[160px]" />
-          <span
-            className="ghost-faint select-none absolute -bottom-6 left-1/2 -translate-x-1/2 font-heading text-[7rem] md:text-[13rem] font-black uppercase tracking-tight whitespace-nowrap text-center leading-none [mask-image:radial-gradient(ellipse_62%_72%_at_50%_42%,transparent_0_30%,black_72%)]"
-          >
-            BVEST 2026
-          </span>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 mb-24 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-center md:text-left flex flex-col items-center md:items-start text-stone-950 dark:text-white">
-            <BvestLogo size={88} />
-            <p className="text-stone-950 dark:text-gray-400 text-sm mt-3">Innovating for a Sustainable Future.</p>
-          </div>
-          <div className="flex flex-wrap justify-center items-center gap-3 text-sm text-stone-950 dark:text-gray-400 font-medium">
-            {["[TODO: Twitter]", "[TODO: Instagram]", "[TODO: LinkedIn]", "[TODO: contact@bvest.edu]"].map((label, i) => (
-              <a
-                key={label}
-                href="#"
-                className={`px-4 py-2 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 transition-all duration-200 ease-fluid hover:bg-black/10 dark:hover:bg-white/10 hover:text-sdg6 dark:hover:text-white active:scale-[0.96] ${i === 0 ? "md:mr-4" : ""}`}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
-        <SDGColorStrip />
-      </footer>
+      {/* 6. Footer */}
+      <Footer />
     </div>
   );
 }

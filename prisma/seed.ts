@@ -39,30 +39,53 @@ async function main() {
 
   const plaintextLog: string[] = ["Society Credentials (KEEP PRIVATE)\n", "=".repeat(40)];
 
-  try {
-    for (const society of SOCIETIES) {
-      const hashed = await bcrypt.hash(society.password, 12);
+  // Load custom societies created via Admin panel
+  let customSocieties: { id: string; name: string; password?: string; hashedPassword?: string; kind?: string }[] = [];
+  const customPath = path.join(__dirname, "custom-societies.json");
+  if (fs.existsSync(customPath)) {
+    try {
+      customSocieties = JSON.parse(fs.readFileSync(customPath, "utf-8"));
+    } catch (e) {
+      console.error("Failed to parse custom-societies.json:", e);
+    }
+  }
 
-      // Clear any existing preferences to reset state
-      await prisma.preference.deleteMany({
-        where: { societyId: society.id },
-      });
+  const allToSeedMap = new Map<string, { id: string; name: string; password?: string; hashedPassword?: string; kind?: string }>();
+  for (const s of SOCIETIES) {
+    allToSeedMap.set(s.id, s);
+  }
+  for (const s of customSocieties) {
+    allToSeedMap.set(s.id, s);
+  }
+
+  try {
+    for (const society of allToSeedMap.values()) {
+      let hashed = society.hashedPassword;
+      if (!hashed && society.password) {
+        hashed = await bcrypt.hash(society.password, 12);
+      }
+      if (!hashed) {
+        hashed = await bcrypt.hash("BvestSociety2026!", 12);
+      }
 
       await prisma.society.upsert({
         where: { id: society.id },
-        update: { name: society.name, password: hashed, locked: false, submittedAt: null, kind: society.kind },
-        create: { id: society.id, name: society.name, password: hashed, locked: false, kind: society.kind },
+        update: { name: society.name, password: hashed, kind: society.kind ?? "GROUP" },
+        create: { id: society.id, name: society.name, password: hashed, locked: false, kind: society.kind ?? "GROUP" },
       });
 
-      const line = `id: ${society.id}  |  password: ${society.password}`;
+      const line = `id: ${society.id}  |  password: ${society.password ?? "(hashed/custom)"}`;
       console.log("✓ Seeded:", line);
       plaintextLog.push(line);
     }
 
-    // Write plaintext credentials to a gitignored file for safe offline reference
-    const outPath = path.join(__dirname, "..", "docs", "seeds-plaintext.txt");
+    const outDir = path.join(__dirname, "..", "docs");
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir, { recursive: true });
+    }
+    const outPath = path.join(outDir, "seeds-plaintext.txt");
     fs.writeFileSync(outPath, plaintextLog.join("\n") + "\n");
-    console.log("\nPlaintext credentials saved to:", outPath, "(gitignored — do not commit)");
+    console.log("\nPlaintext credentials saved to:", outPath);
   } finally {
     await prisma.$disconnect();
   }

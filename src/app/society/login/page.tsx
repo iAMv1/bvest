@@ -19,7 +19,7 @@ async function login(formData: FormData) {
   if (!rl.allowed) redirect("/society/login?error=rate_limited");
 
   const societyId = ((formData.get("societyId") as string | null)?.trim() ?? "").toLowerCase();
-  const password = (formData.get("password") as string | null) ?? "";
+  const password = ((formData.get("password") as string | null) ?? "").trim();
 
   if (!societyId || !password) {
     redirect("/society/login?error=missing");
@@ -36,10 +36,6 @@ async function login(formData: FormData) {
   const valid = await bcrypt.compare(password, society.password);
   if (!valid) {
     redirect("/society/login?error=invalid");
-  }
-
-  if (society.kind !== "GROUP") {
-    redirect("/society/login?error=group-only");
   }
 
   // Regenerate session to prevent fixation
@@ -84,7 +80,7 @@ export default async function LoginPage({ searchParams }: Props) {
           : null;
 
   return (
-    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 overflow-hidden bg-[#EAF4F7] dark:bg-black">
+    <div className="relative flex-1 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 pt-28 md:pt-36 pb-16 overflow-hidden bg-[#EAF4F7] dark:bg-black">
       {/* Dynamic Tilted Society Names Background Graphic */}
       <SocietyBackgroundGraphic />
 

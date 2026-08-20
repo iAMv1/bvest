@@ -3,6 +3,8 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
+import fs from "fs";
+import path from "path";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
@@ -13,12 +15,31 @@ async function requireAdmin() {
   if (!s.isAdmin) redirect("/admin/login?error=unauthorized");
 }
 
+function saveCustomSocietyRecord(record: { id: string; name: string; password?: string; hashedPassword?: string; kind?: string }) {
+  try {
+    const customPath = path.join(process.cwd(), "prisma", "custom-societies.json");
+    let list: any[] = [];
+    if (fs.existsSync(customPath)) {
+      list = JSON.parse(fs.readFileSync(customPath, "utf-8"));
+    }
+    const idx = list.findIndex((item: any) => item.id === record.id);
+    if (idx >= 0) {
+      list[idx] = { ...list[idx], ...record };
+    } else {
+      list.push(record);
+    }
+    fs.writeFileSync(customPath, JSON.stringify(list, null, 2) + "\n");
+  } catch (e) {
+    console.error("Failed to save custom society record:", e);
+  }
+}
+
 export async function createSociety(formData: FormData) {
   await requireAdmin();
   const rawId = ((formData.get("id") as string) ?? "").trim().toLowerCase();
   const name = ((formData.get("name") as string) ?? "").trim();
   const password = (formData.get("password") as string) ?? "";
-  const kind = ((formData.get("kind") as string) ?? "GROUP") === "GROUP" ? "GROUP" : "SOCIETY";
+  const kind = ((formData.get("kind") as string) ?? "GROUP") === "SOCIETY" ? "SOCIETY" : "GROUP";
   const memberIds = (formData.getAll("memberIds") as string[])
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean);
@@ -30,9 +51,7 @@ export async function createSociety(formData: FormData) {
         ? "name"
         : password.length < 6
           ? "password"
-          : kind === "GROUP" && memberIds.length === 0
-            ? "members"
-            : null;
+          : null;
 
   if (problem) redirect(`/admin/societies?error=${problem}`);
 
@@ -42,10 +61,9 @@ export async function createSociety(formData: FormData) {
   const hashed = await bcrypt.hash(password, 12);
 
   let storedMembers: string[] = [];
-  if (kind === "GROUP") {
-    const valid = await prisma.society.findMany({ where: { id: { in: memberIds }, kind: "SOCIETY" } });
+  if (memberIds.length > 0) {
+    const valid = await prisma.society.findMany({ where: { id: { in: memberIds } } });
     storedMembers = valid.map((s) => s.id);
-    if (storedMembers.length !== memberIds.length) redirect("/admin/societies?error=members");
   }
 
   await prisma.society.create({
@@ -54,8 +72,16 @@ export async function createSociety(formData: FormData) {
       name,
       password: hashed,
       kind,
-      memberIds: kind === "GROUP" ? JSON.stringify(storedMembers) : null,
+      memberIds: storedMembers.length > 0 ? JSON.stringify(storedMembers) : null,
     },
+  });
+
+  saveCustomSocietyRecord({
+    id: rawId,
+    name,
+    password,
+    hashedPassword: hashed,
+    kind,
   });
 
   revalidatePath("/admin/societies");
@@ -75,6 +101,14 @@ export async function resetPassword(formData: FormData) {
 
   const hashed = await bcrypt.hash(password, 12);
   await prisma.society.update({ where: { id }, data: { password: hashed } });
+
+  saveCustomSocietyRecord({
+    id: exists.id,
+    name: exists.name,
+    password,
+    hashedPassword: hashed,
+    kind: exists.kind,
+  });
 
   revalidatePath("/admin/societies");
   redirect("/admin/societies?updated=1");

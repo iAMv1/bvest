@@ -38,10 +38,10 @@ export default async function AdminEventsPage({ searchParams }: Props) {
   const societies = await prisma.society.findMany({ orderBy: { name: "asc" } });
 
   return (
-    <div className="relative flex-1 px-6 py-10 overflow-hidden">
+    <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -right-40 top-10 w-[28rem] h-[28rem] bg-sdg7/10 rounded-full blur-[160px] animate-drift" />
+        <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-sdg7/10 rounded-full blur-[160px] animate-drift" />
         <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
           Program
         </span>
@@ -54,10 +54,6 @@ export default async function AdminEventsPage({ searchParams }: Props) {
         </div>
 
         <div className="animate-rise-in mb-8">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-700 dark:text-violet-300 font-mono bg-violet-500/10 border border-violet-500/25 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-            system // program
-          </span>
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
             Event <span className="bg-gradient-to-r from-sdg7 to-sdg9 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent">Program</span>
           </h1>

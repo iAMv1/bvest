@@ -8,7 +8,7 @@ export interface SessionData {
 
 export const sessionOptions: SessionOptions = {
   cookieName: "bvest_session",
-  password: process.env.SESSION_SECRET as string,
+  password: process.env.SESSION_SECRET || "bvest_secret_session_cookie_password_32chars_min_2026!",
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

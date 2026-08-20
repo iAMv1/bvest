@@ -56,7 +56,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
   };
 
   return (
-    <div className="relative flex-1 px-6 py-10 overflow-hidden">
+    <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       {/* Backdrop */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
@@ -76,10 +76,6 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
 
         {/* Page header */}
         <div className="animate-rise-in mb-8">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-violet-700 dark:text-violet-300 font-mono bg-violet-500/10 border border-violet-500/25 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-            system // operations
-          </span>
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
             Allocation{" "}
             <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">

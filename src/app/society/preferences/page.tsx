@@ -33,7 +33,7 @@ export default async function PreferencesPage() {
     }));
 
     return (
-      <div className="relative flex-1 flex items-center justify-center px-4 py-16 overflow-hidden">
+      <div className="relative flex-1 flex items-center justify-center px-4 pt-28 md:pt-36 pb-16 overflow-hidden">
         {/* Backdrop */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-dots absolute inset-0 md:opacity-60" />
@@ -59,10 +59,6 @@ export default async function PreferencesPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span className="animate-rise-in inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 dark:border-emerald-400/20 font-mono mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-              status // final &mdash; locked
-            </span>
             <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
               Preferences Submitted
             </h1>
@@ -70,6 +66,9 @@ export default async function PreferencesPage() {
               Thank you, <strong className="text-stone-800 dark:text-gray-200">{society.name}</strong>.
               Your domain preferences have been recorded and locked.
             </p>
+            <div className="mt-4">
+              <LogoutButton label="Log out" />
+            </div>
             <p className="inline-flex items-center gap-2 text-[11px] text-stone-950 dark:text-gray-500 font-mono mt-4 px-3.5 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04]">
               <span className="text-sdg6">RECEIPT</span> &middot; {society.id.toUpperCase()} &middot;{" "}
               {society.submittedAt
@@ -137,7 +136,7 @@ export default async function PreferencesPage() {
 
   // ── Unlocked: interactive picker ───────────────────────────────────────────
   return (
-    <div className="relative flex-1 px-6 py-12 overflow-hidden">
+    <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       {/* Backdrop */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-50" />
@@ -151,28 +150,20 @@ export default async function PreferencesPage() {
 
       <div className="relative max-w-5xl mx-auto">
         {/* Page header */}
-        <div className="animate-rise-in mb-10">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-sdg6 dark:text-sdg6 font-mono bg-sdg6/10 dark:bg-sdg6/10 border border-sdg6/25 dark:border-sdg6/25">
-              <span className="w-1.5 h-1.5 rounded-full bg-sdg6 animate-pulse" />
-              Portal // {society.id.toUpperCase()}
-            </span>
-            <LogoutButton label="Log out" />
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-stone-950 dark:text-gray-400 font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
-              session // active
-            </span>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-stone-950 dark:text-gray-400 font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
-              lock // on submit
-            </span>
+        <div className="animate-rise-in mb-10 flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div>
+            <h1 className="font-heading text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
+              {society.name}
+            </h1>
+            <p className="text-stone-950 dark:text-gray-400 text-sm max-w-xl leading-relaxed">
+              Select your society&apos;s <strong className="text-stone-800 dark:text-gray-200">3 domain preferences</strong> in ranked order — click a
+              card to assign it as your next choice. Click a selected card to deselect it.
+              Once all 3 are chosen, click <strong className="text-stone-800 dark:text-gray-200">Submit Preferences</strong>. Submissions are final.
+            </p>
           </div>
-          <h1 className="font-heading text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
-            {society.name}
-          </h1>
-          <p className="text-stone-950 dark:text-gray-400 text-sm max-w-xl leading-relaxed">
-            Select your society&apos;s <strong className="text-stone-800 dark:text-gray-200">3 domain preferences</strong> in ranked order — click a
-            card to assign it as your next choice. Click a selected card to deselect it.
-            Once all 3 are chosen, click <strong className="text-stone-800 dark:text-gray-200">Submit Preferences</strong>. Submissions are final.
-          </p>
+          <div className="shrink-0 pt-1">
+            <LogoutButton label="Log out" />
+          </div>
         </div>
 
         <PreferencePicker domains={domains} />
