@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { AdminNav } from "../AdminNav";
 import { LogoutButton } from "@/components/LogoutButton";
 import { AdminSocietyForm } from "@/components/AdminSocietyForm";
+import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 import { createSociety, resetPassword } from "./actions";
 
 interface Props {
@@ -25,6 +26,7 @@ export default async function AdminSocietiesPage({ searchParams }: Props) {
   if (!session.isAdmin) redirect("/admin/login");
 
   const { error, created, updated } = await searchParams;
+  await ensureDefaultSocieties();
   const societies = await prisma.society.findMany({ orderBy: { name: "asc" } });
   const byId = new Map(societies.map((s) => [s.id, s]));
 

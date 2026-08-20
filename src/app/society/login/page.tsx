@@ -8,6 +8,7 @@ import { prisma } from "@/lib/db";
 import type { SessionData } from "@/lib/session";
 import { sessionOptions } from "@/lib/session";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 
 // ── Server Action ─────────────────────────────────────────────────────────────
 async function login(formData: FormData) {
@@ -25,6 +26,7 @@ async function login(formData: FormData) {
     redirect("/society/login?error=missing");
   }
 
+  await ensureDefaultSocieties();
   const society = await prisma.society.findUnique({ where: { id: societyId } });
 
   if (!society) {

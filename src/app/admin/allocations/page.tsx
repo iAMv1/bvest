@@ -7,6 +7,7 @@ import { prisma } from "@/lib/db";
 import { domains } from "@/lib/domains";
 import { AdminNav } from "../AdminNav";
 import { LogoutButton } from "@/components/LogoutButton";
+import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 
 interface Props {
   searchParams: Promise<{ status?: string }>;
@@ -28,6 +29,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
   const { status } = await searchParams;
   const filter = status === "pending" || status === "locked" ? status : "";
 
+  await ensureDefaultSocieties();
   const societies = await prisma.society.findMany({
     include: {
       preferences: { orderBy: { rank: "asc" } },
