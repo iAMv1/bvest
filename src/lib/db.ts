@@ -7,8 +7,18 @@ import ws from "ws";
 neonConfig.webSocketConstructor = ws;
 
 function makePrisma(): PrismaClient {
+  // During Next build, don't try to init real client — return dummy, real client will be made at runtime with correct DATABASE_URL
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return new Proxy({} as PrismaClient, {
+      get(_, prop) {
+        if (prop === "then" || prop === "catch" || prop === "finally") return undefined;
+        return () => {
+          throw new Error(`Prisma build dummy — ${String(prop)} called at build`);
+        };
+      },
+    });
+  }
   const url = process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-  // Build guard: if adapter mismatches schema provider (e.g. postgres schema but sqlite url at build), don't throw — return dummy that will be recreated at runtime with correct env
   try {
     if (url.startsWith("postgres")) {
       const adapter = new PrismaNeon({ connectionString: url });
@@ -17,7 +27,6 @@ function makePrisma(): PrismaClient {
     const adapter = new PrismaBetterSqlite3({ url });
     return new PrismaClient({ adapter } as ConstructorParameters<typeof PrismaClient>[0]);
   } catch (e) {
-    // At build time without DB, return a proxied dummy that throws only on actual query, not on import
     console.warn("Prisma init at build without DB, using lazy dummy:", (e as Error)?.message?.slice(0, 120));
     return new Proxy({} as PrismaClient, {
       get(_, prop) {
