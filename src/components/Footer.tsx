@@ -18,7 +18,7 @@ export function Footer() {
         <span
           className="ghost-faint select-none absolute -bottom-6 left-1/2 -translate-x-1/2 font-heading text-[7rem] md:text-[13rem] font-black uppercase tracking-tight whitespace-nowrap text-center leading-none [mask-image:radial-gradient(ellipse_62%_72%_at_50%_42%,transparent_0_30%,black_72%)]"
         >
-          BVEST 2026
+          BVEST XIII
         </span>
       </div>
 
@@ -32,7 +32,7 @@ export function Footer() {
               Innovating for a Sustainable Future.
             </p>
             <p className="text-xs text-stone-600 dark:text-gray-500 mt-1 font-mono">
-              BVCOE Delhi &middot; BVEST 2026
+              BVCOE Delhi &middot; BVEST XIII
             </p>
           </div>
 
@@ -88,28 +88,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Row: Horizontal Navigation Links + Separate Admin Portal Access Link */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 md:gap-8">
-            {FOOTER_NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-stone-950 dark:text-gray-400 transition-colors duration-200 hover:text-sdg6 dark:hover:text-white"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Separate Admin Portal Link */}
-          <Link
-            href="/admin/login"
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 hover:bg-violet-500/10 text-xs font-mono text-stone-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-300 border border-black/10 dark:border-white/10 hover:border-violet-500/30 transition-all duration-200"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500/70 animate-pulse" />
-            Admin Access
-          </Link>
+        {/* Bottom Row: Horizontal Navigation Links */}
+        <div className="pt-6 flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 md:gap-8">
+          {FOOTER_NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-stone-950 dark:text-gray-400 transition-colors duration-200 hover:text-sdg6 dark:hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
 

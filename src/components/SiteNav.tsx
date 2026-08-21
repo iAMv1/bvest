@@ -271,7 +271,7 @@ export const SiteNav: React.FC = () => {
                   </Link>
                 )}
                 <p className="text-center text-xs text-stone-500 dark:text-gray-500 font-mono tracking-widest uppercase">
-                  BVCOE Delhi &middot; BVEST 2026
+                  BVCOE Delhi &middot; BVEST XIII
                 </p>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -95,7 +96,7 @@ export const CoreTeamSection: React.FC = () => {
             </span>
           </h2>
           <p className="relative text-stone-950 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-sans">
-            The student leadership driving operations, logistics, design, and tech across BVEST 2026.
+            The student leadership driving operations, logistics, design, and tech across BVEST XIII.
           </p>
         </Reveal>
 
