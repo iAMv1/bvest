@@ -74,7 +74,9 @@ async function main() {
 
       await prisma.society.upsert({
         where: { id: society.id },
-        update: { name: society.name, password: hashed, kind: society.kind ?? "GROUP" },
+        // NEVER overwrite password/name/kind on existing societies — deploys must not
+        // revert admin-changed credentials. Password only set on first creation.
+        update: {},
         create: { id: society.id, name: society.name, password: hashed, locked: false, kind: society.kind ?? "GROUP" },
       });
 
