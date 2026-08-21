@@ -7,16 +7,19 @@ import { motion, AnimatePresence, useReducedMotion, useScroll } from "framer-mot
 import { BvestLogo } from "@/components/BvestLogo";
 import { useTheme } from "@/components/ThemeProvider";
 
-const NAV_LINKS = [
+const CORE_NAV_LINKS = [
   { href: "/#goals", label: "Goals" },
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
   { href: "/#contact", label: "Contact" },
-];
+] as const;
 // Admin is hidden from public nav by design — access only via direct /admin/login (share privately)
 
-export const SiteNav: React.FC = () => {
+export type DynamicNavLink = { href: string; label: string; adminOnly?: boolean };
+
+export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamicLinks }) => {
+  const NAV_LINKS = [...CORE_NAV_LINKS, ...(dynamicLinks ?? [])] as { href: string; label: string }[];
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);

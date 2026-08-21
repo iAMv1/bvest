@@ -5,10 +5,10 @@ import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
-import { createEvent, updateEvent, updateEventStatus } from "./actions";
+import { createEvent, updateEvent, updateEventStatus, saveEventResults, publishResults, unpublishResults } from "./actions";
 
 interface Props {
-  searchParams: Promise<{ error?: string; created?: string; updated?: string; edit?: string }>;
+  searchParams: Promise<{ error?: string; created?: string; updated?: string; edit?: string; results?: string; published?: string; unpublished?: string }>;
 }
 
 const ERRORS: Record<string, string> = {
@@ -19,6 +19,7 @@ const ERRORS: Record<string, string> = {
   host: "Host society not found.",
   duplicate: "That event slug already exists.",
   invalid: "Invalid event data.",
+  locked: "Results are locked — unpublish to edit.",
 };
 
 const STATUS_STYLES: Record<string, string> = {
@@ -33,8 +34,8 @@ export default async function AdminEventsPage({ searchParams }: Props) {
   const session = await getSession();
   if (!session.isAdmin) redirect("/admin/login");
 
-  const { error, created, updated, edit } = await searchParams;
-  const events = await prisma.event.findMany({ include: { hostSociety: true }, orderBy: { createdAt: "desc" } });
+  const { error, created, updated, edit, results, published, unpublished } = await searchParams;
+  const events = await prisma.event.findMany({ include: { hostSociety: true, results: { orderBy: { rank: "asc" } } }, orderBy: { createdAt: "desc" } });
   const societies = await prisma.society.findMany({ orderBy: { name: "asc" } });
   const editing = edit ? events.find((e) => e.id === edit || e.slug === edit) : null;
 
@@ -59,9 +60,9 @@ export default async function AdminEventsPage({ searchParams }: Props) {
           </p>
         </div>
 
-        {error && ERRORS[error] && (
+        {error && (
           <div role="alert" className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl mb-6 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 text-sm">
-            {ERRORS[error]}
+            {ERRORS[error] ?? error}
           </div>
         )}
         {created && (
@@ -72,6 +73,21 @@ export default async function AdminEventsPage({ searchParams }: Props) {
         {updated && (
           <div role="status" className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl mb-6 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-sm">
             Event updated.
+          </div>
+        )}
+        {results && (
+          <div role="status" className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl mb-6 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-sm">
+            Results saved.
+          </div>
+        )}
+        {published && (
+          <div role="status" className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl mb-6 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-sm">
+            Results published — “Results Live” now on cards and event page.
+          </div>
+        )}
+        {unpublished && (
+          <div role="status" className="animate-error-in flex items-start gap-2.5 px-4 py-3 rounded-xl mb-6 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 text-sm">
+            Results unpublished — you can edit again.
           </div>
         )}
 
@@ -224,9 +240,14 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                           </form>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <Link href={`/admin/events?edit=${event.id}#event-form`} className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${isEditing ? "bg-violet-600 text-white border-violet-600" : "bg-white dark:bg-black/40 border-black/10 dark:border-white/10 hover:border-violet-500/30 hover:text-violet-600"}`}>
-                            {isEditing ? "Editing" : "Edit"} →
-                          </Link>
+                          <div className="inline-flex items-center gap-1.5 justify-end">
+                            <Link href={`/events/${event.slug}/leaderboard`} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20">
+                              Podium ↗
+                            </Link>
+                            <Link href={`/admin/events?edit=${event.id}#event-form`} className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${isEditing ? "bg-violet-600 text-white border-violet-600" : "bg-white dark:bg-black/40 border-black/10 dark:border-white/10 hover:border-violet-500/30 hover:text-violet-600"}`}>
+                              {isEditing ? "Editing" : "Edit"} →
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -234,6 +255,97 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        {/* Results — per event podium, publish flow */}
+        <div className="animate-rise-in hard-shell mt-8" style={{ animationDelay: "160ms" }}>
+          <div className="hard-core bg-white/70 dark:bg-[#0B0B0C]/80 backdrop-blur-sm p-6 md:p-8">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
+              <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white">Results & podium</h3>
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase font-mono border bg-violet-500/10 text-violet-700 dark:text-violet-300 border-violet-500/20">Sprint B</span>
+            </div>
+            <p className="text-xs text-stone-700 dark:text-gray-400 mb-6 font-mono leading-relaxed">Save team names for ranks 1–3, then Publish. Published results show “Results Live” on cards and a podium on the event page. Unpublish to edit again.</p>
+            {events.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-8 text-center">
+                <p className="text-sm font-medium text-stone-700 dark:text-gray-300">No events yet</p>
+                <p className="text-xs font-mono text-stone-500 dark:text-gray-500 mt-1">Create an event above to start adding podium results.</p>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                {events.map((event) => {
+                  const publishedCount = event.results.length;
+                  return (
+                    <div key={event.id} className={`rounded-2xl border p-5 transition-colors ${event.resultsPublished ? "border-amber-500/20 bg-amber-500/[0.04] dark:bg-amber-500/[0.06]" : "border-black/10 dark:border-white/10 bg-white dark:bg-black/20"}`}>
+                      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-[14px] leading-tight text-stone-900 dark:text-white tracking-tight truncate">{event.title} <span className="font-mono text-xs font-normal text-stone-500">/events/{event.slug}</span></p>
+                          <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold font-mono uppercase tracking-wider border ${STATUS_STYLES[event.status]}`}>{event.status}</span>
+                            {event.resultsPublished ? (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500 text-white border border-amber-500">🏆 Results Live</span>
+                            ) : (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-stone-500">Not published</span>
+                            )}
+                            {publishedCount > 0 && !event.resultsPublished && <span className="text-xs font-mono text-stone-500">{publishedCount} rank{publishedCount !== 1 ? "s" : ""} saved</span>}
+                            {event.resultsPublished && event.publishedAt && <span className="text-xs font-mono text-stone-500">· {new Date(event.publishedAt).toLocaleDateString()}</span>}
+                          </div>
+                        </div>
+                        {event.resultsPublished ? (
+                          <form action={unpublishResults} className="inline-flex shrink-0">
+                            <input type="hidden" name="eventId" value={event.id} />
+                            <button type="submit" className="px-3.5 py-1.5 rounded-full text-xs font-semibold border border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 transition-colors">Unpublish — unlock to edit</button>
+                          </form>
+                        ) : (
+                          <form action={publishResults} className="inline-flex shrink-0">
+                            <input type="hidden" name="eventId" value={event.id} />
+                            <button type="submit" disabled={event.results.length === 0} title={event.results.length === 0 ? "Save at least one rank before publishing" : "Publish results live"} className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors ${event.results.length === 0 ? "bg-stone-100 dark:bg-white/5 border-black/10 dark:border-white/10 text-stone-400 cursor-not-allowed" : "bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-600 dark:border-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600 shadow-sm"}`}>Publish results</button>
+                          </form>
+                        )}
+                      </div>
+                      <form action={saveEventResults} className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <input type="hidden" name="eventId" value={event.id} />
+                        {[1, 2, 3].map((rank) => {
+                          const r = event.results.find((x) => x.rank === rank);
+                          return (
+                            <label key={rank} className="block">
+                              <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 dark:text-gray-500 font-mono mb-1.5">Rank {rank} {rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}</span>
+                              <input name={`team_${rank}`} defaultValue={r?.teamName ?? ""} placeholder={`Team ${rank} name`} maxLength={80} disabled={event.resultsPublished} className="w-full rounded-xl px-3 py-2.5 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-violet-500/60 disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-stone-400" />
+                              <input name={`points_${rank}`} defaultValue={r?.points ?? ""} placeholder="Points (optional)" type="number" min={0} step={1} inputMode="numeric" disabled={event.resultsPublished} className="mt-1.5 w-full rounded-xl px-3 py-2 text-xs bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-violet-500/60 disabled:opacity-50 disabled:cursor-not-allowed font-mono placeholder:text-stone-400" />
+                            </label>
+                          );
+                        })}
+                        <div className="md:col-span-3 flex flex-wrap items-center gap-3 pt-1">
+                          <button type="submit" disabled={event.resultsPublished} className={`px-5 py-2 rounded-full text-xs font-semibold border transition-colors ${event.resultsPublished ? "bg-stone-100 dark:bg-white/5 border-black/10 dark:border-white/10 text-stone-400 cursor-not-allowed" : "bg-stone-900 text-white dark:bg-white dark:text-stone-900 border-stone-900 dark:border-white hover:opacity-90 active:scale-[0.97]"}`}>Save results</button>
+                          {event.resultsPublished ? <span className="inline-flex items-center gap-1.5 text-xs font-mono text-stone-500"><span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" /> Locked — unpublish to edit</span> : <span className="text-xs font-mono text-stone-400 dark:text-gray-500">Leave blank to clear a rank</span>}
+                        </div>
+                      </form>
+                      {event.resultsPublished && event.results.length > 0 && (
+                        <div className="mt-5">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 font-mono mb-2">Live preview</p>
+                          <div className={`grid gap-2.5 text-center ${event.results.length === 1 ? "grid-cols-1 max-w-xs mx-auto" : event.results.length === 2 ? "grid-cols-2 max-w-md mx-auto" : "grid-cols-3"}`}>
+                            {[1, 2, 3].map((rank) => {
+                              const r = event.results.find((x) => x.rank === rank);
+                              if (!r) return null;
+                              return (
+                                <div key={rank} className={`rounded-xl p-3.5 border ${rank === 1 ? "bg-amber-500 text-white border-amber-500 shadow-md" : rank === 2 ? "bg-white dark:bg-white/5 border-black/10 dark:border-white/10" : "bg-stone-50 dark:bg-white/[0.03] border-black/10 dark:border-white/10"}`}>
+                                  <p className={`text-[10px] font-bold uppercase tracking-widest ${rank === 1 ? "text-white/80" : "text-stone-500"}`}>{rank === 1 ? "Gold" : rank === 2 ? "Silver" : "Bronze"}</p>
+                                  <p className={`font-semibold mt-1 leading-tight break-words ${rank === 1 ? "text-white" : "text-stone-900 dark:text-white"}`}>{r.teamName}</p>
+                                  {r.points != null && <p className={`text-xs font-mono mt-1 ${rank === 1 ? "text-white/80" : "text-stone-500"}`}>{r.points} pts</p>}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                      {!event.resultsPublished && event.results.length > 0 && (
+                        <p className="text-xs font-mono text-stone-500 mt-3">Not yet live — press Publish to show podium on the event page.</p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

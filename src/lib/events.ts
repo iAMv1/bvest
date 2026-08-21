@@ -10,6 +10,7 @@ export type LandingEvent = {
   hostSocietyId: string | null;
   hostSociety: { id: string; name: string; kind: string } | null;
   status: string;
+  resultsPublished: boolean;
   startDate: Date | null;
   endDate: Date | null;
   registrationUrl: string | null;

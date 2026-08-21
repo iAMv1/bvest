@@ -11,6 +11,7 @@ const ADMIN_LINKS = [
   { key: "societies", label: "Societies", href: "/admin/societies", desc: "Registry" },
   { key: "events", label: "Events", href: "/admin/events", desc: "Program" },
   { key: "domains", label: "Domains", href: "/admin/domains", desc: "Topics" },
+  { key: "pages", label: "Pages", href: "/admin/pages", desc: "Nav" },
 ] as const;
 
 export function AdminNavbar() {
@@ -25,7 +26,9 @@ export function AdminNavbar() {
       ? "events"
       : pathname.includes("/domains")
         ? "domains"
-        : "console";
+        : pathname.includes("/pages")
+          ? "pages"
+          : "console";
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl">

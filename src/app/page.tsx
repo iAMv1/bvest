@@ -174,8 +174,8 @@ export default async function Home() {
                       const ev = eventForSdg(landingEvents, sdg.number);
                       return (
                         <div className="mt-auto pt-5 w-full border-t border-black/10 dark:border-white/10">
-                          <p className="text-xs text-stone-950 dark:text-gray-400 mb-2"><span className="font-semibold text-stone-800 dark:text-gray-300">Hosted by:</span> {ev?.hostSociety?.name ?? "BVCOE Student Societies"}</p>
-                          <p className="text-xs text-stone-950 dark:text-gray-400"><span className="font-semibold text-stone-800 dark:text-gray-300">Event:</span> {ev ? ev.title : "Confirmed — reveal soon"}</p>
+                          <p className="text-xs text-stone-700 dark:text-gray-400 mb-1.5 leading-relaxed"><span className="font-semibold text-stone-900 dark:text-gray-200">Hosted by:</span> {ev?.hostSociety?.name ?? "BVCOE Student Societies"} {ev?.resultsPublished && <span className="ml-1 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500 text-white border border-amber-500 leading-none">🏆 Live</span>}</p>
+                          <p className="text-xs text-stone-700 dark:text-gray-400 leading-relaxed"><span className="font-semibold text-stone-900 dark:text-gray-200">Event:</span> {ev ? ev.title : "Confirmed — reveal soon"} {ev?.resultsPublished && <span className="text-amber-600 dark:text-amber-400 font-bold"> · Results Live</span>}</p>
                         </div>
                       );
                     })()}
@@ -220,7 +220,7 @@ export default async function Home() {
           {(featuredEvents(landingEvents).length
             ? featuredEvents(landingEvents).map((ev) => {
                 const sdg = sdgData.find((s) => String(s.number) === ev.sdgDomainId) ?? sdgData[3];
-                return { sdg, title: ev.title, host: ev.hostSociety?.name ?? "BVCOE Student Societies", desc: ev.description, slug: ev.slug };
+                return { sdg, title: ev.title, host: ev.hostSociety?.name ?? "BVCOE Student Societies", desc: ev.description, slug: ev.slug, resultsPublished: ev.resultsPublished };
               })
             : ([
                 { sdg: sdgData[3], title: "Code4Ed Hackathon", host: "Tech Society", desc: "Build innovative ed-tech solutions to make quality education accessible to everyone in remote areas.", slug: null as string | null },
@@ -252,6 +252,11 @@ export default async function Home() {
                       </svg>
                       Oct 24&ndash;26
                     </div>
+                    {(event as any).resultsPublished && (
+                      <div className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black bg-amber-500 text-white border border-amber-500">
+                        🏆 Results Live
+                      </div>
+                    )}
                   </div>
 
                   <h3 className="font-heading text-2xl font-bold mb-3 text-gray-900 dark:text-white">{event.title}</h3>

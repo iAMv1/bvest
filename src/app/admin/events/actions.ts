@@ -128,3 +128,62 @@ export async function updateEventStatus(formData: FormData) {
   revalidatePath("/admin/events");
   redirect("/admin/events?updated=1");
 }
+
+export async function saveEventResults(formData: FormData) {
+  await requireAdmin();
+  const eventId = ((formData.get("eventId") as string) ?? "").trim();
+  if (!eventId) redirect("/admin/events?error=invalid");
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) redirect("/admin/events?error=invalid");
+  if (event.resultsPublished) redirect("/admin/events?error=locked");
+
+  const ranks = [1, 2, 3];
+  for (const rank of ranks) {
+    const teamName = ((formData.get(`team_${rank}`) as string) ?? "").trim();
+    const pointsRaw = ((formData.get(`points_${rank}`) as string) ?? "").trim();
+    const points = pointsRaw ? parseInt(pointsRaw, 10) : null;
+    if (!teamName) {
+      await prisma.eventResult.deleteMany({ where: { eventId, rank } });
+      continue;
+    }
+    await prisma.eventResult.upsert({
+      where: { eventId_rank: { eventId, rank } },
+      create: { eventId, rank, teamName, points: Number.isNaN(points as number) ? null : points },
+      update: { teamName, points: Number.isNaN(points as number) ? null : points },
+    });
+  }
+  revalidatePath("/admin/events");
+  revalidatePath("/");
+  revalidatePath(`/events/${event.slug}`);
+  redirect("/admin/events?results=1");
+}
+
+export async function publishResults(formData: FormData) {
+  await requireAdmin();
+  const eventId = ((formData.get("eventId") as string) ?? "").trim();
+  if (!eventId) redirect("/admin/events?error=invalid");
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) redirect("/admin/events?error=invalid");
+  const results = await prisma.eventResult.findMany({ where: { eventId } });
+  if (results.length === 0) redirect("/admin/events?error=invalid");
+  await prisma.event.update({ where: { id: eventId }, data: { resultsPublished: true, publishedAt: new Date(), status: "COMPLETED" } });
+  revalidatePath("/admin/events");
+  revalidatePath("/");
+  revalidatePath(`/events/${event.slug}`);
+  revalidatePath(`/events/${eventId}`);
+  redirect("/admin/events?published=1");
+}
+
+export async function unpublishResults(formData: FormData) {
+  await requireAdmin();
+  const eventId = ((formData.get("eventId") as string) ?? "").trim();
+  if (!eventId) redirect("/admin/events?error=invalid");
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) redirect("/admin/events?error=invalid");
+  await prisma.event.update({ where: { id: eventId }, data: { resultsPublished: false, publishedAt: null } });
+  revalidatePath("/admin/events");
+  revalidatePath("/");
+  revalidatePath(`/events/${event.slug}`);
+  revalidatePath(`/events/${eventId}`);
+  redirect("/admin/events?unpublished=1");
+}

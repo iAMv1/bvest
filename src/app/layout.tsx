@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import { IntroOverlay } from "@/components/IntroOverlay";
 import { IntroProvider } from "@/components/IntroContext";
-import { SiteNav } from "@/components/SiteNav";
+import { SiteNavWrapper } from "@/components/SiteNavWrapper";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { BackToTop } from "@/components/BackToTop";
 import "./globals.css";
@@ -41,8 +41,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <IntroProvider>
             <IntroOverlay />
 
-            {/* Floating island navigation */}
-            <SiteNav />
+            {/* Floating island navigation — server-fed dynamic links */}
+            <SiteNavWrapper />
 
             {children}
 
