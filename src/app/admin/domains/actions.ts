@@ -51,14 +51,15 @@ export async function bulkImportDomains(formData: FormData) {
   }
   if (!raw) redirect("/admin/domains?error=invalid");
 
-  let list: any[] = [];
+  type DomainSeed = { id?: unknown; name?: unknown; description?: unknown; colorToken?: unknown };
+  let list: DomainSeed[] = [];
   try {
     // Try JSON first
     if (raw.trim().startsWith("[")) {
-      list = JSON.parse(raw);
+      list = JSON.parse(raw) as DomainSeed[];
     } else if (raw.trim().startsWith("{")) {
-      const obj = JSON.parse(raw);
-      list = Array.isArray(obj.domains) ? obj.domains : [obj];
+      const obj = JSON.parse(raw) as { domains?: DomainSeed[] };
+      list = Array.isArray(obj.domains) ? obj.domains : [obj as DomainSeed];
     } else {
       // CSV: id,name,description,colorToken per line, skip header if contains "id"
       const lines = raw.split("\n").map((l) => l.trim()).filter(Boolean);

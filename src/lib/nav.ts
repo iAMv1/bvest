@@ -58,7 +58,7 @@ export type PageRow = {
 
 export async function getDynamicPages(): Promise<PageRow[]> {
   try {
-    return await (prisma as any).page.findMany({
+    return await prisma.page.findMany({
       where: { enabled: true, showInNav: true },
       orderBy: { order: "asc" },
     });
@@ -69,7 +69,7 @@ export async function getDynamicPages(): Promise<PageRow[]> {
 
 export async function getAllPages(): Promise<PageRow[]> {
   try {
-    return await (prisma as any).page.findMany({ orderBy: { order: "asc" } });
+    return await prisma.page.findMany({ orderBy: { order: "asc" } });
   } catch {
     return [];
   }
@@ -79,7 +79,7 @@ export async function getNavLinks(opts?: { isAdmin?: boolean }): Promise<NavLink
   const isAdmin = !!opts?.isAdmin;
   let dynamic: PageRow[] = [];
   try {
-    const pages: PageRow[] = await (prisma as any).page.findMany({
+    const pages: PageRow[] = await prisma.page.findMany({
       where: { enabled: true, showInNav: true },
       orderBy: { order: "asc" },
     });

@@ -16,8 +16,8 @@ const ADMIN_LINKS = [
 
 export function AdminNavbar() {
   const pathname = usePathname();
-  if (pathname === "/admin/login") return null;
   const { theme, setPreference } = useTheme();
+  if (pathname === "/admin/login") return null;
   const toggleTheme = () => setPreference(theme === "dark" ? "light" : "dark");
 
   const activeKey = pathname.includes("/societies")

@@ -1,11 +1,15 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
-import Image from "next/image";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
 
+type PublishedEvent = Prisma.EventGetPayload<{
+  include: { results: true; hostSociety: { select: { id: true; name: true } } };
+}>;
+
 export default async function GlobalLeaderboardPage() {
-  let events: any[] = [];
+  let events: PublishedEvent[] = [];
   try {
     events = await prisma.event.findMany({ where: { resultsPublished: true }, include: { results: true, hostSociety: { select: { id: true, name: true } } }, orderBy: { publishedAt: "desc" } });
   } catch { events = []; }
@@ -70,7 +74,7 @@ export default async function GlobalLeaderboardPage() {
                       <div className="flex items-center gap-2 mb-2">{sdg && <span className="w-2 h-2 rounded-full" style={{ backgroundColor: sdg.hex }} />}{sdg && <span className="text-xs font-bold" style={{ color: sdg.hex }}>G{sdg.number}</span>}<span className="text-xs font-mono text-stone-500">/events/{ev.slug}</span></div>
                       <h3 className="font-semibold text-stone-900 dark:text-white leading-tight">{ev.title}</h3>
                       <div className="mt-3 flex flex-wrap gap-1.5">
-                        {ev.results.sort((a: any, b: any) => a.rank - b.rank).map((r: any) => (
+                        {ev.results.sort((a, b) => a.rank - b.rank).map((r) => (
                           <span key={r.id} className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${r.rank === 1 ? "bg-amber-500 text-white border-amber-500" : "bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10"}`}>{r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉"} {r.teamName}</span>
                         ))}
                       </div>

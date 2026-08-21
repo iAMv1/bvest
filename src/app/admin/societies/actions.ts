@@ -18,11 +18,12 @@ async function requireAdmin() {
 function saveCustomSocietyRecord(record: { id: string; name: string; password?: string; hashedPassword?: string; kind?: string }) {
   try {
     const customPath = path.join(process.cwd(), "prisma", "custom-societies.json");
-    let list: any[] = [];
+    type CustomSociety = { id: string; name: string; password?: string; hashedPassword?: string; kind?: string };
+    let list: CustomSociety[] = [];
     if (fs.existsSync(customPath)) {
-      list = JSON.parse(fs.readFileSync(customPath, "utf-8"));
+      list = JSON.parse(fs.readFileSync(customPath, "utf-8")) as CustomSociety[];
     }
-    const idx = list.findIndex((item: any) => item.id === record.id);
+    const idx = list.findIndex((item) => item.id === record.id);
     if (idx >= 0) {
       list[idx] = { ...list[idx], ...record };
     } else {

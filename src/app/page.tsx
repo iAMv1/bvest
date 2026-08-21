@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { SDGColorStrip } from '@/components/SDGColorStrip';
-import { SDGBadge } from '@/components/SDGBadge';
 import { SDGBoxCollage } from '@/components/SDGBoxCollage';
-import { BvestLogo } from '@/components/BvestLogo';
 import { Reveal } from '@/components/Reveal';
 import { Hero } from '@/components/Hero';
 import { BackdropAurora } from '@/components/BackdropAurora';
@@ -12,7 +10,7 @@ import { StatCounter } from '@/components/StatCounter';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { Footer } from '@/components/Footer';
 import { sdgData } from '@/lib/sdg-data';
-import { getLandingEvents, eventForSdg, featuredEvents } from '@/lib/events';
+import { getLandingEvents, eventForSdg } from '@/lib/events';
 
 export const dynamic = "force-dynamic";
 

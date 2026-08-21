@@ -49,7 +49,7 @@ function getPrisma(): PrismaClient {
 export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
   get(_, prop) {
     const target = getPrisma();
-    const val = (target as any)[prop];
-    return typeof val === "function" ? val.bind(target) : val;
+    const val: unknown = (target as unknown as Record<string | symbol, unknown>)[prop];
+    return typeof val === "function" ? (val as (...args: unknown[]) => unknown).bind(target) : val;
   },
 });

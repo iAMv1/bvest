@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
 
@@ -18,7 +19,7 @@ export default async function EventPage({ params }: Props) {
   const { slug } = await params;
 
   // Build guard: if DB not available at build time, return 404 softly
-  let event: any = null;
+  let event: Prisma.EventGetPayload<{ include: { hostSociety: true; results: true } }> | null = null;
   try {
     event = await prisma.event.findUnique({
       where: { slug },
@@ -72,7 +73,7 @@ export default async function EventPage({ params }: Props) {
                 </div>
                 <div className={`grid gap-3 ${event.results.length === 1 ? "grid-cols-1 max-w-xs mx-auto" : event.results.length === 2 ? "grid-cols-1 md:grid-cols-2 max-w-xl mx-auto" : "grid-cols-1 md:grid-cols-3"}`}>
                   {[1, 2, 3].map((rank) => {
-                    const r = event.results.find((x: any) => x.rank === rank);
+                    const r = event.results.find((x) => x.rank === rank);
                     if (!r) return null;
                     return (
                       <div key={rank} className={`rounded-xl p-4 border text-center ${rank === 1 ? "bg-amber-500 text-white border-amber-500 shadow-lg md:scale-[1.02]" : rank === 2 ? "bg-white dark:bg-white/10 border-black/10 dark:border-white/10" : "bg-white dark:bg-white/5 border-black/10 dark:border-white/10"}`}>
@@ -106,7 +107,7 @@ export default async function EventPage({ params }: Props) {
   const sdgNum = Number(slug);
   if (!Number.isNaN(sdgNum) && sdgNum >= 1 && sdgNum <= 17) {
     const sdg = sdgData.find((s) => s.number === sdgNum)!;
-    let events: any[] = [];
+    let events: Prisma.EventGetPayload<{ include: { hostSociety: true; results: true } }>[] = [];
     try {
       events = await prisma.event.findMany({
         where: { sdgDomainId: String(sdgNum), status: { in: ["CONFIRMED", "LIVE"] } },

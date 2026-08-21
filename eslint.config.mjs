@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node test harness + design tooling (not app code):
+    "e2e/**",
+    "e2e.mjs",
+    "e2e.spec.ts",
+    "designs/**",
+    "Graphs/**",
   ]),
 ]);
 

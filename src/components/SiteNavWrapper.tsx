@@ -5,7 +5,7 @@ import { SiteNav } from "@/components/SiteNav";
 export async function SiteNavWrapper() {
   let dynamicLinks: { href: string; label: string; adminOnly?: boolean }[] = [];
   try {
-    const session = await getSession().catch(() => ({ isAdmin: false } as any));
+    const session = await getSession().catch(() => ({ isAdmin: false }) as Awaited<ReturnType<typeof getSession>>);
     const isAdmin = !!session?.isAdmin;
     const all = await getNavLinks({ isAdmin });
     const coreHrefs = new Set<string>(CORE_NAV_LINKS.map((c) => c.href));

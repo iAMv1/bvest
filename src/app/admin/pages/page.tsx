@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import type { Page } from "@prisma/client";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { createPage, togglePageField, movePage, deletePage, updatePage } from "./actions";
@@ -25,9 +26,9 @@ export default async function AdminPagesPage({ searchParams }: Props) {
 
   const { error, created, updated, deleted, edit } = await searchParams;
 
-  let pages: any[] = [];
+  let pages: Page[] = [];
   try {
-    pages = await (prisma as any).page.findMany({ orderBy: { order: "asc" } });
+    pages = await prisma.page.findMany({ orderBy: { order: "asc" } });
   } catch {
     pages = [];
   }
@@ -215,7 +216,7 @@ export default async function AdminPagesPage({ searchParams }: Props) {
                         <td className="px-6 py-4">
                           <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold font-mono uppercase tracking-wider border bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-stone-600 dark:text-gray-400">{p.section}</span>
                         </td>
-                        {["showInNav", "enabled", "adminOnly"].map((field) => {
+                        {(["showInNav", "enabled", "adminOnly"] as const).map((field) => {
                           const val = p[field];
                           const on = !!val;
                           return (

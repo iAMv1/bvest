@@ -57,7 +57,7 @@ export default async function AdminDomainsPage({ searchParams }: Props) {
           <div className="hard-core bg-white/70 dark:bg-[#0B0B0C]/80 backdrop-blur-sm p-6 md:p-8">
             <h2 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-1">Bulk upload</h2>
             <p className="text-xs text-stone-950 dark:text-gray-400 mb-4 font-mono">
-              Paste JSON array <code className="bg-black/5 dark:bg-white/10 px-1 rounded">[{"{"}"id":"ai-for-good","name":"AI for Good","description":"...","colorToken":"var(--color-sdg3)"{"}"}]</code> or CSV <code className="bg-black/5 dark:bg-white/10 px-1 rounded">id,name,description,colorToken</code>. Existing IDs are updated.
+              Paste JSON array <code className="bg-black/5 dark:bg-white/10 px-1 rounded">{`[{"id":"ai-for-good","name":"AI for Good","description":"...","colorToken":"var(--color-sdg3)"}]`}</code> or CSV <code className="bg-black/5 dark:bg-white/10 px-1 rounded">id,name,description,colorToken</code>. Existing IDs are updated.
             </p>
             <form action={bulkImportDomains} className="space-y-4">
               <textarea name="json" rows={4} placeholder='[{"id":"ai-for-good","name":"AI for Good","description":"AI for SDG...","colorToken":"var(--color-sdg3)"}] or CSV lines' className="w-full rounded-xl px-4 py-3 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 font-mono" />

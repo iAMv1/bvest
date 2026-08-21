@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import type { Page } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { isReservedSlug, isValidPageSlug, normalizeSlug } from "@/lib/nav";
@@ -39,7 +40,7 @@ export async function createPage(formData: FormData) {
   if (Number.isNaN(order)) {
     // auto: max + 1
     try {
-      const max = await (prisma as any).page.aggregate({ _max: { order: true } });
+      const max = await prisma.page.aggregate({ _max: { order: true } });
       order = (max._max.order ?? -1) + 1;
     } catch {
       order = 0;
@@ -51,10 +52,10 @@ export async function createPage(formData: FormData) {
   if (title.length < 2) redirect("/admin/pages?error=title");
   if (navLabel && navLabel.length > 40) redirect("/admin/pages?error=navLabel");
 
-  const exists = await (prisma as any).page.findUnique({ where: { slug } }).catch(() => null);
+  const exists = await prisma.page.findUnique({ where: { slug } }).catch(() => null);
   if (exists) redirect("/admin/pages?error=duplicate");
 
-  await (prisma as any).page.create({
+  await prisma.page.create({
     data: {
       slug,
       title,
@@ -79,11 +80,14 @@ export async function togglePageField(formData: FormData) {
   const allowed = ["showInNav", "enabled", "adminOnly"];
   if (!id || !allowed.includes(field)) redirect("/admin/pages?error=invalid");
 
-  const page = await (prisma as any).page.findUnique({ where: { id } });
+  const page = await prisma.page.findUnique({ where: { id } });
   if (!page) redirect("/admin/pages?error=invalid");
 
-  const next = !page[field];
-  await (prisma as any).page.update({ where: { id }, data: { [field]: next } });
+  const current = page[field as "showInNav" | "enabled" | "adminOnly"];
+  const next = !current;
+  const data =
+    field === "showInNav" ? { showInNav: next } : field === "enabled" ? { enabled: next } : { adminOnly: next };
+  await prisma.page.update({ where: { id }, data });
 
   revalidatePath("/admin/pages");
   revalidatePath("/");
@@ -97,7 +101,7 @@ export async function movePage(formData: FormData) {
   const dir = ((formData.get("dir") as string) ?? "").trim(); // "up" | "down"
   if (!id || (dir !== "up" && dir !== "down")) redirect("/admin/pages?error=invalid");
 
-  const pages: any[] = await (prisma as any).page.findMany({ orderBy: { order: "asc" } });
+  const pages: Page[] = await prisma.page.findMany({ orderBy: { order: "asc" } });
   const idx = pages.findIndex((p) => p.id === id);
   if (idx === -1) redirect("/admin/pages?error=invalid");
 
@@ -112,11 +116,11 @@ export async function movePage(formData: FormData) {
   const orderB = b.order;
   // if equal, ensure we give distinct values based on position
   if (orderA === orderB) {
-    await (prisma as any).page.update({ where: { id: a.id }, data: { order: targetIdx } });
-    await (prisma as any).page.update({ where: { id: b.id }, data: { order: idx } });
+    await prisma.page.update({ where: { id: a.id }, data: { order: targetIdx } });
+    await prisma.page.update({ where: { id: b.id }, data: { order: idx } });
   } else {
-    await (prisma as any).page.update({ where: { id: a.id }, data: { order: orderB } });
-    await (prisma as any).page.update({ where: { id: b.id }, data: { order: orderA } });
+    await prisma.page.update({ where: { id: a.id }, data: { order: orderB } });
+    await prisma.page.update({ where: { id: b.id }, data: { order: orderA } });
   }
 
   revalidatePath("/admin/pages");
@@ -128,9 +132,9 @@ export async function deletePage(formData: FormData) {
   await requireAdmin();
   const id = ((formData.get("id") as string) ?? "").trim();
   if (!id) redirect("/admin/pages?error=invalid");
-  const page = await (prisma as any).page.findUnique({ where: { id } }).catch(() => null);
+  const page = await prisma.page.findUnique({ where: { id } }).catch(() => null);
   if (!page) redirect("/admin/pages?error=invalid");
-  await (prisma as any).page.delete({ where: { id } });
+  await prisma.page.delete({ where: { id } });
   revalidatePath("/admin/pages");
   revalidatePath("/");
   revalidatePath(`/${page.slug}`);
@@ -141,7 +145,7 @@ export async function updatePage(formData: FormData) {
   await requireAdmin();
   const id = ((formData.get("id") as string) ?? "").trim();
   if (!id) redirect("/admin/pages?error=invalid");
-  const page = await (prisma as any).page.findUnique({ where: { id } });
+  const page = await prisma.page.findUnique({ where: { id } });
   if (!page) redirect("/admin/pages?error=invalid");
 
   const rawSlug = ((formData.get("slug") as string) ?? "").trim();
@@ -158,10 +162,10 @@ export async function updatePage(formData: FormData) {
   if (title.length < 2) redirect("/admin/pages?error=title");
   if (navLabel && navLabel.length > 40) redirect("/admin/pages?error=navLabel");
 
-  const owner = await (prisma as any).page.findUnique({ where: { slug } }).catch(() => null);
+  const owner = await prisma.page.findUnique({ where: { slug } }).catch(() => null);
   if (owner && owner.id !== id) redirect("/admin/pages?error=duplicate");
 
-  await (prisma as any).page.update({
+  await prisma.page.update({
     where: { id },
     data: { slug, title, navLabel, section: sectionVal },
   });

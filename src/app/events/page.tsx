@@ -1,11 +1,14 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
 
 export default async function EventsPage() {
-  let events: any[] = [];
+  let events: Prisma.EventGetPayload<{
+    include: { hostSociety: { select: { id: true; name: true; kind: true } }; results: true };
+  }>[] = [];
   try {
     events = await prisma.event.findMany({
       where: { status: { in: ["CONFIRMED", "LIVE", "COMPLETED"] } },

@@ -1,13 +1,15 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
 
+type EventWithResults = Prisma.EventGetPayload<{ include: { hostSociety: true; results: true } }>;
+
 export default async function EventLeaderboardPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  let event: any = null;
+  let event: EventWithResults | null = null;
   try {
     event = await prisma.event.findUnique({ where: { slug }, include: { hostSociety: true, results: { orderBy: { rank: "asc" } } } });
   } catch { return notFound(); }
@@ -44,7 +46,7 @@ export default async function EventLeaderboardPage({ params }: { params: Promise
                 {/* Podium — visual 1-2-3 */}
                 <div className={`grid gap-3 ${event.results.length === 1 ? "grid-cols-1 max-w-xs mx-auto" : event.results.length === 2 ? "grid-cols-2 max-w-xl mx-auto" : "grid-cols-1 md:grid-cols-3 items-end"}`}>
                   {[1, 2, 3].map((rank) => {
-                    const r = event.results.find((x: any) => x.rank === rank);
+                    const r = event.results.find((x) => x.rank === rank);
                     if (!r) return null;
                     const isGold = rank === 1;
                     return (
@@ -63,7 +65,7 @@ export default async function EventLeaderboardPage({ params }: { params: Promise
                     <table className="w-full text-sm text-left">
                       <thead><tr className="font-mono text-[11px] uppercase tracking-widest text-stone-500 border-b border-black/10 dark:border-white/10"><th className="px-6 py-3">Rank</th><th className="px-6 py-3">Team</th><th className="px-6 py-3 text-right">Points</th></tr></thead>
                       <tbody className="divide-y divide-black/5 dark:divide-white/5">
-                        {event.results.map((r: any) => (
+                        {event.results.map((r) => (
                           <tr key={r.id} className={r.rank === 1 ? "bg-amber-500/5" : ""}>
                             <td className="px-6 py-3 font-bold">{r.rank === 1 ? "🥇 1" : r.rank === 2 ? "🥈 2" : "🥉 3"}</td>
                             <td className="px-6 py-3 font-semibold text-stone-900 dark:text-white">{r.teamName}</td>

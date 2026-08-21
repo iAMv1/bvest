@@ -1,3 +1,4 @@
+import type { Page } from "@prisma/client";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -19,9 +20,9 @@ export default async function DynamicPage({ params }: Props) {
   // We still allow Page lookup to naturally 404 for reserved slugs (they can never be created)
   if (isReservedSlug(slug)) return notFound();
 
-  let page: any = null;
+  let page: Page | null = null;
   try {
-    page = await (prisma as any).page.findUnique({ where: { slug } });
+    page = await prisma.page.findUnique({ where: { slug } });
   } catch {
     return notFound();
   }
