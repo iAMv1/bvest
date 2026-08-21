@@ -111,8 +111,12 @@ async function main() {
   ok("admin correct → allocations");
   await page.waitForTimeout(1600);
   await page.screenshot({ path: `${SHOTS}/14-allocations.png` });
-  const rows = await page.locator("tbody tr").count();
-  rows === 1 ? ok("1 society row (corebvest, locked)") : fail("row count " + rows);
+  const coreRow = page.locator("tbody tr", { hasText: "COREBVEST" });
+  const coreCount = await coreRow.count();
+  const rowText = coreCount > 0 ? await coreRow.first().innerText() : "";
+  coreCount >= 1 && /Locked/i.test(rowText)
+    ? ok("corebvest locked in group ledger")
+    : fail(`corebvest row count ${coreCount}, locked=${/Locked/i.test(rowText)}`);
 
   // ── Mobile sweep ───────────────────────────────────────────────────────
   await page.setViewportSize({ width: 390, height: 844 });
