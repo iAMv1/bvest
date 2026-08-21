@@ -1,6 +1,8 @@
 # BVEST — Project Handoff (Agent Context)
 
-> Last updated: 2026-08-17. Read this BEFORE touching any code.
+> Last updated: 2026-08-21. Read this BEFORE touching any code.
+>
+> **State**: `main` = sprint A + sprint B + branding integration, pushed, live on Vercel. Prod Neon schema synced (additive) 2026-08-21 — `/admin/events` 500 fixed. Lint gate restored to 0 errors. Local dev server typically running on :3000.
 
 ## 1. What This Is
 
@@ -140,19 +142,24 @@ e2e/                   Playwright harness (clone-original, kept):
 
 ## 8. Known Issues / Traps
 
+0. **React #441 "Minified React error" in dev + prod** = Server Component threw (client shows only the minified wrapper). Diagnose via `npx vercel logs <deployment-url>` (gives Prisma code + digest) or run Playwright with console capture. In DEV it usually means a stale dev server survived a `.next` rebuild / `prisma generate` underneath it → kill PID, delete `.next/dev`, restart fresh.
 1. **Stale prod build syndrome** — `npm run build` regenerates `.next`; `npm run start` serves the OLD build until rebuilt. For live iteration use `npm run dev`. After any theme change: rebuild before `next start`. Also: STOP the dev server before `next build` (they share `.next`; builds while dev runs corrupt the dev server).
 2. **`dark:` variant death** — if dark mode ever renders light-text colors, check `@custom-variant dark` line in globals.css first (see 5.4).
 2. `better-sqlite3` needs `npm rebuild better-sqlite3` after fresh install (prebuilt binary fetch).
-3. `/events/{n}` routes DO NOT exist — goal/event links 404 (styled 404; roadmap step 3).
+3. `/events/{n}` routes DO exist now (`src/app/events/[slug]`, sprint B). Goal/event links no longer 404.
 4. Admin/society auth requires `ADMIN_PASSWORD` + `SESSION_SECRET` or login redirect-loops.
 5. Logo art is AI-generated PNG; light variant (`logo-dark.png`) produced by recolor script (script removed in 08-17 cleanup — regenerate manually if needed).
 6. `prefers-color-scheme: light` + no stored pref → LIGHT theme instantly (verify both).
+7. **Lint gate restored 2026-08-21**: 0 errors required (sprint B had committed 64). eslint.config.mjs ignores `e2e/**`, `e2e.mjs`, `e2e.spec.ts`, `designs/**`, `Graphs/**`. Prisma client regenerated — `prisma.page`/`prisma.event` typed; never reintroduce `(prisma as any)`.
+8. **flow-test expectations**: admin allocations ledger lists ALL GROUP-kind societies with status chips (not just submitters) — assertion checks corebvest row Locked, not row count. Chained-run flake still applies: run isolated after db-reset + sleep 2.
 
 ## 9. Git
 
 - Origin: `https://github.com/iAMv1/bvest.git` (public), branch `main`.
+- **2026-08-21 integration**: sprint A + sprint B + main branding all merged into `main` (fast-forward, `52c14ef`). Old branches `feat/sprint-a-landing-events` + `feat/sprint-b-results-leaderboard` DELETED local+remote. `release/sprint-integration` remains (fully merged, safe to delete).
 - `.gitignore`: `designs/`, `e2e/shots/`, `dev.db*`, `.env*.local` (`.env.example` force-added).
-- Do NOT commit without explicit user request. User explicitly said "don't push" (2026-08-17).
+- Do NOT commit without explicit user request. User explicitly said "don't push" (2026-08-17); authorized the 2026-08-21 integration push explicitly.
+- **USER RULE (2026-08-21): NEVER reset the production DB. Never change society/admin passwords.** `e2e/db-reset.js` is LOCAL-only and touches locked/submittedAt/preferences — never passwords. Runtime auto-seed (`seed-default-societies.ts`) only CREATES missing societies, never updates existing rows.
 
 ## 10. Design Direction (user's latest word, 2026-08-17)
 
@@ -160,15 +167,17 @@ e2e/                   Playwright harness (clone-original, kept):
 - Contrast complaints resolved via: near-black ink text, token strokes 0.1+, glass 0.85 white, oklab-free gradients. Do not soften.
 - $150k-agency-tier target: no template look, everything behavior-gated, both themes verified per component.
 
-## 12. Deployment — Vercel (live since 2026-08-17)
+## 12. Deployment — Vercel (live since 2026-08-17; schema synced 2026-08-21)
 
 - **URL**: https://bvest-demo.vercel.app · project `mereproject/bvest-demo` (scope itzpratham) · linked via `.vercel/` (run `npx vercel link --yes --project bvest-demo` to re-link).
 - **Database**: Neon Postgres (pooled URL in Vercel env `DATABASE_URL` for production + preview). Local dev/e2e unchanged — SQLite `prisma/dev.db`.
-- **Dual-schema mechanism**: `package.json` `vercel-build` = `cp prisma/schema.pg.prisma prisma/schema.prisma && npm run build` → Vercel compiles with the Postgres twin schema (`provider = "postgresql"`), local keeps SQLite schema. **DRIFT RULE: every schema.prisma model change MUST be mirrored in schema.pg.prisma** (schema diff rule noted at top of file).
+- **PROD SCHEMA SYNCED 2026-08-21** (additive only, via `e2e/db-neon-sync-schema.js <url>`): added `Event.resultsPublished`, `Event.publishedAt`, created `EventResult` (+unique idx +FK cascade), `Domain`, `Page` (+slug unique). This fixed the P2022 ColumnNotFound 500 on `/admin/events`. Future model changes MUST be mirrored to Neon the same way — build deploy does NOT migrate.
+- **Dual-schema mechanism**: `package.json` `vercel-build` = `cp prisma/schema.pg.prisma prisma/schema.prisma && npm run build` → Vercel compiles with the Postgres twin schema (`provider = "postgresql"`), local keeps SQLite schema. **DRIFT RULE: every schema.prisma model change MUST be mirrored in schema.pg.prisma AND pushed to Neon additively** (schema diff rule noted at top of file).
 - **Adapter branch**: `src/lib/db.ts` + `prisma/seed.ts` — `DATABASE_URL` starting `postgres` → `PrismaNeon({ connectionString })` (`@prisma/adapter-neon`, clone-shipped), else `PrismaBetterSqlite3`. Do not remove the sqlite branch (local dev + e2e depend on it).
 - **Vercel envs**: `DATABASE_URL` (Neon), `ADMIN_PASSWORD` (demo: `admin12345`), `SESSION_SECRET` (fresh hex, generated at env setup).
-- **Seed remote Neon**: swap schema → `prisma generate` → `DATABASE_URL=<neon> npm run prisma:seed` → restore sqlite schema + `prisma generate`. (Neon serverless driver direct SQL for ad-hoc: `e2e/db-neon-*.js` pattern, tagged-template `sql\`...\`` — plain `sql("...")` throws.)
-- **Live verify (2026-08-17)**: browser probe 7/7 — home 200; admin login → allocations reads Neon; society login → 12 cards; submit → "Preferences Submitted"; admin shows Locked chip; Neon state post-write `locked=true, submittedAt ts, 3 Preference rows`. Write-through CONFIRMED. Screenshots vision-checked: no error/blank/overlap.
+- **Neon access trap**: `npx vercel env pull` returns `[SENSITIVE]` masks in CLI 57 (and vercel@28 hangs) — the real URL is ONLY visible in dashboards / from the user. Prisma CLI (`db push`) fails P1001 from this machine even though TCP+node connect fine (engine network path issue) → use the HTTP-driver script instead: `node e2e/db-neon-sync-schema.js "<pooled-url>"` (port 443, idempotent, additive-only, prints every statement).
+- **Seed remote Neon**: swap schema → `prisma generate` → `DATABASE_URL=<neon> npm run prisma:seed` → restore sqlite schema + `prisma generate`. (Neon serverless driver direct SQL for ad-hoc: `e2e/db-neon-sync-schema.js` pattern via `Pool.query`.)
+- **Live verify (2026-08-21)**: `/admin/events` renders clean post-sync (Playwright probe: no error UI, 0 console errors). Earlier 7/7 write-through probe (2026-08-17) still valid.
 - **Demo reset**: `UPDATE "Society" SET locked=false, "submittedAt"=NULL; DELETE FROM "Preference";`
 - **Demo creds**: admin `admin12345` · society `corebvest` / `Bvest2026!`.
 - Note: Neon cold start makes first request slow (~seconds); SQLite writes do NOT work on Vercel (read-only FS) — never point the Vercel env at a local file path.
