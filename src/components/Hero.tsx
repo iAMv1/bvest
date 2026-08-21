@@ -31,7 +31,7 @@ export const Hero: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
-            <span>October 24 &ndash; 26, 2026</span>
+            <span>October 22 &ndash; 23, 2026</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Venue:</span>
@@ -106,7 +106,7 @@ export const Hero: React.FC = () => {
       >
         <div className="flex items-center gap-2">
           <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
-          <span>October 24 &ndash; 26, 2026</span>
+          <span>October 22 &ndash; 23, 2026</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Venue:</span>

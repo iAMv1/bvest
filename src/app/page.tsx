@@ -198,86 +198,45 @@ export default async function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
-        <Reveal className="relative flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
-              Events
-            </span>
-            <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">Featured{" "}
-              <span className="bg-gradient-to-r from-sdg10 to-sdg6 bg-clip-text text-transparent">
+          <Reveal className="relative flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+              <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
                 Events
               </span>
-            </h2>
-            <p className="relative text-stone-950 dark:text-gray-400 text-lg max-w-xl">A sneak peek at some of the major competitions happening this year.</p>
-          </div>
-          <Link href="#goals" className="group relative text-base font-semibold text-stone-950 dark:text-white flex items-center gap-2 transition-colors duration-200 ease-fluid hover:text-sdg6 dark:hover:text-gray-300 active:scale-[0.97] motion-reduce:active:scale-100 w-fit md:w-auto">
-            View all events
-            <span className="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 ease-fluid group-hover:translate-x-1 group-hover:bg-black/10 dark:group-hover:bg-white/10" aria-hidden="true">&rarr;</span>
-          </Link>
-        </Reveal>
+              <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">
+                Fest{" "}
+                <span className="bg-gradient-to-r from-sdg10 to-sdg6 bg-clip-text text-transparent">
+                  Events
+                </span>
+              </h2>
+              <p className="relative text-stone-950 dark:text-gray-400 text-lg max-w-xl">
+                Official competitions, hackathons, and society challenges for BVEST XIII will be announced soon.
+              </p>
+            </div>
+          </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-          {(featuredEvents(landingEvents).length
-            ? featuredEvents(landingEvents).map((ev) => {
-                const sdg = sdgData.find((s) => String(s.number) === ev.sdgDomainId) ?? sdgData[3];
-                return { sdg, title: ev.title, host: ev.hostSociety?.name ?? "BVCOE Student Societies", desc: ev.description, slug: ev.slug, resultsPublished: ev.resultsPublished };
-              })
-            : ([
-                { sdg: sdgData[3], title: "Code4Ed Hackathon", host: "Tech Society", desc: "Build innovative ed-tech solutions to make quality education accessible to everyone in remote areas.", slug: null as string | null },
-                { sdg: sdgData[6], title: "Renewable Robotics", host: "Robotics Club", desc: "Design and race autonomous robots powered entirely by alternative energy sources.", slug: null as string | null },
-                { sdg: sdgData[12], title: "Climate Data Challenge", host: "Data Science Group", desc: "Analyze massive environmental datasets to predict and visualize local climate impact over the next decade.", slug: null as string | null },
-              ] as const)
-          ).map((event, i) => (
-            <Reveal key={event.title} delay={i * 0.1}>
-              <div className="hard-shell h-full transition-all duration-300 ease-fluid hover:-translate-y-1.5 hover:bg-white/20">
-                <div className="hard-core relative bg-white dark:bg-[#0B0B0C] p-8 h-full flex flex-col overflow-hidden">
-                  {/* Banner image — zoom on hover */}
-                  <div className="relative h-40 rounded-2xl overflow-hidden mb-6">
-                    <Image
-                      src={event.sdg.imageUrl}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-700 ease-fluid group-hover:scale-105"
-                      style={{ backgroundColor: event.sdg.hex }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true" />
-                    <div className="absolute bottom-3 left-3">
-                      <SDGBadge sdg={event.sdg} />
-                    </div>
-                    <div className="absolute top-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold text-white bg-black/45 backdrop-blur-md border border-white/15">
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2" />
-                        <path d="M16 2v4M8 2v4M3 10h18" />
-                      </svg>
-                      Oct 24&ndash;26
-                    </div>
-                    {(event as any).resultsPublished && (
-                      <div className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black bg-amber-500 text-white border border-amber-500">
-                        🏆 Results Live
-                      </div>
-                    )}
-                  </div>
-
-                  <h3 className="font-heading text-2xl font-bold mb-3 text-gray-900 dark:text-white">{event.title}</h3>
-                  <p className="text-sm font-medium text-stone-950 dark:text-gray-400 mb-6">{event.host}</p>
-                  <p className="text-stone-950 dark:text-gray-400 text-base leading-relaxed mb-8">{event.desc}</p>
-                  {event.slug ? (
-                    <Link href={`/events/${event.slug}`} className="group/btn mt-auto inline-flex items-center gap-2 text-sm font-semibold text-stone-950 dark:text-white hover:text-sdg6 dark:hover:text-gray-300 transition-all duration-200 ease-fluid active:scale-[0.97] motion-reduce:active:scale-100 w-fit">
-                      Learn more
-                      <span className="w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-300 ease-fluid group-hover/btn:translate-x-1 group-hover/btn:bg-black/10 dark:group-hover/btn:bg-white/10" aria-hidden="true">&rarr;</span>
-                    </Link>
-                  ) : (
-                    <span className="group/btn mt-auto inline-flex items-center gap-2 text-sm font-semibold text-stone-500 dark:text-white/40 w-fit">
-                      Learn more
-                      <span className="w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center" aria-hidden="true">&rarr;</span>
-                    </span>
-                  )}
-                </div>
+          {/* Coming Soon Featured Banner */}
+          <Reveal>
+            <div className="hard-shell relative rounded-3xl overflow-hidden bg-gradient-to-br from-black/5 via-black/[0.02] to-sdg6/10 dark:from-white/10 dark:via-white/[0.02] dark:to-sdg6/10 p-8 md:p-14 border border-black/10 dark:border-white/10 text-center flex flex-col items-center justify-center min-h-[280px]">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sdg6/15 text-sdg6 font-mono text-xs font-bold uppercase tracking-widest mb-4 border border-sdg6/30">
+                <span className="w-2 h-2 rounded-full bg-sdg6 animate-ping" />
+                Coming Soon
               </div>
-            </Reveal>
-          ))}
-        </div>
+              <h3 className="font-heading text-3xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
+                Full Event Lineup To Be Revealed
+              </h3>
+              <p className="text-stone-700 dark:text-gray-300 text-base md:text-lg max-w-2xl leading-relaxed mb-8">
+                30+ Technical, Cultural, and SDG-themed competitions across all 17 UN Sustainable Development Goals are currently being finalized by society leads.
+              </p>
+              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-stone-900 text-white dark:bg-white dark:text-stone-950 font-semibold text-sm shadow-lg">
+                <svg className="w-4 h-4 text-sdg6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <path d="M16 2v4M8 2v4M3 10h18" />
+                </svg>
+                Mark Your Calendar &middot; Oct 22–23, 2026
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -94,7 +94,7 @@ export default async function LoginPage({ searchParams }: Props) {
             <p className="text-2xl font-heading font-semibold text-stone-950 dark:text-white leading-snug max-w-md">
               Your society&apos;s voice in{" "}
               <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
-                BVEST 2026
+                BVEST XIII
               </span>
             </p>
             <p className="text-sm text-stone-950 dark:text-gray-400 leading-relaxed max-w-sm">
