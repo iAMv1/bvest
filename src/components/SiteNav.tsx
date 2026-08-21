@@ -45,10 +45,6 @@ export const SiteNav: React.FC = () => {
     }
   };
 
-  // Public nav hidden on admin — admin has its own AdminNavbar (separate session, separate chrome)
-  const isAdminRoute = pathname.startsWith("/admin");
-  if (isAdminRoute) return null;
-
   // Bottom capsule: curated, fits pill (Contact lives in footer, Admin hidden by design)
   const BOTTOM_LINKS = NAV_LINKS.filter((l) => l.href !== "/#contact");
 
@@ -78,6 +74,11 @@ export const SiteNav: React.FC = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [shouldReduceMotion]);
+
+  // Website navbar only on login pages + public site — not after login (admin app has its own AdminNavbar)
+  const isAdminApp = pathname.startsWith("/admin") && pathname !== "/admin/login";
+  const isSocietyApp = pathname.startsWith("/society") && pathname !== "/society/login";
+  if (isAdminApp || isSocietyApp) return null;
 
   return (
     <>

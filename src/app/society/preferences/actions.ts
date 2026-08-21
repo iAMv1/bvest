@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
-import { domains } from "@/lib/domains";
 
 interface Selection {
   domainId: string;
@@ -28,7 +27,10 @@ export async function submitPreferences(
     return { ok: false, error: "Ranks must be 1, 2, and 3." };
   }
 
-  const allowed = new Set(domains.map((d) => d.id));
+  // Validate against DB domains first, fallback to static domains file
+  const dbDomains = await prisma.domain.findMany({ select: { id: true } }).catch(() => []);
+  const allowedIds = dbDomains.length > 0 ? dbDomains.map((d) => d.id) : (await import("@/lib/domains")).domains.map((d) => d.id);
+  const allowed = new Set(allowedIds);
   for (const s of selections) {
     if (!allowed.has(s.domainId)) return { ok: false, error: "Invalid domain selected." };
   }

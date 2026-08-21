@@ -48,3 +48,11 @@ model Event {
   status          String   @default("DRAFT") // DRAFT | PENDING | CONFIRMED | LIVE | COMPLETED
   createdAt       DateTime @default(now())
 }
+
+model Domain {
+  id          String   @id
+  name        String
+  description String
+  colorToken  String
+  createdAt   DateTime @default(now())
+}

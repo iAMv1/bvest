@@ -44,27 +44,37 @@ export async function createSociety(formData: FormData) {
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean);
 
+  // SOCIETY (member) needs no password — auto dummy, no members
+  // GROUP (organisation, exactly 2 societies, must log in) needs password + 2 members
+  const needPassword = kind === "GROUP";
   const problem =
     !ID_RE.test(rawId)
       ? "id"
       : name.length < 2
         ? "name"
-        : password.length < 6
+        : needPassword && password.length < 6
           ? "password"
-          : null;
+          : kind === "GROUP" && memberIds.length !== 2
+            ? "members"
+            : kind === "SOCIETY" && memberIds.length !== 0
+              ? "members"
+              : null;
 
   if (problem) redirect(`/admin/societies?error=${problem}`);
 
   const existing = await prisma.society.findUnique({ where: { id: rawId } });
   if (existing) redirect("/admin/societies?error=duplicate");
 
-  const hashed = await bcrypt.hash(password, 12);
-
+  // For GROUP, validate exactly 2 SOCIETY members exist
   let storedMembers: string[] = [];
-  if (memberIds.length > 0) {
-    const valid = await prisma.society.findMany({ where: { id: { in: memberIds } } });
+  if (kind === "GROUP") {
+    const valid = await prisma.society.findMany({ where: { id: { in: memberIds }, kind: "SOCIETY" } });
+    if (valid.length !== 2 || memberIds.length !== 2) redirect(`/admin/societies?error=members`);
     storedMembers = valid.map((s) => s.id);
   }
+
+  const effectivePassword = needPassword ? password : `no-login-${rawId}-${Date.now()}`;
+  const hashed = await bcrypt.hash(effectivePassword, 12);
 
   await prisma.society.create({
     data: {
@@ -72,14 +82,14 @@ export async function createSociety(formData: FormData) {
       name,
       password: hashed,
       kind,
-      memberIds: storedMembers.length > 0 ? JSON.stringify(storedMembers) : null,
+      memberIds: kind === "GROUP" ? JSON.stringify(storedMembers) : null,
     },
   });
 
   saveCustomSocietyRecord({
     id: rawId,
     name,
-    password,
+    password: needPassword ? password : "",
     hashedPassword: hashed,
     kind,
   });

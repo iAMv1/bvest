@@ -10,14 +10,23 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export default async function EventPage({ params }: Props) {
   const { slug } = await params;
 
-  // First, try to find event by slug (event detail)
-  const event = await prisma.event.findUnique({
-    where: { slug },
-    include: { hostSociety: true },
-  });
+  // Build guard: if DB not available at build time, return 404 softly
+  let event: any = null;
+  try {
+    event = await prisma.event.findUnique({
+      where: { slug },
+      include: { hostSociety: true },
+    });
+  } catch {
+    return notFound();
+  }
 
   if (event) {
     const sdg = sdgData.find((s) => String(s.number) === event.sdgDomainId);
@@ -67,11 +76,16 @@ export default async function EventPage({ params }: Props) {
   const sdgNum = Number(slug);
   if (!Number.isNaN(sdgNum) && sdgNum >= 1 && sdgNum <= 17) {
     const sdg = sdgData.find((s) => s.number === sdgNum)!;
-    const events = await prisma.event.findMany({
-      where: { sdgDomainId: String(sdgNum), status: { in: ["CONFIRMED", "LIVE"] } },
-      include: { hostSociety: true },
-      orderBy: { createdAt: "desc" },
-    });
+    let events: any[] = [];
+    try {
+      events = await prisma.event.findMany({
+        where: { sdgDomainId: String(sdgNum), status: { in: ["CONFIRMED", "LIVE"] } },
+        include: { hostSociety: true },
+        orderBy: { createdAt: "desc" },
+      });
+    } catch {
+      events = [];
+    }
     return (
       <div className="flex flex-col min-h-screen">
         <section className="relative overflow-hidden bg-background pt-24 pb-12">

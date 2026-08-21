@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
-import { domains } from "@/lib/domains";
+import { getAllDomains } from "@/lib/get-domains";
 import { PreferencePicker } from "./PreferencePicker";
 import { LogoutButton } from "@/components/LogoutButton";
 
@@ -24,6 +24,8 @@ export default async function PreferencesPage() {
   if (!society) {
     redirect("/society/login");
   }
+
+  const domains = await getAllDomains();
 
   // ── Locked: read-only confirmation view ────────────────────────────────────
   if (society.locked) {

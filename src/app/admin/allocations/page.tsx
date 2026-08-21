@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/db";
-import { domains } from "@/lib/domains";
+import { getAllDomains } from "@/lib/get-domains";
 import { ensureDefaultSocieties } from "@/lib/seed-default-societies";
 
 interface Props {
@@ -28,6 +28,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
   const filter = status === "pending" || status === "locked" ? status : "";
 
   await ensureDefaultSocieties();
+  const domains = await getAllDomains();
   const societies = await prisma.society.findMany({
     include: {
       preferences: { orderBy: { rank: "asc" } },
@@ -35,18 +36,23 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
     orderBy: { name: "asc" },
   });
 
-  const filtered = filter
-    ? societies.filter((s) => (filter === "locked" ? s.locked : !s.locked))
-    : societies;
-  const lockedCount = societies.filter((s) => s.locked).length;
-  const submittedCount = societies.filter((s) => s.submittedAt).length;
-  const pendingCount = societies.length - lockedCount;
+  const orgs = societies.filter((s) => s.kind === "GROUP");
+  const members = societies.filter((s) => s.kind === "SOCIETY");
+  const lockedCount = orgs.filter((s) => s.locked).length;
+  const submittedCount = orgs.filter((s) => s.submittedAt).length;
+  const pendingCount = orgs.length - lockedCount;
+  const filteredOrgs = filter
+    ? orgs.filter((s) => (filter === "locked" ? s.locked : !s.locked))
+    : orgs;
+  // Keep full list for member visibility but stats are org-only
+  const filtered = filteredOrgs;
+  const memberCount = members.length;
 
   const STATS = [
-    { label: "Societies", value: societies.length, dot: "bg-sdg17" },
-    { label: "Submitted", value: submittedCount, dot: "bg-emerald-500" },
+    { label: "Organisations", value: orgs.length, dot: "bg-fuchsia-500" },
+    { label: "Members (pool)", value: memberCount, dot: "bg-violet-500" },
     { label: "Pending", value: pendingCount, dot: "bg-amber-500" },
-    { label: "Locked", value: lockedCount, dot: "bg-violet-500" },
+    { label: "Locked", value: lockedCount, dot: "bg-emerald-500" },
   ];
 
   const domainByRank = (society: { preferences: { rank: number; domainId: string }[] }, rank: number) => {
@@ -78,8 +84,9 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
             </span>
           </h1>
           <p className="text-stone-950 dark:text-gray-400 text-sm max-w-2xl font-mono">
-            ALL SOCIETIES &middot; PREFERENCE LEDGER &middot; STATUS:{" "}
-            <span className="text-emerald-600 dark:text-emerald-400">{lockedCount}/{societies.length} LOCKED</span>
+            ORGANISATIONS ONLY &middot; {orgs.length} GROUPS + {memberCount} MEMBERS POOL &middot; STATUS:{" "}
+            <span className="text-emerald-600 dark:text-emerald-400">{lockedCount}/{orgs.length} LOCKED</span>
+            <span className="ml-3 text-stone-400">· Members never submit — not counted in pending</span>
           </p>
         </div>
 
@@ -136,13 +143,13 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left border-collapse">
                 <thead>
-                  <tr className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500">
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Society</th>
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Status</th>
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Submitted</th>
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Rank 1</th>
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Rank 2</th>
-                    <th className="px-6 py-4 font-bold border-b border-black/10 dark:border-white/10">Rank 3</th>
+                  <tr className="font-mono text-[11px] uppercase tracking-[0.15em] text-stone-500 dark:text-gray-400 font-semibold">
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Organisation</th>
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Status</th>
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Submitted</th>
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Rank 1</th>
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Rank 2</th>
+                    <th className="px-6 py-3.5 font-semibold border-b border-black/10 dark:border-white/10">Rank 3</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-black/5 dark:divide-white/5">
@@ -162,8 +169,8 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
                       style={{ animationDelay: `${Math.min(160 + idx * 50, 600)}ms` }}
                     >
                       <td className="px-6 py-4">
-                        <span className="block font-medium text-gray-900 dark:text-white">{society.name}</span>
-                        <span className="block font-mono text-[10px] text-stone-950 dark:text-gray-500 tracking-wider mt-0.5">
+                        <span className="block font-semibold text-[14px] leading-tight text-stone-900 dark:text-white tracking-tight">{society.name}</span>
+                        <span className="block font-mono text-[11px] text-stone-500 dark:text-gray-500 tracking-wider mt-1">
                           {society.id.toUpperCase()}
                         </span>
                       </td>
@@ -180,23 +187,23 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4 font-mono text-xs text-stone-950 dark:text-gray-400 tabular-nums whitespace-nowrap">
-                        {society.submittedAt ? new Date(society.submittedAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "—"}
+                      <td className="px-6 py-4 font-mono text-xs font-medium text-stone-600 dark:text-gray-400 tabular-nums whitespace-nowrap">
+                        {society.submittedAt ? new Date(society.submittedAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : <span className="text-stone-400 dark:text-gray-600">—</span>}
                       </td>
                       {[1, 2, 3].map((rank) => {
                         const domain = domainByRank(society, rank);
                         return (
                           <td key={rank} className="px-6 py-4">
                             {domain ? (
-                              <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04]">
+                              <span className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.06] shadow-sm">
                                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: domain.colorToken }} />
-                                <span className="text-xs font-medium text-stone-950 dark:text-gray-300 truncate max-w-[150px]">
+                                <span className="text-xs font-semibold text-stone-800 dark:text-gray-200 truncate max-w-[150px]">
                                   {domain.name}
                                 </span>
-                                <span className="font-mono text-[9px] text-stone-950 dark:text-gray-500">R{rank}</span>
+                                <span className="font-mono text-[10px] font-bold text-stone-500 dark:text-gray-500">R{rank}</span>
                               </span>
                             ) : (
-                              <span className="text-xs text-stone-950 dark:text-gray-600 font-mono">—</span>
+                              <span className="text-xs text-stone-400 dark:text-gray-600 font-mono">—</span>
                             )}
                           </td>
                         );

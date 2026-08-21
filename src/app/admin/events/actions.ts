@@ -72,3 +72,59 @@ export async function createEvent(formData: FormData) {
   revalidatePath("/admin/events");
   redirect("/admin/events?created=1");
 }
+
+export async function updateEvent(formData: FormData) {
+  await requireAdmin();
+  const id = ((formData.get("id") as string) ?? "").trim();
+  if (!id) redirect("/admin/events?error=invalid");
+  const title = ((formData.get("title") as string) ?? "").trim();
+  const rawSlug = ((formData.get("slug") as string) ?? "").trim().toLowerCase();
+  const hostSocietyId = ((formData.get("hostSocietyId") as string) ?? "").trim() || null;
+  const sdgDomainId = (formData.get("sdgDomainId") as string) ?? "";
+  const description = ((formData.get("description") as string) ?? "").trim();
+  const venue = ((formData.get("venue") as string) ?? "").trim() || null;
+  let registrationUrl = ((formData.get("registrationUrl") as string) ?? "").trim() || null;
+  if (registrationUrl && !isSafeHttpUrl(registrationUrl)) registrationUrl = null;
+  const status = STATUSES.includes((formData.get("status") as string) ?? "") ? (formData.get("status") as string) : "DRAFT";
+  const startDate = parseDate((formData.get("startDate") as string) ?? "");
+  const endDate = parseDate((formData.get("endDate") as string) ?? "");
+
+  const problem =
+    title.length < 3
+      ? "title"
+      : !SLUG_RE.test(rawSlug)
+        ? "slug"
+        : !sdgData.some((s) => String(s.number) === sdgDomainId)
+          ? "sdg"
+          : description.length < 10
+            ? "description"
+            : null;
+  if (problem) redirect(`/admin/events?error=${problem}`);
+
+  const existing = await prisma.event.findUnique({ where: { id } });
+  if (!existing) redirect("/admin/events?error=invalid");
+  const slugOwner = await prisma.event.findUnique({ where: { slug: rawSlug } });
+  if (slugOwner && slugOwner.id !== id) redirect("/admin/events?error=duplicate");
+  if (hostSocietyId) {
+    const host = await prisma.society.findUnique({ where: { id: hostSocietyId } });
+    if (!host) redirect("/admin/events?error=host");
+  }
+
+  await prisma.event.update({
+    where: { id },
+    data: { title, slug: rawSlug, hostSocietyId, sdgDomainId, description, venue, registrationUrl, status, startDate, endDate },
+  });
+
+  revalidatePath("/admin/events");
+  redirect("/admin/events?updated=1");
+}
+
+export async function updateEventStatus(formData: FormData) {
+  await requireAdmin();
+  const id = ((formData.get("id") as string) ?? "").trim();
+  const status = ((formData.get("status") as string) ?? "").trim();
+  if (!id || !STATUSES.includes(status)) redirect("/admin/events?error=invalid");
+  await prisma.event.update({ where: { id }, data: { status } });
+  revalidatePath("/admin/events");
+  redirect("/admin/events?updated=1");
+}

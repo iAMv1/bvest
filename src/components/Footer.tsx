@@ -7,7 +7,6 @@ const FOOTER_NAV_LINKS = [
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
-  { href: "/admin/login", label: "Admin Portal", isAdmin: true },
 ];
 
 export function Footer() {
@@ -46,16 +45,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`text-sm font-medium transition-colors duration-200 hover:text-sdg6 dark:hover:text-white ${
-                      link.isAdmin
-                        ? "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 text-violet-700 dark:text-violet-300 border border-violet-500/25 hover:bg-violet-500/20"
-                        : "text-stone-950 dark:text-gray-400"
-                    }`}
+                    className="text-sm font-medium text-stone-950 dark:text-gray-400 transition-colors duration-200 hover:text-sdg6 dark:hover:text-white"
                   >
                     {link.label}
-                    {link.isAdmin && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                    )}
                   </Link>
                 </li>
               ))}
