@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { sdgData } from "@/lib/sdg-data";
 import { useIntro } from "@/components/IntroContext";
@@ -92,9 +91,11 @@ export const SDGBoxCollage: React.FC = () => {
                 overflow: "hidden",
               }}
             >
-            <Link
-              href={`/events/${sdg.number}`}
-              aria-label={`SDG ${sdg.number}: ${sdg.name}`}
+            <a
+              href={`https://sdgs.un.org/goals/goal${sdg.number}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`UN SDG Goal ${sdg.number}: ${sdg.name} (opens in new tab)`}
               className="absolute inset-0 block pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
             >
               <Image
@@ -111,7 +112,7 @@ export const SDGBoxCollage: React.FC = () => {
                   <path d="M3 9L9 3M4 3h5v5" />
                 </svg>
               </span>
-            </Link>
+            </a>
           </motion.div>
           </div>
         );
@@ -120,4 +121,5 @@ export const SDGBoxCollage: React.FC = () => {
     </div>
   );
 };
+
 

@@ -9,18 +9,10 @@ import { FestTicker } from '@/components/FestTicker';
 import { StatCounter } from '@/components/StatCounter';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { Footer } from '@/components/Footer';
-import { sdgData } from '@/lib/sdg-data';
-import { getLandingEvents, eventForSdg } from '@/lib/events';
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  let landingEvents: Awaited<ReturnType<typeof getLandingEvents>> = [];
-  try {
-    landingEvents = await getLandingEvents();
-  } catch {
-    landingEvents = [];
-  }
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
@@ -91,101 +83,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 3. The 17 Goals Grid — asymmetric bento */}
-      <section id="goals" className="relative py-20 md:py-24 px-6 bg-sdg7/[0.07] dark:bg-white/[0.02] border-y border-black/10 dark:border-white/5 overflow-hidden scroll-mt-24">
-        {/* Backdrop: drifting orbs + dot grid */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="bg-grid absolute inset-0 md:opacity-70" />
-          <div className="bg-dots absolute inset-0 opacity-40" />
-          <div className="absolute top-10 -left-40 w-[26rem] h-[26rem] bg-sdg2/12 rounded-full blur-[140px] animate-drift" />
-          <div className="absolute bottom-10 -right-40 w-[30rem] h-[30rem] bg-sdg10/14 rounded-full blur-[160px] animate-drift-slow" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto">
-          <Reveal className="text-center mb-24">
-            {/* Ghost display splash */}
-            <span className="outline-text pointer-events-none select-none absolute -top-6 md:-top-10 left-1/2 -translate-x-1/2 font-heading text-[6rem] md:text-[11rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
-              17 Goals
-            </span>
-            <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">
-              The{" "}
-              <span className="bg-gradient-to-r from-sdg7 to-sdg9 bg-clip-text text-transparent">
-                17 Goals
-              </span>
-            </h2>
-            <p className="relative text-stone-950 dark:text-gray-400 text-lg max-w-2xl mx-auto">Discover the events hosted by our societies across all 17 domains.</p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
-            {sdgData.map((sdg, i) => (
-              <Reveal key={sdg.number} delay={(i % 4) * 0.05} className={i === 0 || i === 5 || i === 11 ? "lg:col-span-2" : ""}>
-                <Link
-                  id={`goal-${sdg.number}`}
-                  href={`/events/${sdg.number}`}
-                  className="hard-shell block group h-full transition-all duration-300 ease-fluid hover:-translate-y-1.5 hover:bg-black/15 dark:hover:bg-white/25 active:scale-[0.98] motion-reduce:active:scale-100"
-                  style={{ background: `linear-gradient(180deg, ${sdg.hex}33, var(--glass-stroke))` }}
-                >
-                  <div className="hard-core relative bg-white dark:bg-[#0B0B0C] p-6 h-full overflow-hidden transition-all duration-300 ease-fluid group-hover:bg-stone-50 dark:group-hover:bg-[#101012] flex flex-col items-start gap-4">
-                    {/* Ghost watermark number */}
-                    <span
-                      className="pointer-events-none select-none absolute -right-1 -bottom-5 font-heading text-[5.5rem] font-black leading-none"
-                      style={{ color: sdg.hex, opacity: 0.08 }}
-                      aria-hidden="true"
-                    >
-                      {sdg.number}
-                    </span>
-
-                    {/* Hover arrow chip */}
-                    <span className="absolute right-5 top-5 w-8 h-8 rounded-full border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 backdrop-blur-md flex items-center justify-center text-stone-950 dark:text-white opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-fluid" aria-hidden="true">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M3 9L9 3M4 3h5v5" />
-                      </svg>
-                    </span>
-
-                    <div
-                      className="absolute left-0 top-0 bottom-0 w-1 transition-all duration-300 ease-fluid group-hover:w-1.5"
-                      style={{ backgroundColor: sdg.hex }}
-                    />
-
-                    {/* SDG icon chip with number badge */}
-                    <div
-                      className="relative w-14 h-14 rounded-2xl overflow-hidden flex items-center justify-center shadow-lg shrink-0 transition-transform duration-500 ease-fluid group-hover:rotate-[8deg] group-hover:scale-110"
-                      style={{ backgroundColor: sdg.hex, boxShadow: `0 8px 24px ${sdg.hex}44` }}
-                    >
-                      <Image
-                        src={sdg.imageUrl}
-                        alt=""
-                        width={56}
-                        height={56}
-                        className="w-full h-full object-contain p-1.5"
-                      />
-                      <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white dark:bg-[#0B0B0C] border border-black/10 dark:border-white/15 text-stone-950 dark:text-white text-[10px] font-heading font-bold flex items-center justify-center">
-                        {sdg.number}
-                      </span>
-                    </div>
-
-                    <h3 className="font-heading font-semibold text-lg text-gray-900 dark:text-white leading-tight">
-                      {sdg.name}
-                    </h3>
-
-                    {(() => {
-                      const ev = eventForSdg(landingEvents, sdg.number);
-                      return (
-                        <div className="mt-auto pt-5 w-full border-t border-black/10 dark:border-white/10">
-                          <p className="text-xs text-stone-700 dark:text-gray-400 mb-1.5 leading-relaxed"><span className="font-semibold text-stone-900 dark:text-gray-200">Hosted by:</span> {ev?.hostSociety?.name ?? "BVCOE Student Societies"} {ev?.resultsPublished && <span className="ml-1 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500 text-white border border-amber-500 leading-none">🏆 Live</span>}</p>
-                          <p className="text-xs text-stone-700 dark:text-gray-400 leading-relaxed"><span className="font-semibold text-stone-900 dark:text-gray-200">Event:</span> {ev ? ev.title : "Confirmed — reveal soon"} {ev?.resultsPublished && <span className="text-amber-600 dark:text-amber-400 font-bold"> · Results Live</span>}</p>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Featured Events Section — SDG rose-washed canvas in light */}
+      {/* 3. Featured Events Section — SDG rose-washed canvas in light */}
       <section id="featured-events" className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg10/[0.05] dark:bg-transparent">
         {/* Backdrop: cursor-following aura + grid texture */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -238,10 +136,10 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 5. Core Team Section */}
+      {/* 4. Core Team Section */}
       <CoreTeamSection />
 
-      {/* 6. Sponsors/Partners Strip */}
+      {/* 5. Sponsors/Partners Strip */}
       <section className="relative py-16 md:py-20 px-6 bg-sdg11/[0.09] dark:bg-white/[0.02] border-y border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden">
         {/* Backdrop: low center glow */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">

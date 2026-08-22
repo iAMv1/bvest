@@ -42,10 +42,10 @@ export const Hero: React.FC = () => {
         <div className="flex flex-wrap items-center gap-4">
           <Magnetic strength={0.25}>
             <Link
-              href="#goals"
+              href="#featured-events"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
             >
-              Explore the 17 Goals
+              Explore Fest Events
               <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
                 <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 6h8M6 2l4 4-4 4" />
@@ -123,10 +123,10 @@ export const Hero: React.FC = () => {
       >
         <Magnetic strength={0.25}>
           <Link
-            href="#goals"
+            href="#featured-events"
             className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
           >
-            Explore the 17 Goals
+            Explore Fest Events
             <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
               <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 6h8M6 2l4 4-4 4" />

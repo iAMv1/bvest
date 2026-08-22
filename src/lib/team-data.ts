@@ -99,7 +99,7 @@ export const coreTeamData: TeamMember[] = [
   },
   {
     id: "9",
-    name: "Saksham Budhraja",
+    name: "Saksham Budhiraja",
     role: "Website + Tech Support Coordinator",
     departments: ["Website", "Tech Support"],
     bio: "Working on the fest website and technical requirements while supporting the digital side of the event.",

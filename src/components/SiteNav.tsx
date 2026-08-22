@@ -8,7 +8,6 @@ import { BvestLogo } from "@/components/BvestLogo";
 import { useTheme } from "@/components/ThemeProvider";
 
 const CORE_NAV_LINKS = [
-  { href: "/#goals", label: "Goals" },
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
