@@ -7,6 +7,7 @@ import { Hero } from '@/components/Hero';
 import { BackdropAurora } from '@/components/BackdropAurora';
 import { FestTicker } from '@/components/FestTicker';
 import { StatCounter } from '@/components/StatCounter';
+import { BvestLegacySection } from '@/components/BvestLegacySection';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { Footer } from '@/components/Footer';
 
@@ -136,7 +137,10 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 4. Core Team Section */}
+      {/* 4. Legacy Archive (10th, 11th, 12th & 13th Editions) */}
+      <BvestLegacySection />
+
+      {/* 5. Core Team Section */}
       <CoreTeamSection />
 
       {/* 5. Sponsors/Partners Strip */}

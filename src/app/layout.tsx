@@ -18,8 +18,48 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "BVEST | College Technical Fest",
-  description: "Official website for BVEST.",
+  title: {
+    default: "BVEST XIII (2026) — Annual Technical Fest | BVCOE Delhi",
+    template: "%s | BVEST XIII — BVCOE Delhi",
+  },
+  description:
+    "Official portal for BVEST XIII (2026), the annual college technical fest of Bharati Vidyapeeth's College of Engineering (BVCOE), New Delhi, themed around the 17 UN Sustainable Development Goals (SDGs).",
+  keywords: [
+    "BVEST",
+    "BVEST 2026",
+    "BVEST XIII",
+    "BVCOE",
+    "BVCOE Delhi",
+    "Bharati Vidyapeeth's College of Engineering",
+    "UN SDGs",
+    "Sustainable Development Goals",
+    "College Technical Fest Delhi",
+    "Hackathon Delhi",
+  ],
+  authors: [
+    { name: "BVCOE Delhi", url: "https://bvcoend.ac.in" },
+    { name: "BVEST Tech Team" },
+  ],
+  openGraph: {
+    title: "BVEST XIII (2026) — Annual Technical Fest | BVCOE Delhi",
+    description:
+      "Innovating for a Sustainable Future across the 17 UN Sustainable Development Goals. Join 30+ student societies at BVCOE Delhi on October 22–23, 2026.",
+    url: "https://bvest.bvcoend.ac.in",
+    siteName: "BVEST XIII — BVCOE Delhi",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BVEST XIII (2026) — Annual Technical Fest | BVCOE Delhi",
+    description:
+      "Official website for BVEST XIII at BVCOE Delhi. Technical events, hackathons, and showcases themed around the 17 UN Sustainable Development Goals.",
+    creator: "@bvcoe_delhi",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -14,13 +14,13 @@ export const StatCounter: React.FC<StatCounterProps> = ({ value, label, classNam
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const shouldReduceMotion = useReducedMotion();
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState(String(value));
 
   useEffect(() => {
     if (!inView) return;
     if (shouldReduceMotion) {
-      const raf = requestAnimationFrame(() => setDisplay(String(value)));
-      return () => cancelAnimationFrame(raf);
+      setDisplay(String(value));
+      return;
     }
     const controls = animate(0, value, {
       duration: 1.4,

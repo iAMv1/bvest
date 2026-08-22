@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const TECHNICAL_SOCIETIES = [
+const ALL_SOCIETIES = [
   "IEEE BVCOE",
   "OPTiCA",
   "BVP ISTE",
@@ -18,9 +18,6 @@ const TECHNICAL_SOCIETIES = [
   "IOSC",
   "GFG",
   "ATHENA",
-];
-
-const NON_TECHNICAL_SOCIETIES = [
   "DANCE",
   "MUSIC",
   "NSS",
@@ -36,79 +33,30 @@ const NON_TECHNICAL_SOCIETIES = [
 ];
 
 export const SocietyBackgroundGraphic: React.FC = () => {
-  const allSocieties = [...TECHNICAL_SOCIETIES, ...NON_TECHNICAL_SOCIETIES];
-
-  // Prepare multiple distinct staggered rows of tilted society text marquee
-  const row1 = [...TECHNICAL_SOCIETIES, ...NON_TECHNICAL_SOCIETIES];
-  const row2 = [...NON_TECHNICAL_SOCIETIES, ...TECHNICAL_SOCIETIES];
-  const row3 = [...TECHNICAL_SOCIETIES].reverse();
-  const row4 = [...NON_TECHNICAL_SOCIETIES].reverse();
-  const row5 = [
-    ...TECHNICAL_SOCIETIES.slice(5),
-    ...NON_TECHNICAL_SOCIETIES.slice(4),
-    ...TECHNICAL_SOCIETIES.slice(0, 5),
-    ...NON_TECHNICAL_SOCIETIES.slice(0, 4),
-  ];
-
   return (
-    <div
-      aria-hidden="true"
-      className="fixed inset-0 overflow-hidden pointer-events-none z-0 select-none opacity-20 dark:opacity-15 flex flex-col justify-between py-10 rotate-[-12deg] scale-125"
-    >
-      {/* Glow gradient backdrops */}
-      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px]" />
-      <div className="absolute bottom-1/3 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/20 rounded-full blur-[140px]" />
+    <div aria-hidden="true" className="fixed inset-0 overflow-hidden pointer-events-none select-none z-0">
+      {/* 1. Engineering Grid & Dot Matrix Backdrops */}
+      <div className="bg-grid absolute inset-0 opacity-40 dark:opacity-30" />
+      <div className="bg-dots absolute inset-0 opacity-30 dark:opacity-20" />
 
-      {/* Row 1 */}
-      <div style={{ animationDuration: "38s" }} className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-stone-600 dark:text-gray-500">
-        {row1.concat(row1).map((name, i) => (
-          <span key={`r1-${i}`} className="inline-flex items-center gap-6">
-            <span className="hover:text-stone-950 dark:hover:text-white transition-colors">{name}</span>
-            <span className="text-xs opacity-40">&bull;</span>
-          </span>
-        ))}
-      </div>
+      {/* 2. Soft Ambient Glowing Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[36rem] h-[36rem] bg-sdg6/15 dark:bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
+      <div className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] bg-sdg10/12 dark:bg-purple-600/10 rounded-full blur-[190px] animate-drift-slow" />
+      <div className="absolute top-1/2 right-1/3 -translate-y-1/2 w-[28rem] h-[28rem] bg-sdg7/10 dark:bg-sdg7/5 rounded-full blur-[150px]" />
 
-      {/* Row 2 */}
-      <div style={{ animationDuration: "52s" }} className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-2xl md:text-4xl font-black tracking-wider uppercase text-stone-600 dark:text-gray-400">
-        {row2.concat(row2).map((name, i) => (
-          <span key={`r2-${i}`} className="inline-flex items-center gap-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-stone-500 to-stone-700 dark:from-gray-300 dark:to-gray-600">
-              {name}
+      {/* 3. Vignette Shadow Overlay — creates cinematic focus on the central card */}
+      <div className="absolute inset-0 bg-radial-vignette opacity-60 dark:opacity-80 pointer-events-none" />
+
+      {/* 4. Small Infinite Scrolling Society Ticker at Bottom */}
+      <div className="absolute bottom-0 inset-x-0 py-3 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-black/40 backdrop-blur-md overflow-hidden">
+        <div style={{ animationDuration: "45s" }} className="flex gap-8 whitespace-nowrap animate-marquee font-mono text-xs font-medium tracking-widest uppercase text-stone-700 dark:text-stone-300">
+          {ALL_SOCIETIES.concat(ALL_SOCIETIES).map((name, i) => (
+            <span key={`soc-${i}`} className="inline-flex items-center gap-6">
+              <span>{name}</span>
+              <span className="text-[8px] opacity-40 text-stone-500 dark:text-stone-400">&bull;</span>
             </span>
-            <span className="text-xs opacity-40">&bull;</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Row 3 */}
-      <div style={{ animationDuration: "46s" }} className="flex gap-10 whitespace-nowrap animate-marquee font-heading text-lg md:text-2xl font-bold tracking-widest uppercase text-stone-600 dark:text-gray-500">
-        {row3.concat(row3).map((name, i) => (
-          <span key={`r3-${i}`} className="inline-flex items-center gap-6">
-            <span>{name}</span>
-            <span className="text-xs opacity-40">&bull;</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Row 4 */}
-      <div style={{ animationDuration: "34s" }} className="flex gap-8 whitespace-nowrap animate-marquee-reverse font-heading text-3xl md:text-5xl font-black tracking-widest uppercase text-stone-700 dark:text-gray-300">
-        {row4.concat(row4).map((name, i) => (
-          <span key={`r4-${i}`} className="inline-flex items-center gap-6">
-            <span>{name}</span>
-            <span className="text-xs opacity-40">&bull;</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Row 5 */}
-      <div style={{ animationDuration: "58s" }} className="flex gap-8 whitespace-nowrap animate-marquee font-heading text-xl md:text-3xl font-extrabold tracking-widest uppercase text-stone-600 dark:text-gray-500">
-        {row5.concat(row5).map((name, i) => (
-          <span key={`r5-${i}`} className="inline-flex items-center gap-6">
-            <span>{name}</span>
-            <span className="text-xs opacity-40">&bull;</span>
-          </span>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

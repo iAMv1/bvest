@@ -124,8 +124,8 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
           <div className="flex items-center gap-2.5">
             {!onPortal && (
               <Link
-                href="/#featured-events"
-                onClick={(e) => handleNavClick(e, "/#featured-events")}
+                href="/events"
+                onClick={(e) => handleNavClick(e, "/events")}
                 className={`btn-shine hidden lg:inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white text-gray-950 dark:text-gray-950 rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-gray-200 dark:hover:bg-gray-200 active:scale-[0.96] group`}
               >
               Explore Events
@@ -270,8 +270,8 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
               <div className="flex flex-col gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                 {!onPortal && (
                   <Link
-                    href="/#featured-events"
-                    onClick={(e) => handleNavClick(e, "/#featured-events")}
+                    href="/events"
+                    onClick={(e) => handleNavClick(e, "/events")}
                     className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-sdg6 to-sdg3 text-white font-semibold text-base shadow-lg active:scale-[0.98]"
                   >
                     Explore Events &rarr;

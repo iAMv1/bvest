@@ -3,10 +3,10 @@ import { BvestLogo } from "@/components/BvestLogo";
 import { SDGColorStrip } from "@/components/SDGColorStrip";
 
 const FOOTER_NAV_LINKS = [
-  { href: "/#goals", label: "Goals" },
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
+  { href: "/links", label: "Bio Links" },
 ];
 
 export function Footer() {
@@ -25,19 +25,22 @@ export function Footer() {
       <div className="relative max-w-7xl mx-auto px-6 mb-12">
         {/* Top Row: Brand Info + Social Icons */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-8 border-b border-black/10 dark:border-white/10">
-          {/* Brand */}
+          {/* Brand & Official Attribution */}
           <div className="flex flex-col items-center md:items-start text-stone-950 dark:text-white">
             <BvestLogo size={88} />
-            <p className="text-stone-950 dark:text-gray-400 text-sm mt-3 text-center md:text-left">
-              Innovating for a Sustainable Future.
+            <p className="text-stone-950 dark:text-gray-300 text-sm mt-3 text-center md:text-left font-medium">
+              Innovating for a Sustainable Future across the 17 UN Sustainable Development Goals.
             </p>
-            <p className="text-xs text-stone-600 dark:text-gray-500 mt-1 font-mono">
-              BVCOE Delhi &middot; BVEST XIII
+            <p className="text-xs text-stone-600 dark:text-gray-400 mt-1 font-sans text-center md:text-left">
+              Official Technical Fest of <strong>Bharati Vidyapeeth&apos;s College of Engineering (BVCOE)</strong>
+            </p>
+            <p className="text-[11px] text-stone-500 dark:text-gray-500 mt-0.5 font-mono text-center md:text-left">
+              A-4, Paschim Vihar, Rohtak Road, New Delhi &ndash; 110063
             </p>
           </div>
 
           {/* Social Icons (Instagram & WhatsApp Only) */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             {/* Instagram Icon Button */}
             <a
               href="https://www.instagram.com/bvest.bvcoe?igsi=MWJmc283MG95eTdoNg=="
@@ -88,17 +91,23 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Row: Horizontal Navigation Links */}
-        <div className="pt-6 flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 md:gap-8">
-          {FOOTER_NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-stone-950 dark:text-gray-400 transition-colors duration-200 hover:text-sdg6 dark:hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* Bottom Row: Horizontal Navigation Links & Privacy Disclaimer */}
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6">
+            {FOOTER_NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-stone-950 dark:text-gray-400 transition-colors duration-200 hover:text-sdg6 dark:hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <p className="text-xs text-stone-500 dark:text-gray-500 font-mono">
+            &copy; 2026 BVEST XIII &middot; BVCOE Delhi. All rights reserved. &middot; Privacy &amp; Data Policy Enforced
+          </p>
         </div>
       </div>
 

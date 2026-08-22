@@ -19,8 +19,8 @@ export const Hero: React.FC = () => {
 
   if (shouldReduceMotion) {
     return (
-      <div className="max-w-xl pb-24 md:pb-40 pointer-events-auto">
-        <div className="mb-8 text-gray-900 dark:text-white">
+      <div className="max-w-xl pb-24 md:pb-40 pointer-events-auto flex flex-col items-center md:items-start text-center md:text-left mx-auto md:mx-0">
+        <div className="mb-8 text-gray-900 dark:text-white flex justify-center md:justify-start w-full">
           <BvestLogo size={200} showSubtitle={true} />
         </div>
 
@@ -28,7 +28,7 @@ export const Hero: React.FC = () => {
           The Annual Technical Fest themed around the UN Sustainable Development Goals.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
+        <div className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
             <span>October 22 &ndash; 23, 2026</span>
@@ -39,29 +39,25 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <Magnetic strength={0.25}>
-            <Link
-              href="#featured-events"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
-            >
-              Explore Fest Events
-              <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 6h8M6 2l4 4-4 4" />
-                </svg>
-              </span>
-            </Link>
-          </Magnetic>
-          <Magnetic strength={0.25}>
-            <Link
-              href="/society/login"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-300 ease-fluid hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.97]"
-            >
-              Society Portal
-              <span className="w-7 h-7 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
-            </Link>
-          </Magnetic>
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+          <Link
+            href="/events"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 bg-white text-stone-950 rounded-full font-semibold transition-all duration-200 hover:bg-stone-200 active:scale-[0.98] shadow-md dark:shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+          >
+            Explore Fest Events
+            <span className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center text-stone-900 transition-transform duration-200 group-hover:translate-x-0.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 6h8M6 2l4 4-4 4" />
+              </svg>
+            </span>
+          </Link>
+          <Link
+            href="/society/login"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
+          >
+            Society Portal
+            <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+          </Link>
         </div>
       </div>
     );
@@ -69,7 +65,7 @@ export const Hero: React.FC = () => {
 
   return (
     <motion.div
-      className="max-w-xl pb-24 md:pb-40 pointer-events-auto"
+      className="max-w-xl pb-24 md:pb-40 pointer-events-auto flex flex-col items-center md:items-start text-center md:text-left mx-auto md:mx-0"
       initial="hidden"
       animate={start ? "show" : "hidden"}
       variants={{
@@ -82,8 +78,11 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 24 },
           show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
         }}
-        className="mb-8 text-gray-900 dark:text-white"
+        className="mb-8 text-gray-900 dark:text-white flex justify-center md:justify-start w-full"
       >
+        <h1 className="sr-only">
+          BVEST XIII (2026) — Annual Technical Fest of Bharati Vidyapeeth&apos;s College of Engineering (BVCOE) Delhi
+        </h1>
         <BvestLogo size={200} showSubtitle={true} />
       </motion.div>
 
@@ -102,7 +101,7 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 18 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
         }}
-        className="flex flex-col sm:flex-row items-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium"
+        className="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-6 text-stone-950 dark:text-gray-400 mb-12 text-sm font-medium"
       >
         <div className="flex items-center gap-2">
           <span className="font-semibold text-stone-900 dark:text-gray-200 uppercase text-xs tracking-wider">Date:</span>
@@ -119,30 +118,26 @@ export const Hero: React.FC = () => {
           hidden: { opacity: 0, y: 18 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_EXPO } },
         }}
-        className="flex flex-wrap items-center gap-4"
+        className="flex flex-wrap items-center justify-center md:justify-start gap-4"
       >
-        <Magnetic strength={0.25}>
-          <Link
-            href="#featured-events"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-950 rounded-full font-semibold transition-all duration-300 ease-fluid hover:bg-gray-200 active:scale-[0.97] shadow-[0_8px_40px_rgba(20,20,20,0.12)] dark:shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
-          >
-            Explore Fest Events
-            <span className="w-7 h-7 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-300 ease-fluid group-hover:translate-x-1 group-hover:-translate-y-px group-hover:scale-105">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M2 6h8M6 2l4 4-4 4" />
-              </svg>
-            </span>
-          </Link>
-        </Magnetic>
-        <Magnetic strength={0.25}>
-          <Link
-            href="/society/login"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-300 ease-fluid hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.97]"
-          >
-            Society Portal
-            <span className="w-7 h-7 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-sm">&rarr;</span>
-          </Link>
-        </Magnetic>
+        <Link
+          href="/events"
+          className="group inline-flex items-center gap-3 px-7 py-3.5 bg-white text-stone-950 rounded-full font-semibold transition-all duration-200 hover:bg-stone-200 active:scale-[0.98] shadow-md dark:shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+        >
+          Explore Fest Events
+          <span className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center text-stone-900 transition-transform duration-200 group-hover:translate-x-0.5">
+            <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 6h8M6 2l4 4-4 4" />
+            </svg>
+          </span>
+        </Link>
+        <Link
+          href="/society/login"
+          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
+        >
+          Society Portal
+          <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+        </Link>
       </motion.div>
     </motion.div>
   );
