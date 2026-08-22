@@ -59,16 +59,19 @@ export default async function Home() {
         <div className="relative max-w-4xl mx-auto px-6 text-center">
         <Reveal className="relative">
           <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white tracking-tight">
-            Innovating for a{" "}
+            BVEST 13 &mdash;{" "}
             <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
-              Sustainable Future
+              Engineering a Better Tomorrow
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-stone-950 dark:text-gray-400 mb-8 leading-relaxed">
-            BVEST is our premier college technical fest where innovation meets impact. We&apos;ve structured this year&apos;s entire fest around the 17 UN Sustainable Development Goals (SDGs), challenging our students to build solutions for the world&apos;s most pressing problems.
+          <p className="text-lg md:text-xl text-stone-950 dark:text-gray-300 mb-6 leading-relaxed">
+            Bharati Vidyapeeth&apos;s College of Engineering presents BVEST 13, an expansive celebration of technology, ingenuity, and intellectual excellence, conceived to bring student potential into dialogue with the challenges shaping our world. It is a platform where disciplines converge, perspectives evolve, and knowledge finds relevance beyond the boundaries of the classroom.
           </p>
-          <p className="text-lg md:text-xl text-stone-950 dark:text-gray-400 leading-relaxed">
-            Each participating society and club is assigned one specific SDG. They host technical events, hackathons, and showcases entirely dedicated to their assigned goal&apos;s domain.
+          <p className="text-lg md:text-xl text-stone-950 dark:text-gray-300 mb-6 leading-relaxed">
+            At the heart of this edition lie the 17 United Nations Sustainable Development Goals, with every society and student chapter entrusted with one defining goal. Through a diverse spectrum of technical events, competitions, showcases, and experiential challenges, each chapter will translate its assigned SDG into a distinctive ecosystem of thought, exploration, and creation.
+          </p>
+          <p className="text-lg md:text-xl font-semibold text-sdg6 dark:text-sdg6 leading-relaxed font-mono">
+            Seventeen global ambitions. One extraordinary platform. An opportunity to shape what comes next.
           </p>
         </Reveal>
 
