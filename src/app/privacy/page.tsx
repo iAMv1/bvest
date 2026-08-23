@@ -147,7 +147,7 @@ export default function PrivacyPolicyPage() {
                 If you have questions regarding this Privacy Policy or wish to request data correction/removal, please contact the BVEST team:
               </p>
               <div className="text-xs font-mono space-y-1 text-stone-900 dark:text-white">
-                <p>📧 Email: <a href="mailto:bvest@bvcoend.ac.in" className="underline text-sdg6 font-bold">bvest@bvcoend.ac.in</a></p>
+                <p>📞 EM Coordinators: Aastha Narang (+91 98991 56103) &middot; Akshat Arora (+91 84700 84661)</p>
                 <p>📍 Location: Bharati Vidyapeeth&apos;s College of Engineering (BVCOE), A-4, Paschim Vihar, New Delhi &ndash; 110063</p>
               </div>
             </div>

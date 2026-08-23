@@ -120,10 +120,10 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
               <Link
                 href="/events"
                 onClick={(e) => handleNavClick(e, "/events")}
-                className={`btn-shine hidden lg:inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white text-gray-950 dark:text-gray-950 rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-gray-200 dark:hover:bg-gray-200 active:scale-[0.96] group`}
+                className={`btn-shine hidden lg:inline-flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-stone-800 dark:hover:bg-gray-200 active:scale-[0.96] group`}
               >
               Explore Events
-              <span className="w-5 h-5 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105">
+              <span className="w-5 h-5 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105">
                 <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 6h8M6 2l4 4-4 4" />
                 </svg>
