@@ -87,14 +87,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 3. Featured Events Section — SDG rose-washed canvas in light */}
-      <section id="featured-events" className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg10/[0.05] dark:bg-transparent">
+      {/* 3. Featured Events Section — clean light background without pink tint */}
+      <section id="featured-events" className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg6/[0.04] dark:bg-transparent transition-colors duration-200">
         {/* Backdrop: cursor-following aura + grid texture */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-grid absolute inset-0 md:opacity-60" />
           <div className="bg-dots absolute inset-0 md:opacity-40" />
           <div className="absolute top-1/4 -right-40 w-[34rem] h-[34rem] bg-sdg6/12 rounded-full blur-[170px] animate-drift" />
-          <div className="absolute bottom-1/4 -right-24 w-[22rem] h-[22rem] bg-sdg10/10 rounded-full blur-[140px] animate-drift-slow" />
+          <div className="absolute bottom-1/4 -right-24 w-[22rem] h-[22rem] bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
@@ -105,7 +105,7 @@ export default async function Home() {
               </span>
               <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">
                 Fest{" "}
-                <span className="bg-gradient-to-r from-sdg10 to-sdg6 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
                   Events
                 </span>
               </h2>

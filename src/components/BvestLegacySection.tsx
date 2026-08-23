@@ -65,7 +65,7 @@ export const BvestLegacySection: React.FC = () => {
             Heritage &amp; History
           </span>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-stone-950 dark:text-white tracking-tight mb-4">
-            BVEST <span className="bg-gradient-to-r from-sdg6 to-sdg10 bg-clip-text text-transparent">Legacy</span>
+            BVEST <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">Legacy</span>
           </h2>
           <p className="text-stone-700 dark:text-gray-400 text-base md:text-lg leading-relaxed">
             Exploring past poster editions and logos of BVCOE Delhi&apos;s flagship technical fest through the years.
@@ -98,12 +98,22 @@ export const BvestLegacySection: React.FC = () => {
                     {/* Logo / Poster Visual Placeholder Frame */}
                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone-100 dark:bg-black/50 border border-black/5 dark:border-white/10 flex items-center justify-center p-6 mb-5 group-hover:border-sdg6/50 transition-colors">
                       {item.imageSrc ? (
-                        <Image
-                          src={item.imageSrc}
-                          alt={`${item.version} Logo`}
-                          fill
-                          className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-                        />
+                        <>
+                          {/* Dark logo in light mode */}
+                          <Image
+                            src="/logo-dark.png"
+                            alt={`${item.version} Logo`}
+                            fill
+                            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105 dark:hidden"
+                          />
+                          {/* White logo in dark mode */}
+                          <Image
+                            src="/logo.png"
+                            alt={`${item.version} Logo`}
+                            fill
+                            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105 hidden dark:block"
+                          />
+                        </>
                       ) : (
                         <div className="text-center flex flex-col items-center justify-center gap-2">
                           <div

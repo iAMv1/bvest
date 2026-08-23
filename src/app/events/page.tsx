@@ -25,7 +25,7 @@ export default async function EventsPage() {
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="bg-dots absolute inset-0 md:opacity-40" />
         <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
-        <div className="absolute -right-40 top-1/3 w-[30rem] h-[30rem] bg-sdg10/10 rounded-full blur-[180px] animate-drift-slow" />
+        <div className="absolute -right-40 top-1/3 w-[30rem] h-[30rem] bg-sdg3/10 rounded-full blur-[180px] animate-drift-slow" />
         <span
           className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]"
           aria-hidden
@@ -40,7 +40,7 @@ export default async function EventsPage() {
           <div>
             <h1 className="font-heading text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
               Fest{" "}
-              <span className="bg-gradient-to-r from-sdg10 to-sdg6 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
                 Events
               </span>
             </h1>
