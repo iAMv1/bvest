@@ -7,6 +7,7 @@ const FOOTER_NAV_LINKS = [
   { href: "/#core-team", label: "Core Team" },
   { href: "/society/login", label: "Society Portal" },
   { href: "/links", label: "Bio Links" },
+  { href: "/privacy", label: "Privacy Policy" },
 ];
 
 export function Footer() {
@@ -68,7 +69,7 @@ export function Footer() {
 
             {/* WhatsApp Icon Button */}
             <a
-              href="https://wa.me/"
+              href="https://chat.whatsapp.com/CQ9FNfCj1Sq25jSU0Ly4fK?mode=gi_t"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
@@ -91,6 +92,90 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Contact Information & Official Help Desk */}
+        <div className="py-8 border-b border-black/10 dark:border-white/10">
+          <div className="mb-6">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-sdg6">
+              Get in Touch &middot; Support &amp; Inquiries
+            </span>
+            <h3 className="font-heading text-2xl font-bold text-stone-950 dark:text-white mt-1">
+              Official Contact Channels
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Email Card */}
+            <div className="p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-sdg6/15 text-sdg6 flex items-center justify-center mb-3">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500 dark:text-gray-400 font-semibold block">Official Fest Email</span>
+                <a
+                  href="mailto:bvest@bvcoend.ac.in"
+                  className="text-base font-bold text-stone-900 dark:text-white hover:text-sdg6 transition-colors block mt-1"
+                >
+                  bvest@bvcoend.ac.in
+                </a>
+              </div>
+              <p className="text-xs text-stone-600 dark:text-gray-400 mt-3">
+                For official queries, sponsorships, and fest communications.
+              </p>
+            </div>
+
+            {/* EM Coordinators Card */}
+            <div className="p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-sdg3/15 text-sdg3 flex items-center justify-center mb-3">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500 dark:text-gray-400 font-semibold block">Event Management (EM) Coordinators</span>
+                <div className="mt-2 space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-stone-900 dark:text-gray-200">Aastha Narang</span>
+                    <a href="tel:+919899156103" className="font-mono text-stone-700 dark:text-gray-300 hover:text-sdg6 font-semibold">
+                      +91 98991 56103
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-semibold text-stone-900 dark:text-gray-200">Akshat Arora</span>
+                    <a href="tel:+918470084661" className="font-mono text-stone-700 dark:text-gray-300 hover:text-sdg6 font-semibold">
+                      +91 84700 84661
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-stone-600 dark:text-gray-400 mt-3">
+                Designated EM coordinators for student &amp; event assistance.
+              </p>
+            </div>
+
+            {/* Support Hours Card */}
+            <div className="p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-sdg9/15 text-sdg9 flex items-center justify-center mb-3">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500 dark:text-gray-400 font-semibold block">Designated Contact Hours</span>
+                <span className="text-sm font-bold text-stone-900 dark:text-white block mt-1">
+                  Mon &ndash; Sat &middot; 9:00 AM &ndash; 6:00 PM IST
+                </span>
+              </div>
+              <p className="text-xs text-stone-600 dark:text-gray-400 mt-3">
+                BVCOE Delhi Campus, Paschim Vihar, New Delhi.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Row: Horizontal Navigation Links & Privacy Disclaimer */}
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6">
@@ -106,7 +191,7 @@ export function Footer() {
           </div>
 
           <p className="text-xs text-stone-500 dark:text-gray-500 font-mono">
-            &copy; 2026 BVEST XIII &middot; BVCOE Delhi. All rights reserved. &middot; Privacy &amp; Data Policy Enforced
+            &copy; 2026 BVEST XIII &middot; BVCOE Delhi. All rights reserved. &middot; <Link href="/privacy" className="underline hover:text-sdg6 transition-colors">Privacy &amp; Data Policy</Link>
           </p>
         </div>
       </div>

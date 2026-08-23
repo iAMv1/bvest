@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Society Portal | BVEST",
-  description: "Society login and domain preference portal for BVEST.",
+  title: "Society Portal",
+  description: "Society login and domain preference portal for BVEST XIII 2026.",
 };
 
 export default function SocietyLayout({ children }: { children: React.ReactNode }) {

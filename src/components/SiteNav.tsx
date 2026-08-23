@@ -27,13 +27,10 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
   const onPortal = pathname.startsWith("/society") || pathname.startsWith("/admin");
   const { theme, setPreference } = useTheme();
   const { scrollYProgress } = useScroll();
-  const [bottomActive, setBottomActive] = useState<string>(NAV_LINKS[0].href);
-
   const toggleTheme = () => setPreference(theme === "dark" ? "light" : "dark");
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setOpen(false);
-    setBottomActive(href);
     if (href.startsWith("/#")) {
       const targetId = href.replace("/#", "");
       if (pathname === "/") {
@@ -46,9 +43,6 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
       }
     }
   };
-
-  // Bottom capsule: curated, fits pill (Contact lives in footer, Admin hidden by design)
-  const BOTTOM_LINKS = NAV_LINKS.filter((l) => l.href !== "/#contact");
 
 
   useEffect(() => {
@@ -105,7 +99,7 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
           }`}
         >
           <Link href="/" className="shrink-0 transition-transform duration-300 ease-fluid hover:scale-[1.04] active:scale-[0.97] motion-reduce:hover:scale-100" aria-label="BVEST home">
-            <BvestLogo size={34} />
+            <BvestLogo size={15} isHeader={true} />
           </Link>
 
           <nav className="hidden md:flex items-center gap-7 text-[13px] font-medium text-stone-950 dark:text-gray-300 whitespace-nowrap">
@@ -183,41 +177,7 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
         </motion.div>
       </div>
 
-      {/* Bottom capsule nav — mobile only (Apple / WhatsApp capsule) */}
-      <div className="md:hidden fixed inset-x-3 bottom-3 z-40 flex justify-center pointer-events-none" style={{ paddingBottom: "max(0px, env(safe-area-inset-bottom))" }}>
-        <nav
-          aria-label="Mobile navigation"
-          className="island-glass rounded-full p-1.5 flex items-center gap-1 pointer-events-auto w-full max-w-[360px] shadow-[0_12px_44px_rgba(23,21,15,0.14),inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[0_12px_44px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]"
-        >
-          {BOTTOM_LINKS.map((link) => {
-            const isActive = bottomActive === link.href;
-            const isPortal = link.href.startsWith("/society") || link.href.startsWith("/admin");
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                aria-current={isActive ? "page" : undefined}
-                className={`flex-1 flex items-center justify-center px-2 py-2.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.97] ${
-                  isActive
-                    ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900 shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
-                    : isPortal
-                    ? "text-stone-950 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5"
-                    : "text-stone-600 dark:text-white/60 hover:text-stone-900 dark:hover:text-white"
-                }`}
-              >
-                {link.label === "Goals" && (
-                  <svg className="w-3.5 h-3.5 mr-1 hidden sm:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
-                )}
-                {link.label === "Events" && (
-                  <svg className="w-3.5 h-3.5 mr-1 hidden sm:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                )}
-                <span className="truncate">{link.label.replace(" Portal", "")}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+
 
       {/* Mobile full-screen drawer — kept for edge case (deep links), now unreachable via UI but still accessible if open state forced externally */}
       <AnimatePresence>

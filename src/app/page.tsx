@@ -65,13 +65,10 @@ export default async function Home() {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-stone-950 dark:text-gray-300 mb-6 leading-relaxed">
-            Bharati Vidyapeeth&apos;s College of Engineering presents BVEST 13, an expansive celebration of technology, ingenuity, and intellectual excellence, conceived to bring student potential into dialogue with the challenges shaping our world. It is a platform where disciplines converge, perspectives evolve, and knowledge finds relevance beyond the boundaries of the classroom.
+            BVEST 13 is a major student festival by Bharati Vidyapeeth&apos;s College of Engineering focused on technology, innovation, creativity, and intellectual excellence. This edition is centered around the 17 UN Sustainable Development Goals (SDGs), with each student society/chapter assigned one SDG.
           </p>
           <p className="text-lg md:text-xl text-stone-950 dark:text-gray-300 mb-6 leading-relaxed">
-            At the heart of this edition lie the 17 United Nations Sustainable Development Goals, with every society and student chapter entrusted with one defining goal. Through a diverse spectrum of technical events, competitions, showcases, and experiential challenges, each chapter will translate its assigned SDG into a distinctive ecosystem of thought, exploration, and creation.
-          </p>
-          <p className="text-lg md:text-xl font-semibold text-sdg6 dark:text-sdg6 leading-relaxed font-mono">
-            Seventeen global ambitions. One extraordinary platform. An opportunity to shape what comes next.
+            Through technical events, competitions, showcases, and hands-on challenges, students will explore their SDG and turn it into innovative ideas and experiences. The festival aims to connect student talent with real-world global challenges and encourage collaboration across disciplines.
           </p>
         </Reveal>
 
@@ -81,7 +78,7 @@ export default async function Home() {
             <span className="w-px h-12 bg-black/10 dark:bg-white/10 hidden md:block" aria-hidden="true" />
             <StatCounter value={30} label="Societies" />
             <span className="w-px h-12 bg-black/10 dark:bg-white/10 hidden md:block" aria-hidden="true" />
-            <StatCounter value={3} label="Days of Fest" />
+            <StatCounter value={2} label="Days of Fest" />
           </div>
         </Reveal>
         </div>

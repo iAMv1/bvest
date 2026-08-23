@@ -16,20 +16,13 @@ interface LegacyEdition {
 
 const LEGACY_EDITIONS: LegacyEdition[] = [
   {
-    version: "BVEST X",
-    edition: "10th Edition",
-    year: "2023",
-    tagline: "A Decade of Technical Excellence",
-    badgeHex: "#26BDE2",
-    description: "Milestone 10th anniversary celebrating student innovation and inter-college tech rivalries.",
-  },
-  {
-    version: "BVEST XI",
-    edition: "11th Edition",
-    year: "2024",
-    tagline: "Empowering Future Engineers",
-    badgeHex: "#8B5CF6",
-    description: "Expanded to 25+ student societies featuring flagship hackathons and robotics races.",
+    version: "BVEST XIII",
+    edition: "13th Edition (Current)",
+    year: "2026",
+    tagline: "17 UN Sustainable Development Goals",
+    badgeHex: "#4C9F38",
+    imageSrc: "/logo-dark.png",
+    description: "The official 2026 edition aligning all 30+ BVCOE societies with the UN Sustainable Development Goals.",
   },
   {
     version: "BVEST XII",
@@ -37,16 +30,26 @@ const LEGACY_EDITIONS: LegacyEdition[] = [
     year: "2025",
     tagline: "Engineering Beyond Boundaries",
     badgeHex: "#FD6925",
+    imageSrc: "/Bvest12.png",
     description: "Pioneered sustainable technology challenges and inter-departmental collaboration.",
   },
   {
-    version: "BVEST XIII",
-    edition: "13th Edition (Current)",
-    year: "2026",
-    tagline: "17 UN Sustainable Development Goals",
-    badgeHex: "#4C9F38",
-    imageSrc: "/logo.png",
-    description: "The official 2026 edition aligning all 30+ BVCOE societies with the UN Sustainable Development Goals.",
+    version: "BVEST XI",
+    edition: "11th Edition",
+    year: "2024",
+    tagline: "Empowering Future Engineers",
+    badgeHex: "#8B5CF6",
+    imageSrc: "/Bvest11.png",
+    description: "Expanded to 25+ student societies featuring flagship hackathons and robotics races.",
+  },
+  {
+    version: "BVEST X",
+    edition: "10th Edition",
+    year: "2023",
+    tagline: "A Decade of Technical Excellence",
+    badgeHex: "#26BDE2",
+    imageSrc: "/Bvest10.png",
+    description: "Milestone 10th anniversary celebrating student innovation and inter-college tech rivalries.",
   },
 ];
 
@@ -96,8 +99,8 @@ export const BvestLegacySection: React.FC = () => {
                     </div>
 
                     {/* Logo / Poster Visual Placeholder Frame */}
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone-100 dark:bg-black/50 border border-black/5 dark:border-white/10 flex items-center justify-center p-6 mb-5 group-hover:border-sdg6/50 transition-colors">
-                      {item.imageSrc ? (
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone-100 dark:bg-black/50 border border-black/5 dark:border-white/10 flex items-center justify-center p-3 mb-5 group-hover:border-sdg6/50 transition-colors">
+                      {item.version === "BVEST XIII" ? (
                         <>
                           {/* Dark logo in light mode */}
                           <Image
@@ -114,6 +117,13 @@ export const BvestLegacySection: React.FC = () => {
                             className="object-contain p-4 transition-transform duration-300 group-hover:scale-105 hidden dark:block"
                           />
                         </>
+                      ) : item.imageSrc ? (
+                        <Image
+                          src={item.imageSrc}
+                          alt={`${item.version} Poster`}
+                          fill
+                          className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                        />
                       ) : (
                         <div className="text-center flex flex-col items-center justify-center gap-2">
                           <div
@@ -132,15 +142,9 @@ export const BvestLegacySection: React.FC = () => {
                       )}
                     </div>
 
-                    <h3 className="font-heading text-xl font-bold text-stone-950 dark:text-white mb-2">
+                    <h3 className="font-heading text-xl font-bold text-stone-950 dark:text-white">
                       {item.version}
                     </h3>
-                    <p className="text-xs font-medium text-sdg6 mb-3 font-mono">
-                      &ldquo;{item.tagline}&rdquo;
-                    </p>
-                    <p className="text-xs text-stone-600 dark:text-gray-400 leading-relaxed">
-                      {item.description}
-                    </p>
                   </div>
                 </div>
               </div>

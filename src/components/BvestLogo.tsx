@@ -11,6 +11,7 @@ export interface BvestLogoProps {
   className?: string;
   onClick?: () => void;
   variant?: "auto" | "dark-on-dark" | "ink-on-light"; // force one artwork
+  isHeader?: boolean;
 }
 
 export const BvestLogo: React.FC<BvestLogoProps> = ({
@@ -20,14 +21,23 @@ export const BvestLogo: React.FC<BvestLogoProps> = ({
   className = "",
   onClick,
   variant = "auto",
+  isHeader = false,
 }) => {
   const { theme } = useTheme();
   // White 3D-glass artwork works on dark surfaces only; ink variant for light.
   const useInk =
     variant === "ink-on-light" || (variant === "auto" && theme === "light");
-  // Original image dimensions: 1692 x 929 (aspect ratio ~ 1.82)
-  const aspectRatio = 1692 / 929;
+
+  const aspectRatio = isHeader ? 1239 / 245 : 1692 / 929;
   const calculatedWidth = size * aspectRatio;
+
+  const imgSrc = isHeader
+    ? useInk
+      ? "/headerlogolight.png"
+      : "/headerlogodark.png"
+    : useInk
+    ? "/logo-dark.png"
+    : "/logo.png";
 
   return (
     <div
@@ -36,7 +46,7 @@ export const BvestLogo: React.FC<BvestLogoProps> = ({
       className={`relative inline-block select-none ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
       <Image
-        src={useInk ? "/logo-dark.png" : "/logo.png"}
+        src={imgSrc}
         alt="BVEST Logo"
         fill
         sizes={`${Math.ceil(calculatedWidth)}px`}

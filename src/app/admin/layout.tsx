@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { AdminNavbar } from "@/components/AdminNavbar";
 
 export const metadata: Metadata = {
-  title: "Admin Portal | BVEST",
-  description: "Admin portal for BVEST — societies, events, allocations.",
+  title: "Admin Portal",
+  description: "Admin portal for BVEST XIII 2026 — societies, events, allocations.",
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -1,9 +1,28 @@
 export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const event = await prisma.event.findUnique({
+      where: { slug },
+      select: { title: true },
+    });
+    if (event) {
+      return {
+        title: `${event.title} — Leaderboard`,
+      };
+    }
+  } catch {}
+  return {
+    title: "Event Leaderboard",
+  };
+}
 
 type EventWithResults = Prisma.EventGetPayload<{ include: { hostSociety: true; results: true } }>;
 

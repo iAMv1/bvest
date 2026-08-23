@@ -1,8 +1,14 @@
 export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
+
+export const metadata: Metadata = {
+  title: "Leaderboard",
+  description: "Official event podiums and aggregated scoreboards for BVEST XIII 2026.",
+};
 
 type PublishedEvent = Prisma.EventGetPayload<{
   include: { results: true; hostSociety: { select: { id: true; name: true } } };

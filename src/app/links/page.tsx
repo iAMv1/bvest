@@ -1,7 +1,13 @@
 export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { BvestLogo } from "@/components/BvestLogo";
+
+export const metadata: Metadata = {
+  title: "Official Links",
+  description: "Official bio links, event listings, and portals for BVEST XIII 2026.",
+};
 
 const LINKTREE_ITEMS = [
   {
@@ -26,7 +32,7 @@ const LINKTREE_ITEMS = [
   {
     title: "WhatsApp Channel / Group 💬",
     description: "Join the official participant broadcast community",
-    href: "https://wa.me/",
+    href: "https://chat.whatsapp.com/CQ9FNfCj1Sq25jSU0Ly4fK?mode=gi_t",
     external: true,
     highlight: false,
   },
@@ -40,10 +46,10 @@ const LINKTREE_ITEMS = [
 ];
 
 const LEGACY_VERSIONS = [
-  { version: "BVEST X", edition: "10th Edition (2023)", tagline: "Decade of Innovation" },
-  { version: "BVEST XI", edition: "11th Edition (2024)", tagline: "Tech for Tomorrow" },
-  { version: "BVEST XII", edition: "12th Edition (2025)", tagline: "Engineering Excellence" },
   { version: "BVEST XIII", edition: "13th Edition (2026)", tagline: "17 UN SDGs · Active" },
+  { version: "BVEST XII", edition: "12th Edition (2025)", tagline: "Engineering Excellence" },
+  { version: "BVEST XI", edition: "11th Edition (2024)", tagline: "Tech for Tomorrow" },
+  { version: "BVEST X", edition: "10th Edition (2023)", tagline: "Decade of Innovation" },
 ];
 
 export default function LinksPage() {
@@ -76,11 +82,10 @@ export default function LinksPage() {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
-              className={`group relative w-full p-4 rounded-2xl border text-left transition-all duration-300 active:scale-[0.98] ${
-                item.highlight
+              className={`group relative w-full p-4 rounded-2xl border text-left transition-all duration-300 active:scale-[0.98] ${item.highlight
                   ? "bg-gradient-to-r from-sdg6 to-sdg3 text-white border-sdg6/50 shadow-lg shadow-sdg6/20 hover:shadow-sdg6/40"
                   : "bg-white/5 hover:bg-white/10 text-white border-white/10 hover:border-white/25"
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between gap-3">
                 <div>

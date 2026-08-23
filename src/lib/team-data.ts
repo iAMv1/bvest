@@ -85,6 +85,7 @@ export const coreTeamData: TeamMember[] = [
     bio: "Working across event operations, technical requirements, and budgeting to support the smooth execution of different activities.",
     initials: "PN",
     color: "#4C9F38",
+    image: "/coreteampics/Pratham.jpeg",
     category: "events",
   },
   {

@@ -36,7 +36,7 @@ export function AdminNavbar() {
         {/* Left: brand + admin badge */}
         <div className="flex items-center gap-3">
           <Link href="/admin/allocations" className="flex items-center gap-3 shrink-0" aria-label="Admin console home">
-            <BvestLogo size={32} />
+            <BvestLogo size={32} isHeader={true} />
             <span className="hidden sm:flex flex-col leading-none">
               <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-violet-600 dark:text-violet-400">Admin</span>
               <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-stone-500 dark:text-white/50">BVEST Console</span>

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
@@ -9,6 +10,35 @@ export const dynamic = "force-dynamic";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const event = await prisma.event.findUnique({
+      where: { slug },
+      select: { title: true, description: true },
+    });
+    if (event) {
+      return {
+        title: event.title,
+        description: event.description,
+      };
+    }
+  } catch {}
+  const sdgNum = Number(slug);
+  if (!Number.isNaN(sdgNum) && sdgNum >= 1 && sdgNum <= 17) {
+    const sdg = sdgData.find((s) => s.number === sdgNum);
+    if (sdg) {
+      return {
+        title: `Goal ${sdg.number}: ${sdg.name}`,
+        description: `Official BVEST XIII 2026 events in SDG Domain ${sdg.number} — ${sdg.name}`,
+      };
+    }
+  }
+  return {
+    title: "Event Details",
+  };
 }
 
 export async function generateStaticParams() {

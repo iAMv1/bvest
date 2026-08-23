@@ -1,9 +1,15 @@
 export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
+
+export const metadata: Metadata = {
+  title: "Events",
+  description: "Browse all official competitions, hackathons, and society challenges for BVEST XIII 2026.",
+};
 
 export default async function EventsPage() {
   let events: Prisma.EventGetPayload<{
