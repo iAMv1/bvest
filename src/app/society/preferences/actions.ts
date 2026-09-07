@@ -27,10 +27,9 @@ export async function submitPreferences(
     return { ok: false, error: "Ranks must be 1, 2, and 3." };
   }
 
-  // Validate against DB domains first, fallback to static domains file
-  const dbDomains = await prisma.domain.findMany({ select: { id: true } }).catch(() => []);
-  const allowedIds = dbDomains.length > 0 ? dbDomains.map((d) => d.id) : (await import("@/lib/domains")).domains.map((d) => d.id);
-  const allowed = new Set(allowedIds);
+  // Validate against combined domain list (DB + fallback)
+  const allDomains = await (await import("@/lib/get-domains")).getAllDomains();
+  const allowed = new Set(allDomains.map((d) => d.id));
   for (const s of selections) {
     if (!allowed.has(s.domainId)) return { ok: false, error: "Invalid domain selected." };
   }
@@ -61,5 +60,7 @@ export async function submitPreferences(
   ]);
 
   revalidatePath("/society/preferences");
+  revalidatePath("/admin/allocations");
+  revalidatePath("/admin/societies");
   return { ok: true };
 }

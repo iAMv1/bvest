@@ -29,20 +29,26 @@ export default async function PreferencesPage() {
 
   // ── Locked: read-only confirmation view ────────────────────────────────────
   if (society.locked) {
-    const rankedDomains = society.preferences.map((pref: { rank: number; domainId: string }) => ({
-      rank: pref.rank,
-      domain: domains.find((d) => d.id === pref.domainId),
-    }));
+    const rankedDomains = society.preferences.map((pref: { rank: number; domainId: string }) => {
+      const found = domains.find((d) => d.id === pref.domainId);
+      const domain = found || {
+        id: pref.domainId,
+        name: pref.domainId.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "),
+        description: "Recorded UN SDG Domain Preference",
+        colorToken: "var(--color-sdg6)",
+      };
+      return { rank: pref.rank, domain };
+    });
 
     return (
       <div className="relative flex-1 flex items-center justify-center px-4 pt-28 md:pt-36 pb-16 overflow-hidden">
         {/* Backdrop */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-dots absolute inset-0 md:opacity-60" />
-          <div className="absolute left-1/4 top-1/4 w-[26rem] h-[26rem] bg-sdg6/12 rounded-full blur-[150px] animate-drift" />
-          <div className="absolute right-1/4 bottom-1/4 w-[22rem] h-[22rem] bg-sdg7/10 rounded-full blur-[130px] animate-drift-slow" />
+          <div className="absolute left-1/4 top-1/4 w-104 h-104 bg-sdg6/12 rounded-full blur-[150px] animate-drift" />
+          <div className="absolute right-1/4 bottom-1/4 w-88 h-88 bg-sdg7/10 rounded-full blur-[130px] animate-drift-slow" />
           {/* Ghost display splash */}
-          <span className="outline-text pointer-events-none select-none absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_40%,transparent_85%)]" aria-hidden="true">
+          <span className="outline-text pointer-events-none select-none absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_bottom,black_40%,transparent_85%)]" aria-hidden="true">
             Sealed
           </span>
         </div>
