@@ -58,7 +58,14 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
   const domainByRank = (society: { preferences: { rank: number; domainId: string }[] }, rank: number) => {
     const pref = society.preferences.find((p) => p.rank === rank);
     if (!pref) return null;
-    return domains.find((d) => d.id === pref.domainId) ?? null;
+    const found = domains.find((d) => d.id === pref.domainId);
+    if (found) return found;
+    return {
+      id: pref.domainId,
+      name: pref.domainId.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "),
+      description: "Domain Preference",
+      colorToken: "var(--color-sdg6)",
+    };
   };
 
   return (
