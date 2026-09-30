@@ -51,11 +51,27 @@ export const Hero: React.FC = () => {
               </svg>
             </span>
           </Link>
-          <Link
+          {/* <Link
             href="/society/login"
             className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
           >
             Society Portal
+            <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+          </Link> */}
+          <Link
+            href="/hackathon"
+            className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
+          >
+            <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 dark:bg-cyan-400/15 border border-cyan-500/20 flex items-center justify-center p-1">
+              <Image
+                src="/hack8kalogo.png"
+                alt="HACK@BVP 8.0 Logo"
+                width={32}
+                height={32}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span>HACK@BVP 8.0</span>
             <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
           </Link>
         </div>
@@ -131,11 +147,27 @@ export const Hero: React.FC = () => {
             </svg>
           </span>
         </Link>
-        <Link
+        {/* <Link
           href="/society/login"
           className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
         >
           Society Portal
+          <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+        </Link> */}
+        <Link
+          href="/hackathon"
+          className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
+        >
+          <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 dark:bg-cyan-400/15 border border-cyan-500/20 flex items-center justify-center p-1">
+            <Image
+              src="/hack8kalogo.png"
+              alt="HACK@BVP 8.0 Logo"
+              width={32}
+              height={32}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <span>HACK@BVP 8.0</span>
           <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
         </Link>
       </motion.div>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion, useScroll } from "framer-motion";
 import { BvestLogo } from "@/components/BvestLogo";
@@ -10,7 +11,7 @@ import { useTheme } from "@/components/ThemeProvider";
 const CORE_NAV_LINKS = [
   { href: "/#featured-events", label: "Events" },
   { href: "/#core-team", label: "Core Team" },
-  { href: "/society/login", label: "Society Portal" },
+  //{ href: "/society/login", label: "Society Portal" },
   { href: "/#contact", label: "Contact" },
 ] as const;
 // Admin is hidden from public nav by design — access only via direct /admin/login (share privately)
@@ -118,17 +119,26 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
           <div className="flex items-center gap-2.5">
             {!onPortal && (
               <Link
-                href="/events"
-                onClick={(e) => handleNavClick(e, "/events")}
-                className={`btn-shine hidden lg:inline-flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-stone-800 dark:hover:bg-gray-200 active:scale-[0.96] group`}
+                href="/hackathon"
+                onClick={(e) => handleNavClick(e, "/hackathon")}
+                className="btn-shine hidden lg:inline-flex items-center gap-2 pl-2 pr-3.5 py-1.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-stone-800 dark:hover:bg-gray-200 active:scale-[0.96] group shadow-sm"
               >
-              Explore Events
-              <span className="w-5 h-5 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105">
-                <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 6h8M6 2l4 4-4 4" />
-                </svg>
-              </span>
-            </Link>
+                <div className="w-5 h-5 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 dark:bg-cyan-400/15 border border-cyan-500/20 flex items-center justify-center p-0.5">
+                  <Image
+                    src="/hack8kalogo.png"
+                    alt="HACK@BVP 8.0"
+                    width={20}
+                    height={20}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <span>HACK@BVP 8.0</span>
+                <span className="w-4 h-4 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:translate-x-0.5">
+                  <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 6h8M6 2l4 4-4 4" />
+                  </svg>
+                </span>
+              </Link>
             )}
 
             {/* Theme toggle — visible on all sizes */}
@@ -230,11 +240,21 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
               <div className="flex flex-col gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                 {!onPortal && (
                   <Link
-                    href="/events"
-                    onClick={(e) => handleNavClick(e, "/events")}
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-gradient-to-r from-sdg6 to-sdg3 text-white font-semibold text-base shadow-lg active:scale-[0.98]"
+                    href="/hackathon"
+                    onClick={(e) => handleNavClick(e, "/hackathon")}
+                    className="w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl bg-black text-white dark:bg-white dark:text-black font-semibold text-base shadow-lg active:scale-[0.98]"
                   >
-                    Explore Events &rarr;
+                    <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 bg-white/10 dark:bg-black/40 border border-white/20 dark:border-white/10 flex items-center justify-center p-0.5">
+                      <Image
+                        src="/hack8kalogo.png"
+                        alt="HACK@BVP 8.0 Logo"
+                        width={28}
+                        height={28}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span>HACK@BVP 8.0</span>
+                    <span className="text-base">&rarr;</span>
                   </Link>
                 )}
                 <p className="text-center text-xs text-stone-500 dark:text-gray-500 font-mono tracking-widest uppercase">

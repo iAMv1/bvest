@@ -3,14 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { BvestLogo } from '@/components/BvestLogo';
+import { useSetIntroDone } from '@/components/IntroContext';
 
 export const IntroOverlay = () => {
   const [visible, setVisible] = useState(true);
   const [showSkip, setShowSkip] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const markIntroDone = useSetIntroDone();
 
   const dismiss = () => {
     setVisible(false);
+    setTimeout(() => {
+      markIntroDone?.();
+    }, 750);
   };
 
   useEffect(() => {
@@ -18,11 +23,11 @@ export const IntroOverlay = () => {
       const raf = requestAnimationFrame(() => setVisible(false));
       return () => cancelAnimationFrame(raf);
     }
-    const skipTimer = setTimeout(() => setShowSkip(true), 1000);
-    // Slide in + display animation ~4s + exit
-    const doneTimer = setTimeout(dismiss, 2000);
+    const skipTimer = setTimeout(() => setShowSkip(true), 1200);
+    // Slide in (0.75s) + color sweep animation (2.8s) + hold full logo (~1.2s) -> dismiss at 4.8s
+    const doneTimer = setTimeout(dismiss, 3000);
     return () => { clearTimeout(skipTimer); clearTimeout(doneTimer); };
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, markIntroDone]);
 
   return (
     <AnimatePresence>
