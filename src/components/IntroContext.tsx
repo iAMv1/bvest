@@ -20,12 +20,12 @@ export const IntroProvider = ({ children }: { children: React.ReactNode }) => {
       return () => cancelAnimationFrame(raf);
     }
 
-    // IntroOverlay dismiss timer is 4800ms.
+    // IntroOverlay dismiss timer is 5500ms.
     // Exit animation duration is 750ms.
-    // Total wait ~5550ms.
+    // Total wait ~6250ms.
     const timer = setTimeout(() => {
       setIntroDone(true);
-    }, 5600);
+    }, 2300);
 
     return () => clearTimeout(timer);
   }, [shouldReduceMotion]);

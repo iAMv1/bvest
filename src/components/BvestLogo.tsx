@@ -50,86 +50,38 @@ export const BvestLogo: React.FC<BvestLogoProps> = ({
     : "/logo.png";
 
   return (
-    <>
-      <style jsx>{`
-        /* Smooth base fade-in */
-        @keyframes bvestBaseFade {
-          0% {
-            opacity: 0;
-            filter: blur(4px);
-          }
-          100% {
-            opacity: 1;
-            filter: blur(0px);
-          }
-        }
+    <div
+      style={{ height: size, width: calculatedWidth }}
+      onClick={onClick}
+      className={`relative inline-block select-none overflow-hidden ${onClick ? 'cursor-pointer' : ''} ${className}`}
+    >
+      {/* Base Logo Image (Exact original sizing) */}
+      <div className={`relative w-full h-full ${animated ? 'bvest-base-wrapper' : 'opacity-100'}`}>
+        <Image
+          src={baseSrc}
+          alt="BVEST Logo Base"
+          fill
+          sizes={`${Math.ceil(calculatedWidth)}px`}
+          className="object-contain"
+          priority
+          unoptimized
+        />
+      </div>
 
-        /* Color layer progressive section reveal */
-        @keyframes bvestColorSweep {
-          0% {
-            opacity: 0;
-            clip-path: inset(0 100% 0 0);
-          }
-          20% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 1;
-            clip-path: inset(0 0% 0 0);
-          }
-        }
-
-        .bvest-base-wrapper {
-          animation: bvestBaseFade 1s ease-out forwards;
-        }
-
-        .bvest-color-wrapper {
-          opacity: 0;
-          animation: bvestColorSweep 2.8s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .bvest-base-wrapper,
-          .bvest-color-wrapper {
-            animation: none !important;
-            opacity: 1 !important;
-            clip-path: none !important;
-            filter: none !important;
-          }
-        }
-      `}</style>
-
-      <div
-        style={{ height: size, width: calculatedWidth }}
-        onClick={onClick}
-        className={`relative inline-block select-none overflow-hidden ${onClick ? 'cursor-pointer' : ''} ${className}`}
-      >
-        {/* Base Logo Image (Exact original sizing) */}
-        <div className={`relative w-full h-full ${animated ? 'bvest-base-wrapper' : 'opacity-100'}`}>
+      {/* Color Overlay Layer (Single stacked container, zero misalignment) */}
+      {animated && (
+        <div className="absolute inset-0 w-full h-full pointer-events-none bvest-color-wrapper">
           <Image
-            src={baseSrc}
-            alt="BVEST Logo Base"
+            src={colorSrc}
+            alt="BVEST Logo Color"
             fill
             sizes={`${Math.ceil(calculatedWidth)}px`}
             className="object-contain"
             priority
+            unoptimized
           />
         </div>
-
-        {/* Color Overlay Layer (Single stacked container, zero misalignment) */}
-        {animated && (
-          <div className="absolute inset-0 w-full h-full pointer-events-none bvest-color-wrapper">
-            <Image
-              src={colorSrc}
-              alt="BVEST Logo Color"
-              fill
-              sizes={`${Math.ceil(calculatedWidth)}px`}
-              className="object-contain"
-              priority
-            />
-          </div>
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 };

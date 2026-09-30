@@ -24,8 +24,8 @@ export const IntroOverlay = () => {
       return () => cancelAnimationFrame(raf);
     }
     const skipTimer = setTimeout(() => setShowSkip(true), 1200);
-    // Slide in (0.75s) + color sweep animation (2.8s) + hold full logo (~1.2s) -> dismiss at 4.8s
-    const doneTimer = setTimeout(dismiss, 3000);
+    // Slide in (0.75s) + color sweep animation (3.6s) + hold full logo (~1.3s) -> dismiss at 5.5s
+    const doneTimer = setTimeout(dismiss, 1500);
     return () => { clearTimeout(skipTimer); clearTimeout(doneTimer); };
   }, [shouldReduceMotion, markIntroDone]);
 
