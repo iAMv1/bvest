@@ -380,3 +380,54 @@ body {
 .animate-rise-in {
   animation: rise-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* ── BVEST Logo Intro Animation (Color Sweep) ───────────────────────────── */
+@keyframes bvestBaseFade {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes bvestColorSweep {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    -webkit-clip-path: inset(0 100% 0 0);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+    -webkit-clip-path: inset(0 0% 0 0);
+  }
+}
+
+.bvest-base-wrapper {
+  animation: bvestBaseFade 1s ease-out forwards;
+}
+
+.bvest-color-wrapper {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  animation: bvestColorSweep 3.6s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+  will-change: clip-path, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bvest-base-wrapper,
+  .bvest-color-wrapper {
+    animation: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    filter: none !important;
+  }
+}
