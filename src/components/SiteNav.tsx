@@ -75,14 +75,14 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
   // Website navbar only on login pages + public site — not after login (admin app has its own AdminNavbar)
   const isAdminApp = pathname.startsWith("/admin") && pathname !== "/admin/login";
   const isSocietyApp = pathname.startsWith("/society") && pathname !== "/society/login";
-  if (isAdminApp || isSocietyApp) return null;
+  if (isAdminApp || isSocietyApp || pathname.startsWith("/hackathon")) return null;
 
   return (
     <>
       {/* Scroll progress hairline — SDG gradient, tracks page progress */}
       <motion.div
         aria-hidden="true"
-        className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left"
+        className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left"
         style={{
           scaleX: scrollYProgress,
           background: "linear-gradient(90deg, #E5243B, #DDA63A, #4C9F38, #26BDE2, #DD1367, #00689D)",
@@ -229,7 +229,7 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
                     <Link
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="flex items-center justify-between px-5 py-4 rounded-2xl text-xl font-heading font-semibold text-stone-950 dark:text-white bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 active:scale-[0.98] transition-all"
+                      className="flex items-center justify-between px-5 py-4 rounded-2xl text-xl font-heading font-semibold text-stone-950 dark:text-white bg-black/3 dark:bg-white/4 border border-black/5 dark:border-white/5 active:scale-[0.98] transition-all"
                     >
                       <span>{link.label}</span>
                       <span className="text-stone-400 dark:text-white/30 text-base">&rarr;</span>

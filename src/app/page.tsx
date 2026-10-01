@@ -20,7 +20,7 @@ export default async function Home() {
       <section className="relative overflow-hidden bg-background pt-24 md:pt-28 pb-0 transition-colors duration-200">
         <SDGBoxCollage />
         <BackdropAurora
-          className="absolute inset-0 z-[1]"
+          className="absolute inset-0 z-1"
           parallax={55}
           home={{ x: 50, y: 32 }}
           layers={[
@@ -47,20 +47,20 @@ export default async function Home() {
       />
 
       {/* 2. About Section — SDG cyan-washed canvas in light */}
-      <section className="relative py-20 md:py-24 overflow-hidden bg-sdg6/[0.05] dark:bg-transparent">
+      <section className="relative py-20 md:py-24 overflow-hidden bg-sdg6/5 dark:bg-transparent">
         {/* Backdrop: cursor-following aura + dot grid + signal rings */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-dots absolute inset-0 md:opacity-60" />
           <div className="bg-rings absolute inset-0 opacity-60" />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-sdg6/12 rounded-full blur-[160px] animate-drift" />
-          <div className="absolute left-[20%] top-1/2 -translate-y-1/2 w-[20rem] h-[20rem] bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-xl h-144 bg-sdg6/12 rounded-full blur-[160px] animate-drift" />
+          <div className="absolute left-[20%] top-1/2 -translate-y-1/2 w-80 h-80 bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-6 text-center">
         <Reveal className="relative">
           <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white tracking-tight">
             BVEST 13 &mdash;{" "}
-            <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
               Engineering a Better Tomorrow
             </span>
           </h2>
@@ -85,24 +85,24 @@ export default async function Home() {
       </section>
 
       {/* 3. Featured Events Section — clean light background without pink tint */}
-      <section id="featured-events" className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg6/[0.04] dark:bg-transparent transition-colors duration-200">
+      <section id="featured-events" className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg6/4 dark:bg-transparent transition-colors duration-200">
         {/* Backdrop: cursor-following aura + grid texture */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-grid absolute inset-0 md:opacity-60" />
           <div className="bg-dots absolute inset-0 md:opacity-40" />
-          <div className="absolute top-1/4 -right-40 w-[34rem] h-[34rem] bg-sdg6/12 rounded-full blur-[170px] animate-drift" />
-          <div className="absolute bottom-1/4 -right-24 w-[22rem] h-[22rem] bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
+          <div className="absolute top-1/4 -right-40 w-136 h-136 bg-sdg6/12 rounded-full blur-[170px] animate-drift" />
+          <div className="absolute bottom-1/4 -right-24 w-88 h-88 bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
           <Reveal className="relative flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
+              <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
                 Events
               </span>
               <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">
                 Fest{" "}
-                <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
                   Events
                 </span>
               </h2>
@@ -114,7 +114,7 @@ export default async function Home() {
 
           {/* Coming Soon Featured Banner */}
           <Reveal>
-            <div className="hard-shell relative rounded-3xl overflow-hidden bg-gradient-to-br from-black/5 via-black/[0.02] to-sdg6/10 dark:from-white/10 dark:via-white/[0.02] dark:to-sdg6/10 p-8 md:p-14 border border-black/10 dark:border-white/10 text-center flex flex-col items-center justify-center min-h-[280px]">
+            <div className="hard-shell relative rounded-3xl overflow-hidden bg-linear-to-br from-black/5 via-black/2 to-sdg6/10 dark:from-white/10 dark:via-white/2 dark:to-sdg6/10 p-8 md:p-14 border border-black/10 dark:border-white/10 text-center flex flex-col items-center justify-center min-h-70">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sdg6/15 text-sdg6 font-mono text-xs font-bold uppercase tracking-widest mb-4 border border-sdg6/30">
                 <span className="w-2 h-2 rounded-full bg-sdg6 animate-ping" />
                 Coming Soon
@@ -144,11 +144,11 @@ export default async function Home() {
       <CoreTeamSection />
 
       {/* 5. Sponsors/Partners Strip */}
-      <section className="relative py-16 md:py-20 px-6 bg-sdg11/[0.09] dark:bg-white/[0.02] border-y border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden">
+      <section className="relative py-16 md:py-20 px-6 bg-sdg11/9 dark:bg-white/2 border-y border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden">
         {/* Backdrop: low center glow */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="bg-dots absolute inset-0 md:opacity-50" />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] bg-sdg11/8 rounded-full blur-[150px]" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-160 h-80 bg-sdg11/8 rounded-full blur-[150px]" />
         </div>
 
         <div className="relative max-w-6xl mx-auto text-center">

@@ -4,9 +4,16 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const HackathonLogoAnimation: React.FC = () => {
+export interface HackathonLogoAnimationProps {
+  initialFullscreen?: boolean;
+}
+
+export const HackathonLogoAnimation: React.FC<HackathonLogoAnimationProps> = ({
+  initialFullscreen = false,
+}) => {
   const [animKey, setAnimKey] = useState(0);
   const [phase, setPhase] = useState<"winding" | "complete">("winding");
+  const [isFullscreen, setIsFullscreen] = useState(initialFullscreen);
 
   const restartAnimation = () => {
     setPhase("winding");
@@ -20,15 +27,37 @@ export const HackathonLogoAnimation: React.FC = () => {
     return () => clearTimeout(timer);
   }, [animKey]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
+
   return (
-    <div className="relative w-full max-w-[460px] mx-auto select-none">
+    <div
+      className={
+        isFullscreen
+          ? "fixed inset-0 z-99999 bg-[#07090E]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-4 sm:p-8 select-none overflow-y-auto animate-in fade-in duration-200"
+          : "relative w-full max-w-full lg:max-w-xl mx-auto select-none"
+      }
+    >
       {/* Ambient background glow & holographic rings */}
-      <div className="absolute -inset-6 bg-gradient-to-tr from-cyan-500/25 via-blue-600/20 to-indigo-500/25 rounded-3xl blur-2xl opacity-70 dark:opacity-60 pointer-events-none" />
+      <div className="absolute -inset-6 bg-linear-to-tr from-cyan-500/25 via-blue-600/20 to-indigo-500/25 rounded-3xl blur-2xl opacity-70 dark:opacity-60 pointer-events-none" />
       
       {/* Tech Glassmorphic Pedestal Frame */}
-      <div className="relative rounded-3xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-black/40 backdrop-blur-xl p-6 sm:p-8 shadow-2xl overflow-hidden group">
+      <div
+        className={
+          isFullscreen
+            ? "relative w-full max-w-3xl rounded-3xl border border-white/20 bg-black/85 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] overflow-hidden group my-auto"
+            : "relative rounded-3xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-black/40 backdrop-blur-xl p-6 sm:p-8 shadow-2xl overflow-hidden group"
+        }
+      >
         {/* Subtle Cyber Grid lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00d2ff08_1px,transparent_1px),linear-gradient(to_bottom,#00d2ff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00d2ff08_1px,transparent_1px),linear-gradient(to_bottom,#00d2ff08_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
         
         {/* Top HUD Bar */}
         <div className="relative z-20 flex items-center justify-between pb-4 mb-4 border-b border-black/5 dark:border-white/10 font-mono text-[11px] text-stone-500 dark:text-gray-400">
@@ -41,28 +70,53 @@ export const HackathonLogoAnimation: React.FC = () => {
               CIRCUIT 8.0 // {phase === "winding" ? "ASSEMBLING" : "ENERGIZED"}
             </span>
           </div>
-          <button
-            onClick={restartAnimation}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-[10px] font-semibold text-stone-700 dark:text-gray-200 transition-all active:scale-95"
-            title="Replay circuit winding animation"
-          >
-            <svg
-              className={`w-3 h-3 ${phase === "winding" ? "animate-spin" : ""}`}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 text-[10px] font-semibold text-cyan-600 dark:text-cyan-300 transition-all active:scale-95"
+              title={isFullscreen ? "Exit Fullscreen (Esc)" : "Expand to Fullscreen"}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            <span>Replay</span>
-          </button>
+              {isFullscreen ? (
+                <>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 9L4 4m0 0v4m0-4h4m6 6l5-5m0 0v4m0-4h-4M9 15l-5 5m0 0v-4m0 4h4m6-6l5 5m0 0v-4m0 4h-4" />
+                  </svg>
+                  <span>Exit Fullscreen</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                  <span>Fullscreen</span>
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={restartAnimation}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-[10px] font-semibold text-stone-700 dark:text-gray-200 transition-all active:scale-95"
+              title="Replay circuit winding animation"
+            >
+              <svg
+                className={`w-3 h-3 ${phase === "winding" ? "animate-spin" : ""}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Replay</span>
+            </button>
+          </div>
         </div>
 
         {/* Core Animation Canvas (545 x 704 aspect ratio) */}
         <div
           key={animKey}
-          className="relative w-full aspect-[545/704] flex items-center justify-center overflow-hidden"
+          className="relative w-full aspect-545/704 flex items-center justify-center overflow-hidden"
         >
           {/* Base high-res logo with staggered section reveals matching the winding paths */}
           <div className="relative w-full h-full">
@@ -429,6 +483,12 @@ export const HackathonLogoAnimation: React.FC = () => {
             <span className="text-emerald-600 dark:text-emerald-400 font-semibold">ONLINE</span>
           </div>
         </div>
+
+        {isFullscreen && (
+          <p className="mt-3 text-[11px] font-mono text-cyan-400/80 text-center">
+            Tip: Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white font-mono text-[10px]">Esc</kbd> or click Exit Fullscreen to return
+          </p>
+        )}
       </div>
     </div>
   );
