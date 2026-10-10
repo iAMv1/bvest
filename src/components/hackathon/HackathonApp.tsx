@@ -12,8 +12,6 @@ import { SDGDetailDrawer } from "@/components/hackathon/SDGDetailDrawer";
 import { CountdownSection } from "@/components/hackathon/CountdownSection";
 import { EventTimelineSection } from "@/components/hackathon/EventTimelineSection";
 import { PrizesSection } from "@/components/hackathon/PrizesSection";
-import { JudgingCriteriaSection } from "@/components/hackathon/JudgingCriteriaSection";
-import { SponsorsSection } from "@/components/hackathon/SponsorsSection";
 import { FAQSection } from "@/components/hackathon/FAQSection";
 import { FinalCTASection } from "@/components/hackathon/FinalCTASection";
 import { HackathonFooter } from "@/components/hackathon/HackathonFooter";
@@ -113,11 +111,6 @@ export const HackathonApp: React.FC = () => {
         {/* 9. Prizes Podium */}
         <PrizesSection />
 
-        {/* 10. Judging Criteria & Weightings */}
-        <JudgingCriteriaSection />
-
-        {/* 11. Ecosystem Sponsors & Community Alliances */}
-        <SponsorsSection />
 
         {/* 17. Frequently Asked Questions Accordion */}
         <FAQSection />

@@ -44,6 +44,6 @@ export const EVENT_CONFIG: EventConfig = {
   prizePool: "₹1,50,000+",
   teamSize: "2 – 4 Builders",
   hackDuration: "24 Hours In-Person",
-  applicationDeadline: "October 18, 2026",
-  countdownTarget: "2026-10-22T09:00:00+05:30",
+  applicationDeadline: "October 16, 2026, 6:00 PM IST",
+  countdownTarget: "2026-10-16T18:00:00+05:30",
 };

@@ -12,7 +12,6 @@ const NAV_ITEMS = [
   { label: "TRACKS", href: "#tracks" },
   { label: "TIMELINE", href: "#timeline" },
   { label: "PRIZES", href: "#prizes" },
-  { label: "SPONSORS", href: "#sponsors" },
   { label: "FAQ", href: "#faq" },
   { label: "CONTACT", href: "#contact" },
 ];

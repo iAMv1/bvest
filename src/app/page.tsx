@@ -143,28 +143,6 @@ export default async function Home() {
       {/* 5. Core Team Section */}
       <CoreTeamSection />
 
-      {/* 5. Sponsors/Partners Strip */}
-      <section className="relative py-16 md:py-20 px-6 bg-sdg11/9 dark:bg-white/2 border-y border-black/10 dark:border-white/5 transition-colors duration-200 overflow-hidden">
-        {/* Backdrop: low center glow */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="bg-dots absolute inset-0 md:opacity-50" />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-160 h-80 bg-sdg11/8 rounded-full blur-[150px]" />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto text-center">
-          <Reveal>
-            <h2 className="text-sm font-bold tracking-widest uppercase text-stone-950 dark:text-gray-400 mb-12">
-              Supported by our amazing partners
-            </h2>
-            <div className="flex flex-wrap justify-center items-center gap-16 md:gap-24 opacity-40 grayscale">
-              <div className="text-2xl font-heading font-bold text-stone-950 dark:text-gray-400">[Sponsor Logo 1]</div>
-              <div className="text-2xl font-heading font-bold text-stone-950 dark:text-gray-400">[Sponsor Logo 2]</div>
-              <div className="text-2xl font-heading font-bold text-stone-950 dark:text-gray-400">[Sponsor Logo 3]</div>
-              <div className="text-2xl font-heading font-bold text-stone-950 dark:text-gray-400">[Sponsor Logo 4]</div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
 
       {/* 6. Footer */}
       <Footer />

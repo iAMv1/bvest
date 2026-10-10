@@ -79,8 +79,8 @@ export const EVENT_SCHEDULE: TimelineEvent[] = [
   },
   {
     id: "reg-close",
-    date: "OCTOBER 18, 2026",
-    time: "11:59 PM IST",
+    date: "OCTOBER 16, 2026",
+    time: "06:00 PM IST",
     title: "Applications Deadline & Shortlisting",
     description: "Registration portal closes. Shortlisted teams receive official invitation emails, travel advisories, and check-in QR passes.",
     stage: "pre-hack",

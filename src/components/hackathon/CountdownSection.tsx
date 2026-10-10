@@ -62,26 +62,26 @@ export const CountdownSection: React.FC = () => {
             animate={{ scale: 1, opacity: 1 }}
             className="flex flex-col items-center gap-4 py-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-bold uppercase tracking-widest animate-pulse">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              <span>24-HOUR HACKATHON IN PROGRESS</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-400 font-mono text-xs font-bold uppercase tracking-widest">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+              <span>REGISTRATIONS CLOSED</span>
             </div>
             <h2 className="font-heading text-4xl sm:text-7xl font-black text-white uppercase tracking-tight">
-              HACKBVP 8.0 IS LIVE.
+              REGISTRATIONS ARE CLOSED.
             </h2>
             <p className="text-gray-300 font-mono text-sm max-w-xl">
-              The 24-hour sprint has commenced at BVCOE Delhi. Check the live Discord channels for ongoing mentor check-ins and announcements.
+              Applications for HackBVP 8.0 have officially closed. Shortlisted teams will receive confirmation via email and Discord.
             </p>
           </motion.div>
         ) : (
           <div className="w-full flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-4">
               <IconClock size={14} />
-              <span>24-HOUR SPRINT COUNTDOWN</span>
+              <span>REGISTRATION DEADLINE</span>
             </div>
 
             <h2 className="font-heading text-2xl sm:text-4xl font-black text-white uppercase tracking-tight mb-8">
-              THE 24-HOUR CLOCK IS TICKING.
+              REGISTRATIONS CLOSING IN.
             </h2>
 
             {/* Huge Animated Digit Boxes */}
@@ -109,7 +109,7 @@ export const CountdownSection: React.FC = () => {
             </div>
 
             <p className="font-mono text-xs text-gray-400 mt-6">
-              Hacking begins October 22, 2026 &middot; BVCOE Delhi Main Auditorium
+              Registrations close October 16, 2026 at 6:00 PM IST &middot; BVCOE Delhi Campus
             </p>
           </div>
         )}

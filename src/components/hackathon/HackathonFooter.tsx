@@ -75,11 +75,6 @@ export const HackathonFooter: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#sponsors" className="hover:text-cyan-400 transition-colors">
-                  Partners
-                </a>
-              </li>
-              <li>
                 <a href="#faq" className="hover:text-cyan-400 transition-colors">
                   FAQ
                 </a>
