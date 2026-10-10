@@ -20,17 +20,17 @@ export const GlobalBackgroundFlow: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-1 overflow-hidden select-none"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none"
       aria-hidden="true"
-      style={{ opacity: 0.95 }}
+      style={{ opacity: 0.28 }}
     >
       <GatewayFlow
         className="w-full h-full"
-        speed={1.05}
-        density={1.1}
-        particleColor="rgba(6, 182, 212, 0.95)"
-        lineColor="rgba(6, 182, 212, 0.38)"
-        glowColor="rgba(56, 189, 248, 0.85)"
+        speed={0.8}
+        density={0.65}
+        particleColor="rgba(6, 182, 212, 0.65)"
+        lineColor="rgba(6, 182, 212, 0.18)"
+        glowColor="rgba(56, 189, 248, 0.45)"
         interactive={true}
       />
     </div>

@@ -120,6 +120,7 @@ export const SiteNav: React.FC<{ dynamicLinks?: DynamicNavLink[] }> = ({ dynamic
             {!onPortal && (
               <Link
                 href="/hackathon"
+                prefetch={true}
                 onClick={(e) => handleNavClick(e, "/hackathon")}
                 className="btn-shine hidden lg:inline-flex items-center gap-2 pl-2 pr-3.5 py-1.5 bg-black text-white dark:bg-white dark:text-black rounded-full text-xs font-semibold transition-all duration-200 ease-fluid hover:bg-stone-800 dark:hover:bg-gray-200 active:scale-[0.96] group shadow-sm"
               >

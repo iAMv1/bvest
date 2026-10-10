@@ -10,32 +10,17 @@ interface IntroLoaderProps {
 
 export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
   const [phase, setPhase] = useState<"logo" | "tagline" | "complete">("logo");
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user already saw the loader in this session to respect repeat visits
     const seen = sessionStorage.getItem("hackbvp8-loader-seen");
     if (seen === "true") {
-      setVisible(false);
       onComplete?.();
       return;
     }
 
-    const timer1 = setTimeout(() => {
-      setPhase("tagline");
-    }, 850);
-
-    const timer2 = setTimeout(() => {
-      setPhase("complete");
-      setVisible(false);
-      sessionStorage.setItem("hackbvp8-loader-seen", "true");
-      onComplete?.();
-    }, 1800);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
+    sessionStorage.setItem("hackbvp8-loader-seen", "true");
+    onComplete?.();
   }, [onComplete]);
 
   const handleSkip = () => {

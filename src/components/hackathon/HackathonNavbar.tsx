@@ -9,7 +9,6 @@ import { IconArrowRight, IconMenu, IconX, IconSparkles } from "@/components/hack
 
 const NAV_ITEMS = [
   { label: "ABOUT", href: "#about" },
-  { label: "SDGs", href: "#sdgs" },
   { label: "TRACKS", href: "#tracks" },
   { label: "TIMELINE", href: "#timeline" },
   { label: "PRIZES", href: "#prizes" },

@@ -10,7 +10,7 @@ const EXPERIENCE_PILLARS = [
     tag: "01",
     title: "BUILD",
     headline: "High-Velocity Autonomous Prototyping",
-    desc: "36 hours of distraction-free hacking with unlimited campus Wi-Fi, hardware stations, and food. Push code, debug edge cases, and ship working software.",
+    desc: "24 hours of distraction-free hacking with unlimited campus Wi-Fi, hardware stations, and food. Push code, debug edge cases, and ship working software.",
     color: "#26BDE2",
   },
   {

@@ -22,7 +22,7 @@ export const FAQS_DATA: FAQItem[] = [
     id: "team-size",
     category: "Participation",
     question: "What is the permissible team size?",
-    answer: "Teams must consist of 2 to 4 members. Cross-college and cross-specialization teams are completely permissible and encouraged. All team members must be physically present at the venue during the 36-hour sprint."
+    answer: "Teams must consist of 2 to 4 members. Cross-college and cross-specialization teams are completely permissible and encouraged. All team members must be physically present at the venue during the 24-hour sprint."
   },
   {
     id: "solo-participation",
@@ -46,7 +46,7 @@ export const FAQS_DATA: FAQItem[] = [
     id: "technologies-allowed",
     category: "Hacking & SDGs",
     question: "What programming languages and hardware are permitted?",
-    answer: "Any software framework, programming language, cloud platform, or microcontroller (Arduino, ESP32, Raspberry Pi, etc.) is allowed. You can use open-source libraries and public APIs, provided all custom application logic and prototypes are authored during the official 36-hour hacking period."
+    answer: "Any software framework, programming language, cloud platform, or microcontroller (Arduino, ESP32, Raspberry Pi, etc.) is allowed. You can use open-source libraries and public APIs, provided all custom application logic and prototypes are authored during the official 24-hour hacking period."
   },
   {
     id: "freshers-allowed",
@@ -58,7 +58,7 @@ export const FAQS_DATA: FAQItem[] = [
     id: "food-and-accommodation",
     category: "Logistics",
     question: "Will food, beverages, and accommodation be provided?",
-    answer: "Yes! High-protein hot meals, midnight energy snacks, coffee, and breakfast are served on campus throughout the 36 hours. Dedicated indoor rest lounges with beanbags and mattresses are segregated for male and female hackers, guarded by 24/7 campus security."
+    answer: "Yes! High-protein hot meals, midnight energy snacks, coffee, and breakfast are served on campus throughout the 24 hours. Dedicated indoor rest lounges with beanbags and mattresses are segregated for male and female hackers, guarded by 24/7 campus security."
   },
   {
     id: "what-to-submit",

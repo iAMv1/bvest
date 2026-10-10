@@ -22,15 +22,16 @@ export const LampContainer = ({
 
           {/* Left Conic Light Beam (Spreads from Center Down-Left immediately below navbar) */}
           <motion.div
-            initial={{ opacity: 0.2, width: "16rem" }}
-            animate={{ opacity: 1, width: "42rem" }}
+            initial={{ opacity: 0.2, scaleX: 0.35 }}
+            animate={{ opacity: 1, scaleX: 1 }}
             transition={{
-              delay: 0.1,
-              duration: 0.85,
+              duration: 0.65,
               ease: [0.16, 1, 0.3, 1],
             }}
             style={{
               top: "64px",
+              transformOrigin: "right top",
+              willChange: "transform, opacity",
               background:
                 "conic-gradient(from 180deg at 100% 0%, #06b6d4 0deg, rgba(6,182,212,0.65) 20deg, rgba(6,182,212,0.18) 45deg, transparent 65deg, transparent 360deg)",
             }}
@@ -43,15 +44,16 @@ export const LampContainer = ({
 
           {/* Right Conic Light Beam (Spreads from Center Down-Right immediately below navbar) */}
           <motion.div
-            initial={{ opacity: 0.2, width: "16rem" }}
-            animate={{ opacity: 1, width: "42rem" }}
+            initial={{ opacity: 0.2, scaleX: 0.35 }}
+            animate={{ opacity: 1, scaleX: 1 }}
             transition={{
-              delay: 0.1,
-              duration: 0.85,
+              duration: 0.65,
               ease: [0.16, 1, 0.3, 1],
             }}
             style={{
               top: "64px",
+              transformOrigin: "left top",
+              willChange: "transform, opacity",
               background:
                 "conic-gradient(from 115deg at 0% 0%, transparent 0deg, rgba(6,182,212,0.18) 20deg, rgba(6,182,212,0.65) 45deg, #06b6d4 65deg, transparent 65deg, transparent 360deg)",
             }}
@@ -70,27 +72,33 @@ export const LampContainer = ({
 
           {/* Inner Glowing Core */}
           <motion.div
-            initial={{ width: "12rem", opacity: 0.3 }}
-            animate={{ width: "26rem", opacity: 0.85 }}
+            initial={{ opacity: 0.3, scaleX: 0.45 }}
+            animate={{ opacity: 0.85, scaleX: 1 }}
             transition={{
-              delay: 0.1,
-              duration: 0.85,
-              ease: "easeInOut",
+              duration: 0.65,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            style={{ top: "45px" }}
+            style={{
+              top: "45px",
+              transformOrigin: "center center",
+              willChange: "transform, opacity",
+            }}
             className="absolute left-1/2 -translate-x-1/2 z-20 h-32 w-96 rounded-full bg-cyan-400/45 blur-2xl pointer-events-none"
           />
 
           {/* Horizontal Lamp Filament Beam: Situated flush immediately below the 64px navbar */}
           <motion.div
-            initial={{ width: "14rem", opacity: 0.3 }}
-            animate={{ width: "38rem", opacity: 1 }}
+            initial={{ opacity: 0.3, scaleX: 0.35 }}
+            animate={{ opacity: 1, scaleX: 1 }}
             transition={{
-              delay: 0.1,
-              duration: 0.85,
-              ease: "easeInOut",
+              duration: 0.65,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            style={{ top: "64px" }}
+            style={{
+              top: "64px",
+              transformOrigin: "center center",
+              willChange: "transform, opacity",
+            }}
             className="absolute left-1/2 -translate-x-1/2 z-40 h-0.5 w-152 bg-linear-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_25px_rgba(6,182,212,1),0_0_50px_rgba(6,182,212,0.8)]"
           />
 

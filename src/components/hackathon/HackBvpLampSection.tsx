@@ -21,76 +21,72 @@ export const HackBvpLampSection: React.FC = () => {
       <LampContainer>
         {/* Lamp Sub-Atmosphere Glow behind logo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 0.35, scale: 1.15 }}
-          transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
-          className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-40 bg-cyan-400/25 rounded-full blur-[70px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.4, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-40 bg-cyan-400/25 rounded-full blur-[60px]"
         />
 
         {/* Cinematic Drop-Down Container for the Logo */}
         <motion.div
-          initial={{ opacity: 0, y: -160, scale: 0.82 }}
+          initial={{ opacity: 0, y: -36, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
-            type: "spring",
-            damping: 13,
-            stiffness: 75,
-            mass: 1.15,
-            delay: 0.28,
+            duration: 0.65,
+            ease: [0.16, 1, 0.3, 1],
           }}
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           className="relative flex flex-col items-center justify-center mb-3 sm:mb-4"
         >
-          {/* Reactive Cyan Backlight Halo (Pulses outward upon dropping into the blue light) */}
+          {/* Reactive Cyan Backlight Halo (Pulses outward upon landing in the blue light) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.4 }}
+            initial={{ opacity: 0, scale: 0.7 }}
             animate={{
-              opacity: [0, 0.85, 0.45],
-              scale: [0.4, 1.35, 1.15],
+              opacity: [0, 0.75, 0.4],
+              scale: [0.7, 1.25, 1.1],
             }}
             transition={{
-              delay: 0.45,
-              duration: 1.4,
-              times: [0, 0.4, 1],
+              duration: 1.0,
+              times: [0, 0.45, 1],
               ease: "easeOut",
             }}
-            className="absolute inset-0 rounded-full bg-linear-to-b from-cyan-400/40 via-cyan-500/20 to-transparent blur-3xl pointer-events-none"
+            className="absolute inset-0 rounded-full bg-linear-to-b from-cyan-400/35 via-cyan-500/18 to-transparent blur-3xl pointer-events-none"
           />
 
-          {/* Gentle floating motion container (Engages smoothly after drop-down landing) */}
+          {/* Gentle floating motion container (Engages smoothly after entrance landing) */}
           <motion.div
             animate={{
-              y: [0, -7, 0],
+              y: [0, -6, 0],
             }}
             transition={{
               duration: 4.5,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 1.4,
+              delay: 0.65,
             }}
             className="relative flex items-center justify-center"
           >
-            <div className="relative w-48 sm:w-60 md:w-68 lg:w-76 h-52 sm:h-64 md:h-72 lg:h-80 flex items-center justify-center">
+            <div className="relative w-48 sm:w-60 md:w-68 lg:w-76 h-52 sm:h-64 md:h-72 lg:h-80 flex items-center justify-center drop-shadow-[0_8px_32px_rgba(6,182,212,0.6)]">
               <Image
                 src="/hack8kalogo.png"
                 alt="HackBVP 8.0 Logo"
                 fill
                 priority
                 sizes="(max-width: 640px) 192px, (max-width: 768px) 240px, (max-width: 1024px) 272px, 304px"
-                className="object-contain filter drop-shadow-[0_8px_36px_rgba(6,182,212,0.65)] select-none pointer-events-none"
+                className="object-contain select-none pointer-events-none"
               />
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Badge Pill: Drops down following the logo */}
+        {/* Badge Pill: Cascades down following the logo */}
         <motion.div
-          initial={{ opacity: 0, y: -25 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            type: "spring",
-            damping: 15,
-            stiffness: 85,
-            delay: 0.55,
+            duration: 0.5,
+            delay: 0.12,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-mono text-[11px] sm:text-xs uppercase tracking-wider mb-2.5 shadow-[0_0_15px_rgba(6,182,212,0.18)] backdrop-blur-sm"
         >
@@ -98,15 +94,14 @@ export const HackBvpLampSection: React.FC = () => {
           <span>National Flagship Hackathon &bull; BVEST XIII</span>
         </motion.div>
 
-        {/* Tagline Heading: Cascades down into position */}
+        {/* Tagline Heading: Cascades into position */}
         <motion.h1
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            type: "spring",
-            damping: 15,
-            stiffness: 80,
-            delay: 0.65,
+            duration: 0.55,
+            delay: 0.2,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="bg-linear-to-br from-white via-cyan-100 to-cyan-500/60 py-1 bg-clip-text text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent font-heading uppercase leading-tight"
         >
@@ -118,9 +113,9 @@ export const HackBvpLampSection: React.FC = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.7,
-            delay: 0.75,
-            ease: "easeOut",
+            duration: 0.5,
+            delay: 0.26,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="mt-1.5 max-w-xl text-center text-xs sm:text-sm md:text-base text-slate-300/85 font-sans leading-snug"
         >
@@ -129,12 +124,12 @@ export const HackBvpLampSection: React.FC = () => {
 
         {/* Action Controls & Navigation down */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.7,
-            delay: 0.85,
-            ease: "easeOut",
+            duration: 0.5,
+            delay: 0.32,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="mt-4 sm:mt-5 flex flex-row items-center gap-3 z-20"
         >
@@ -162,7 +157,7 @@ export const HackBvpLampSection: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.0, duration: 0.8 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
           className="mt-3 sm:mt-4 flex flex-col items-center gap-1 text-cyan-400/60 hover:text-cyan-300 transition-colors cursor-pointer"
           onClick={() => {
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });

@@ -41,7 +41,7 @@ export const JOURNEY_STEPS: JourneyStep[] = [
   {
     step: "03",
     title: "BUILD",
-    subtitle: "36-Hour Sprint Execution",
+    subtitle: "24-Hour Sprint Execution",
     description: "Transform blueprints into functioning code and hardware prototypes. Push code to your team repo, hook up live APIs, and assemble responsive interfaces.",
     actionableTip: "Prioritize end-to-end working flow over ten half-baked micro-features.",
     iconName: "Code2",
@@ -107,7 +107,7 @@ export const EVENT_SCHEDULE: TimelineEvent[] = [
     id: "hack-starts",
     date: "OCTOBER 22, 2026",
     time: "11:30 AM IST",
-    title: "Hacking Sprint Begins (36h Timer Starts)",
+    title: "Hacking Sprint Begins (24h Timer Starts)",
     description: "The countdown clock starts! Builders start coding, repository setups initialize, and real-time Discord support desks open.",
     stage: "day-1",
     badge: "Hacking Active"

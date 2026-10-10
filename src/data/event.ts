@@ -33,7 +33,7 @@ export const EVENT_CONFIG: EventConfig = {
   institution: "Bharati Vidyapeeth's College of Engineering (BVCOE), New Delhi",
   dates: "October 22 – 23, 2026",
   startDate: "2026-10-22T09:00:00+05:30",
-  endDate: "2026-10-23T21:00:00+05:30",
+  endDate: "2026-10-23T09:00:00+05:30",
   venue: "BVCOE Delhi Campus, Paschim Vihar",
   city: "New Delhi, India",
   registrationUrl: "https://unstop.com", // [REGISTRATION PLATFORM URL]
@@ -43,7 +43,7 @@ export const EVENT_CONFIG: EventConfig = {
   email: "hackbvp@bvcoend.ac.in",
   prizePool: "₹1,50,000+",
   teamSize: "2 – 4 Builders",
-  hackDuration: "36 Hours In-Person",
+  hackDuration: "24 Hours In-Person",
   applicationDeadline: "October 18, 2026",
   countdownTarget: "2026-10-22T09:00:00+05:30",
 };

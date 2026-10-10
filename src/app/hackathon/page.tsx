@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HackBVP 8.0 — Build for a Better World",
     description:
-      "National flagship hackathon powered by the 17 UN Sustainable Development Goals. 36 hours of high-impact engineering at BVCOE New Delhi.",
+      "National flagship hackathon powered by the 17 UN Sustainable Development Goals. 24 hours of high-impact engineering at BVCOE New Delhi.",
     url: "https://bvest.bvcoend.ac.in/hackathon",
     siteName: "HackBVP 8.0",
     type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HackBVP 8.0 — Build for a Better World",
     description:
-      "Join 400+ builders at BVCOE Delhi for 36 hours of innovation centered on the 17 UN Sustainable Development Goals.",
+      "Join 400+ builders at BVCOE Delhi for 24 hours of innovation centered on the 17 UN Sustainable Development Goals.",
     images: ["/og-image.png"],
   },
   alternates: {

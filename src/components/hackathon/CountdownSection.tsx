@@ -64,24 +64,24 @@ export const CountdownSection: React.FC = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-mono text-xs font-bold uppercase tracking-widest animate-pulse">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              <span>HACKATHON IN PROGRESS</span>
+              <span>24-HOUR HACKATHON IN PROGRESS</span>
             </div>
             <h2 className="font-heading text-4xl sm:text-7xl font-black text-white uppercase tracking-tight">
               HACKBVP 8.0 IS LIVE.
             </h2>
             <p className="text-gray-300 font-mono text-sm max-w-xl">
-              The 36-hour sprint has commenced at BVCOE Delhi. Check the live Discord channels for ongoing mentor check-ins and announcements.
+              The 24-hour sprint has commenced at BVCOE Delhi. Check the live Discord channels for ongoing mentor check-ins and announcements.
             </p>
           </motion.div>
         ) : (
           <div className="w-full flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-4">
               <IconClock size={14} />
-              <span>COMMENCEMENT COUNTDOWN</span>
+              <span>24-HOUR SPRINT COUNTDOWN</span>
             </div>
 
             <h2 className="font-heading text-2xl sm:text-4xl font-black text-white uppercase tracking-tight mb-8">
-              THE 36-HOUR CLOCK IS TICKING.
+              THE 24-HOUR CLOCK IS TICKING.
             </h2>
 
             {/* Huge Animated Digit Boxes */}
@@ -94,7 +94,10 @@ export const CountdownSection: React.FC = () => {
                   {/* Subtle top cyan line */}
                   <div className="absolute top-0 inset-x-6 h-1 bg-linear-to-r from-cyan-400 to-blue-500 opacity-60" />
 
-                  <span className="font-heading text-5xl sm:text-7xl font-black text-white tabular-nums tracking-tight">
+                  <span
+                    className="font-heading text-5xl sm:text-7xl font-black text-white tabular-nums tracking-tight"
+                    suppressHydrationWarning
+                  >
                     {block.value}
                   </span>
 

@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { EVENT_CONFIG } from "@/data/event";
-import { SDGS_DATA } from "@/data/sdgs";
 import { IconMapPin, IconCalendar, IconExternalLink, IconSparkles } from "@/components/hackathon/Icons";
 
 export const HackathonFooter: React.FC = () => {
@@ -13,7 +12,7 @@ export const HackathonFooter: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-white/10">
           {/* Brand & Mission Statement */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
+          <div className="lg:col-span-5 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="relative h-11 w-9 shrink-0 flex items-center justify-center">
                 <Image
@@ -34,7 +33,7 @@ export const HackathonFooter: React.FC = () => {
             </p>
 
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              The flagship national sustainability hackathon of BVEST XIII at Bharati Vidyapeeth&apos;s College of Engineering (BVCOE Delhi). 36 hours dedicated to building solutions for the 17 UN SDGs.
+              The flagship national sustainability hackathon of BVEST XIII at Bharati Vidyapeeth&apos;s College of Engineering (BVCOE Delhi). 24 hours dedicated to building solutions for the 17 UN SDGs.
             </p>
 
             <div className="pt-2 flex flex-col gap-1.5 text-xs font-mono text-gray-400">
@@ -50,7 +49,7 @@ export const HackathonFooter: React.FC = () => {
           </div>
 
           {/* Quick Navigation Links */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-white block mb-4">
               NAVIGATION
             </span>
@@ -58,11 +57,6 @@ export const HackathonFooter: React.FC = () => {
               <li>
                 <a href="#about" className="hover:text-cyan-400 transition-colors">
                   About HackBVP
-                </a>
-              </li>
-              <li>
-                <a href="#sdgs" className="hover:text-cyan-400 transition-colors">
-                  17 UN SDGs
                 </a>
               </li>
               <li>
@@ -98,30 +92,8 @@ export const HackathonFooter: React.FC = () => {
             </ul>
           </div>
 
-          {/* SDG Direct Index */}
-          <div className="lg:col-span-3">
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-white block mb-4">
-              THE 17 SDG SPECTRUM
-            </span>
-            <div className="grid grid-cols-2 gap-1.5 text-[11px] font-mono text-gray-400">
-              {SDGS_DATA.map((sdg) => (
-                <a
-                  key={sdg.id}
-                  href="#sdgs"
-                  className="hover:text-white transition-colors truncate flex items-center gap-1.5"
-                >
-                  <span
-                    className="w-2 h-2 rounded-full shrink-0"
-                    style={{ backgroundColor: sdg.color }}
-                  />
-                  <span>#{sdg.number} {sdg.title}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-
           {/* Socials, Communication & Organizers */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
+          <div className="lg:col-span-4 flex flex-col gap-4">
             <span className="font-mono text-xs font-bold uppercase tracking-widest text-white block mb-1">
               CONNECT &amp; INQUIRE
             </span>

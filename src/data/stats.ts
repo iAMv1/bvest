@@ -11,8 +11,8 @@ export interface StatItem {
 export const HACKATHON_STATS: StatItem[] = [
   {
     id: "hours",
-    value: "36",
-    number: 36,
+    value: "24",
+    number: 24,
     suffix: "h",
     label: "Continuous Hacking",
     sublabel: "Non-stop in-person sprint on campus",

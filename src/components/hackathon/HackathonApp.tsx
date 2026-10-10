@@ -7,16 +7,12 @@ import { CustomCursor } from "@/components/hackathon/CustomCursor";
 import { IntroLoader } from "@/components/hackathon/IntroLoader";
 import { HackathonNavbar } from "@/components/hackathon/HackathonNavbar";
 import { SDGIntroSection } from "@/components/hackathon/SDGIntroSection";
-import { SDGExplorerSection } from "@/components/hackathon/SDGExplorerSection";
 import { ArcaHeroAnimation } from "@/components/hackathon/ArcaHeroAnimation";
 import { SDGDetailDrawer } from "@/components/hackathon/SDGDetailDrawer";
-import { SDGNetworkGraph } from "@/components/hackathon/SDGNetworkGraph";
-import { ImpactMatrixSection } from "@/components/hackathon/ImpactMatrixSection";
 import { CountdownSection } from "@/components/hackathon/CountdownSection";
 import { EventTimelineSection } from "@/components/hackathon/EventTimelineSection";
 import { PrizesSection } from "@/components/hackathon/PrizesSection";
 import { JudgingCriteriaSection } from "@/components/hackathon/JudgingCriteriaSection";
-import { JudgesMentorsSection } from "@/components/hackathon/JudgesMentorsSection";
 import { SponsorsSection } from "@/components/hackathon/SponsorsSection";
 import { FAQSection } from "@/components/hackathon/FAQSection";
 import { FinalCTASection } from "@/components/hackathon/FinalCTASection";
@@ -78,19 +74,14 @@ export const HackathonApp: React.FC = () => {
       <HackathonNavbar />
 
       {/* Main Hackathon Storytelling Flow */}
-      <main id="main-content" className="relative">
+      <main id="main-content" className="relative z-10">
         {/* 0. Aceternity Lamp Entrance: Glowing Lamp with Subtle Lighting & HackBVP Logo */}
         <HackBvpLampSection />
 
         {/* 1. Narrative Why HackBVP & SDG Thesis */}
         <SDGIntroSection />
 
-        {/* 3. The 17 SDGs Main Interactive Grid Explorer */}
-        <SDGExplorerSection
-          onSelectSDG={handleOpenSDG}
-        />
-
-        {/* 4. Hackathon Tracks 3D Rotating Cylinder */}
+        {/* 2. Hackathon Tracks 3D Rotating Cylinder */}
         <section id="tracks" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-t border-white/10 overflow-hidden">
           <div className="max-w-7xl mx-auto mb-10 flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-3">
@@ -113,13 +104,7 @@ export const HackathonApp: React.FC = () => {
           </div>
         </section>
 
-        {/* 5. Interconnected SDG Network Graph */}
-        <SDGNetworkGraph onSelectSDG={handleOpenSDG} />
-
-        {/* 6. Impact Matrix (Tech vs SDG) */}
-        <ImpactMatrixSection onSelectSDG={handleOpenSDG} />
-
-        {/* 7. Large Real-Time Sprint Countdown */}
+        {/* 3. Large Real-Time Sprint Countdown */}
         <CountdownSection />
 
         {/* 8. Run of Show / Event Timeline */}
@@ -131,10 +116,7 @@ export const HackathonApp: React.FC = () => {
         {/* 10. Judging Criteria & Weightings */}
         <JudgingCriteriaSection />
 
-        {/* 15. Grand Jury & Technical Mentors */}
-        <JudgesMentorsSection onSelectSDG={handleOpenSDG} />
-
-        {/* 16. Ecosystem Sponsors & Community Alliances */}
+        {/* 11. Ecosystem Sponsors & Community Alliances */}
         <SponsorsSection />
 
         {/* 17. Frequently Asked Questions Accordion */}

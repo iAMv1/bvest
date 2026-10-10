@@ -156,6 +156,7 @@ export const Hero: React.FC = () => {
         </Link> */}
         <Link
           href="/hackathon"
+          prefetch={true}
           className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full font-semibold island-glass text-stone-950 dark:text-white transition-all duration-200 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98]"
         >
           <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 dark:bg-cyan-400/15 border border-cyan-500/20 flex items-center justify-center p-1">

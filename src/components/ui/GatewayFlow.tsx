@@ -63,14 +63,14 @@ export const GatewayFlow: React.FC<GatewayFlowProps> = ({
     let ripples: Ripple[] = [];
     const paths: Path[] = [];
 
-    const numPaths = Math.max(24, Math.round(70 * density));
+    const numPaths = Math.max(20, Math.round(50 * density));
 
     const cyanPalette = [
-      "rgba(6, 182, 212, 0.95)",
-      "rgba(56, 189, 248, 1)",
-      "rgba(255, 255, 255, 0.9)",
-      "rgba(34, 211, 238, 0.95)",
-      "rgba(147, 197, 253, 0.9)",
+      "rgba(6, 182, 212, 0.7)",
+      "rgba(56, 189, 248, 0.75)",
+      "rgba(255, 255, 255, 0.6)",
+      "rgba(34, 211, 238, 0.7)",
+      "rgba(147, 197, 253, 0.65)",
     ];
 
     const initPaths = (w: number, h: number) => {
@@ -107,7 +107,7 @@ export const GatewayFlow: React.FC<GatewayFlowProps> = ({
     const resize = () => {
       if (!canvas || !ctx) return;
       const { w, h } = getViewportDimensions();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
       const sizeChanged = Math.abs(width - w) > 20 || Math.abs(height - h) > 20;
       width = w;
@@ -257,7 +257,11 @@ export const GatewayFlow: React.FC<GatewayFlowProps> = ({
         ctx.fill();
       }
 
-      // Draw Converging Bezier Paths and Dotted Particle Streams
+      // Draw Converging Bezier Paths (batched dashed stream track)
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 1.0;
+      ctx.setLineDash([1, 4]);
+
       paths.forEach((path) => {
         const p0 = { x: path.isLeft ? -20 : width + 20, y: path.startY };
         const p1 = {
@@ -270,17 +274,27 @@ export const GatewayFlow: React.FC<GatewayFlowProps> = ({
         };
         const p3 = { x: centerX, y: centerY };
 
-        // Draw dotted dashed stream track (dots effect)
         ctx.beginPath();
         ctx.moveTo(p0.x, p0.y);
         ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        ctx.strokeStyle = lineColor;
-        ctx.lineWidth = 1.1;
-        ctx.setLineDash([1, 4]);
         ctx.stroke();
-        ctx.setLineDash([]);
+      });
 
-        // Animate particles along path
+      ctx.setLineDash([]);
+
+      // Animate and draw particles along paths with high-performance glow
+      paths.forEach((path) => {
+        const p0 = { x: path.isLeft ? -20 : width + 20, y: path.startY };
+        const p1 = {
+          x: path.isLeft ? centerX * 0.45 : width - centerX * 0.45,
+          y: path.startY,
+        };
+        const p2 = {
+          x: path.isLeft ? centerX * 0.8 : width - centerX * 0.8,
+          y: centerY,
+        };
+        const p3 = { x: centerX, y: centerY };
+
         path.particles.forEach((p) => {
           p.t += p.speed;
           if (p.t > 1) {
@@ -318,14 +332,18 @@ export const GatewayFlow: React.FC<GatewayFlowProps> = ({
             }
           });
 
-          // Draw Glowing Dots / Particles
+          // Draw Glowing Dots / Particles (High-performance dual pass, zero shadowBlur lag)
+          // 1. Soft atmospheric glow halo
+          ctx.beginPath();
+          ctx.arc(posX, posY, p.size * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(6, 182, 212, 0.12)";
+          ctx.fill();
+
+          // 2. High-intensity particle core
           ctx.beginPath();
           ctx.arc(posX, posY, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
-          ctx.shadowColor = glowColor;
-          ctx.shadowBlur = 8;
           ctx.fill();
-          ctx.shadowBlur = 0;
         });
       });
 

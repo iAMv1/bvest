@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { EVENT_CONFIG } from "@/data/event";
@@ -8,15 +8,21 @@ import { SDGS_DATA } from "@/data/sdgs";
 import { IconSparkles, IconArrowRight, IconCalendar } from "@/components/hackathon/Icons";
 
 export const FinalCTASection: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <section className="relative py-32 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-t border-white/10 overflow-hidden flex items-center justify-center text-center">
       {/* 17 Converging SDG Particles Animation Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true" suppressHydrationWarning>
         {/* Subtle grid */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,189,226,0.12),transparent_70%)]" />
 
         {/* 17 Floating Converging Particles representing the 17 SDGs */}
-        {SDGS_DATA.map((sdg, index) => {
+        {mounted && SDGS_DATA.map((sdg, index) => {
           const angle = (index * 2 * Math.PI) / 17;
           const initialX = Math.cos(angle) * 350;
           const initialY = Math.sin(angle) * 250;
@@ -125,11 +131,11 @@ export const FinalCTASection: React.FC = () => {
           </a>
 
           <a
-            href="#sdgs"
+            href="#tracks"
             data-cursor="button"
             className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-mono text-sm font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/15 text-white transition-all active:scale-95"
           >
-            <span>EXPLORE THE 17 GOALS</span>
+            <span>EXPLORE TRACKS</span>
             <IconArrowRight size={16} />
           </a>
         </motion.div>
