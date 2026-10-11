@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
 import { IconArrowRight, IconSparkles } from "@/components/hackathon/Icons";
+import { EVENT_CONFIG } from "@/data/event";
 
 /**
  * Interactive 3D Cursor-reactive HackBVP Logo
@@ -160,7 +161,7 @@ export const HackBvpLampSection: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://unstop.com/p/hack-at-bvp-80-bharati-vidyapeeths-college-of-engineering-1768545"
+                  href={EVENT_CONFIG.registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 sm:px-7 sm:py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-500/40 text-white font-medium text-xs sm:text-sm transition-all duration-300 hover:scale-[1.02] backdrop-blur-md"
