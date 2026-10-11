@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { EVENT_CONFIG } from "@/data/event";
-import { IconClock, IconSparkles } from "@/components/hackathon/Icons";
+import { IconClock } from "@/components/hackathon/Icons";
 
 interface TimeLeft {
   days: number;
@@ -47,15 +47,15 @@ export const CountdownSection: React.FC = () => {
   }, []);
 
   const timeBlocks = [
-    { label: "DAYS", value: String(timeLeft.days).padStart(2, "0") },
-    { label: "HOURS", value: String(timeLeft.hours).padStart(2, "0") },
-    { label: "MINUTES", value: String(timeLeft.minutes).padStart(2, "0") },
-    { label: "SECONDS", value: String(timeLeft.seconds).padStart(2, "0") },
+    { label: "DAYS", value: String(timeLeft.days).padStart(2, "0"), accent: "bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.7)]" },
+    { label: "HOURS", value: String(timeLeft.hours).padStart(2, "0"), accent: "bg-linear-to-r from-cyan-400 to-sky-500 shadow-[0_0_12px_rgba(14,165,233,0.7)]" },
+    { label: "MINUTES", value: String(timeLeft.minutes).padStart(2, "0"), accent: "bg-sky-500 shadow-[0_0_12px_rgba(14,165,233,0.7)]" },
+    { label: "SECONDS", value: String(timeLeft.seconds).padStart(2, "0"), accent: "bg-blue-600 shadow-[0_0_12px_rgba(37,99,235,0.7)]" },
   ];
 
   return (
-    <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-[#090D18] border-y border-white/10">
-      <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
+    <section id="countdown" className="relative py-16 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-y border-white/10 overflow-hidden">
+      <div className="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
         {timeLeft.isLive ? (
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -75,24 +75,27 @@ export const CountdownSection: React.FC = () => {
           </motion.div>
         ) : (
           <div className="w-full flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-4">
-              <IconClock size={14} />
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-500/35 text-cyan-300 font-mono text-xs uppercase tracking-wider mb-5 shadow-[0_0_18px_rgba(6,182,212,0.22)] backdrop-blur-md">
+              <IconClock size={14} className="text-cyan-400" />
               <span>REGISTRATION DEADLINE</span>
             </div>
 
-            <h2 className="font-heading text-2xl sm:text-4xl font-black text-white uppercase tracking-tight mb-8">
-              REGISTRATIONS CLOSING IN.
+            {/* Section Title with glowing cyan period */}
+            <h2 className="font-heading text-3xl sm:text-5xl lg:text-5xl font-black text-white uppercase tracking-tight mb-8">
+              REGISTRATIONS CLOSING IN
+              <span className="text-cyan-400 drop-shadow-[0_0_14px_rgba(6,182,212,0.95)]">.</span>
             </h2>
 
-            {/* Huge Animated Digit Boxes */}
+            {/* Countdown Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full max-w-3xl">
               {timeBlocks.map((block) => (
                 <div
                   key={block.label}
-                  className="p-6 sm:p-8 rounded-3xl bg-white/3 border border-white/10 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center relative overflow-hidden"
+                  className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#0b101c]/90 border border-white/10 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-cyan-500/30"
                 >
-                  {/* Subtle top cyan line */}
-                  <div className="absolute top-0 inset-x-6 h-1 bg-linear-to-r from-cyan-400 to-blue-500 opacity-60" />
+                  {/* Top colored accent line */}
+                  <div className={`absolute top-0 inset-x-5 h-1 rounded-full ${block.accent}`} />
 
                   <span
                     className="font-heading text-5xl sm:text-7xl font-black text-white tabular-nums tracking-tight"
@@ -108,7 +111,8 @@ export const CountdownSection: React.FC = () => {
               ))}
             </div>
 
-            <p className="font-mono text-xs text-gray-400 mt-6">
+            {/* Footer Deadline Detail */}
+            <p className="font-mono text-xs sm:text-sm text-gray-400 mt-6 tracking-wide">
               Registrations close October 16, 2026 at 6:00 PM IST &middot; BVCOE Delhi Campus
             </p>
           </div>
@@ -117,3 +121,5 @@ export const CountdownSection: React.FC = () => {
     </section>
   );
 };
+
+export default CountdownSection;

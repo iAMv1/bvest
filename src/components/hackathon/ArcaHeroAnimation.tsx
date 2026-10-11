@@ -28,11 +28,13 @@ export type SDGArtifactType =
   | "circular_loop";
 
 const TRACK_ARTIFACTS: Record<string, SDGArtifactType> = {
-  "ai-for-humanity": "quantum_ai",
-  "climate-and-planet": "climate_globe",
-  "smart-cities": "smart_city",
-  "inclusive-futures": "education_matrix",
-  "open-impact": "clean_energy",
+  "health-well-being": "bio_helix",
+  "social-impact-women-safety": "education_matrix",
+  "sustainability-smart-cities": "smart_city",
+  "ai4impact": "quantum_ai",
+  "fintech": "circular_loop",
+  "iot": "water_crystal",
+  "robotics-hardware": "clean_energy",
 };
 
 // Interactive 3D Canvas rendering a dedicated rotating SDG geometric artifact
@@ -287,6 +289,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
   onExploreTracks,
 }) => {
   const [selectedTrack, setSelectedTrack] = useState<HackathonTrack | null>(null);
+  const [expandedPsIndex, setExpandedPsIndex] = useState<number | null>(0);
   const [mounted, setMounted] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [rotationAngle, setRotationAngle] = useState(0);
@@ -305,9 +308,9 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
     setMounted(true);
   }, []);
 
-  // Card cylinder configuration matching the exact ThreeUI Arca slant & radius for 5 tracks
+  // Card cylinder configuration matching the exact ThreeUI Arca slant & radius for 7 tracks
   const totalCards = HACKATHON_TRACKS.length;
-  const cylinderRadius = 400; // Optimal 3D push radius for 5 cards
+  const cylinderRadius = 490; // Optimal 3D push radius for 7 cards
   const baseTiltX = -10; // -10deg pitch tilt
   const baseTiltZ = 8; // +8deg diagonal slant across canvas
 
@@ -446,7 +449,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
           </span>
           <span className="text-gray-300 font-semibold tracking-wider uppercase">
-            CONTINUOUS 3D CAROUSEL // 5 HACKATHON TRACKS
+            CONTINUOUS 3D CAROUSEL // 7 HACKATHON TRACKS
           </span>
         </div>
 
@@ -478,31 +481,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
         </div>
       </div>
 
-      {/* OVERSIZED BACKGROUND TYPOGRAPHY (Layered behind the 3D rotating cylinder) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-10">
-        <div
-          className="flex flex-col items-center justify-center opacity-20 transition-transform duration-300"
-          style={{
-            transform: `translate(${tilt.x * -0.6}px, ${tilt.y * -0.6}px) rotate(-4deg)`,
-          }}
-        >
-          <div className="relative w-28 sm:w-36 lg:w-44 mb-2 drop-shadow-[0_0_40px_rgba(56,189,248,0.6)]">
-            <Image
-              src="/hack8kalogo.png"
-              alt="HackBVP Logo Watermark"
-              width={200}
-              height={260}
-              className="w-full h-auto object-contain"
-            />
-          </div>
-          <span className="font-heading text-[13vw] lg:text-[15vw] font-black uppercase tracking-tighter leading-none text-white whitespace-nowrap drop-shadow-2xl">
-            TRACKS
-          </span>
-          <span className="font-mono text-sm sm:text-xl tracking-[0.45em] uppercase text-cyan-400 -mt-2 lg:-mt-5 font-bold">
-            5 IMPACT HORIZONS &bull; 17 UN SDGS &bull; 2026
-          </span>
-        </div>
-      </div>
+
 
       {/* CONTINUOUS ROTATING 3D CYLINDER OF 5 TRACK CARDS */}
       <div className="relative z-30 flex-1 flex items-center justify-center w-full my-4 overflow-visible">
@@ -784,12 +763,12 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
               </button>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-auto divide-y lg:divide-y-0 lg:divide-x divide-white/10">
-                {/* Left Side: 5 Tracks Selector Bar (Identical to left side of user screenshot) */}
+                {/* Left Side: 7 Tracks Selector Bar */}
                 <div className="lg:col-span-4 p-4 sm:p-5 flex flex-col gap-2.5 bg-black/40">
                   <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                     <span className="font-mono text-xs text-gray-400 uppercase tracking-widest font-bold">
-                      SELECT TRACK (1-5)
+                      SELECT TRACK (1-7)
                     </span>
                   </div>
 
@@ -903,23 +882,124 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
                       </div>
                     </div>
 
-                    {/* Inspiration Challenge Statements */}
+                    {/* Official Problem Statements Accordion from HackBVP 8.0 Doc */}
                     <div className="mb-6">
-                      <span className="font-mono text-[11px] font-bold text-amber-400 uppercase tracking-wider block mb-3">
-                        INSPIRATION CHALLENGE STATEMENTS:
-                      </span>
-                      <div className="space-y-2.5">
-                        {selectedTrack.keyChallenges.map((challenge, idx) => (
-                          <div
-                            key={idx}
-                            className="p-3.5 sm:p-4 rounded-xl bg-white/3 border border-white/10 flex items-start gap-3 transition-colors hover:bg-white/6"
-                          >
-                            <IconCheck size={16} className="text-cyan-400 shrink-0 mt-0.5" />
-                            <span className="text-xs sm:text-sm text-stone-200 font-sans leading-relaxed">
-                              {challenge}
-                            </span>
-                          </div>
-                        ))}
+                      <div className="flex items-center justify-between mb-3.5">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: selectedTrack.accentColor }} />
+                          <span className="font-mono text-xs sm:text-sm font-bold text-amber-400 uppercase tracking-wider">
+                            OFFICIAL PROBLEM STATEMENTS ({selectedTrack.problemStatements?.length || 0})
+                          </span>
+                        </div>
+                        <span className="text-[11px] font-mono text-gray-400 hidden sm:inline">
+                          Select to expand deliverables
+                        </span>
+                      </div>
+
+                      <div className="space-y-3">
+                        {(selectedTrack.problemStatements || []).map((ps, psIdx) => {
+                          const isExpanded = expandedPsIndex === psIdx || (expandedPsIndex === null && psIdx === 0);
+                          return (
+                            <div
+                              key={ps.id || psIdx}
+                              className="rounded-2xl border transition-all overflow-hidden bg-white/2 hover:bg-white/4 cursor-pointer"
+                              style={{
+                                borderColor: isExpanded ? `${selectedTrack.accentColor}88` : "rgba(255, 255, 255, 0.1)",
+                                boxShadow: isExpanded ? `0 0 25px ${selectedTrack.accentColor}15` : "none",
+                              }}
+                              onClick={() => setExpandedPsIndex(isExpanded ? -1 : psIdx)}
+                            >
+                              {/* Header Card */}
+                              <div className="p-3.5 sm:p-4 flex items-start justify-between gap-3 select-none">
+                                <div className="flex items-start gap-3 flex-1 min-w-0">
+                                  <span
+                                    className="px-2.5 py-1 rounded-md text-xs font-mono font-bold shrink-0 mt-0.5 shadow-sm"
+                                    style={{
+                                      backgroundColor: `${selectedTrack.accentColor}25`,
+                                      color: selectedTrack.accentColor,
+                                      border: `1px solid ${selectedTrack.accentColor}55`,
+                                    }}
+                                  >
+                                    {ps.code}
+                                  </span>
+                                  <div className="flex flex-col min-w-0">
+                                    <h3 className="font-heading font-bold text-sm sm:text-base text-white leading-snug">
+                                      {ps.title}
+                                    </h3>
+                                    {!isExpanded && (
+                                      <p className="text-xs text-stone-400 font-sans line-clamp-1 mt-1">
+                                        {ps.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0 text-gray-400 mt-0.5">
+                                  <span className="text-[10px] font-mono uppercase tracking-wider hidden sm:inline text-gray-500">
+                                    {isExpanded ? "Collapse" : "Expand"}
+                                  </span>
+                                  <div className={`p-1 rounded-full bg-white/5 transition-transform ${isExpanded ? "rotate-90 text-cyan-400" : ""}`}>
+                                    <IconChevronRight size={14} />
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Expanded Deliverables & Description */}
+                              {isExpanded && (
+                                <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-3.5 text-xs sm:text-sm">
+                                  {/* Problem Statement Paragraph */}
+                                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/5">
+                                    <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase tracking-wider block mb-1.5">
+                                      Problem Statement
+                                    </span>
+                                    <p className="text-stone-300 font-sans leading-relaxed">
+                                      {ps.description}
+                                    </p>
+                                  </div>
+
+                                  {/* What We Need Deliverables */}
+                                  {ps.whatWeNeed && ps.whatWeNeed.length > 0 && (
+                                    <div className="p-3.5 rounded-xl bg-white/2 border border-white/5">
+                                      <span className="font-mono text-[10px] text-emerald-400 font-bold uppercase tracking-wider block mb-2">
+                                        What We Need / Deliverables
+                                      </span>
+                                      <ul className="space-y-2">
+                                        {ps.whatWeNeed.map((item, itemIdx) => (
+                                          <li key={itemIdx} className="flex items-start gap-2.5 text-stone-200 font-sans text-xs sm:text-sm leading-relaxed">
+                                            <IconCheck size={15} className="text-emerald-400 shrink-0 mt-0.5" />
+                                            <span>{item}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+
+                                  {/* Core Flow (if present) */}
+                                  {ps.coreFlow && (
+                                    <div className="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 font-mono text-xs text-cyan-300 flex flex-wrap items-center gap-2">
+                                      <span className="font-bold text-[10px] text-cyan-400 uppercase tracking-wider">Core Flow:</span>
+                                      <span>{ps.coreFlow}</span>
+                                    </div>
+                                  )}
+
+                                  {/* SDGs Covered Badges */}
+                                  {ps.sdgs && ps.sdgs.length > 0 && (
+                                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                                      <span className="text-[10px] font-mono text-gray-400 mr-1">SDGs:</span>
+                                      {ps.sdgs.map((sdgName, sIdx) => (
+                                        <span
+                                          key={sIdx}
+                                          className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] font-mono text-stone-300"
+                                        >
+                                          {sdgName}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -950,7 +1030,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
                       className="w-full sm:flex-1 py-3 px-6 rounded-full text-black font-heading font-bold text-xs uppercase tracking-wider text-center hover:brightness-110 transition-all shadow-[0_0_25px_rgba(0,229,255,0.4)]"
                       style={{ backgroundColor: selectedTrack.accentColor }}
                     >
-                      REGISTER FOR THIS TRACK ON DEVFOLIO
+                      REGISTER FOR THIS TRACK ON UNSTOP
                     </a>
                     <button
                       onClick={() => setSelectedTrack(null)}

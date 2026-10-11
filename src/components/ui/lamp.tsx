@@ -23,14 +23,14 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
           transformOrigin: "center center",
           willChange: "transform, opacity",
         }}
-        className="relative z-30 h-1 sm:h-1.5 w-64 sm:w-80 md:w-96 lg:w-full max-w-[440px] rounded-full bg-linear-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_25px_rgba(6,182,212,1),0_0_55px_rgba(6,182,212,0.85),0_0_90px_rgba(6,182,212,0.5)]"
+        className="relative z-30 h-1 sm:h-1.5 w-64 sm:w-80 md:w-96 lg:w-full max-w-110 rounded-full bg-linear-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_25px_rgba(6,182,212,1),0_0_55px_rgba(6,182,212,0.85),0_0_90px_rgba(6,182,212,0.5)]"
       />
 
       {/* Futuristic subtle accent brackets */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 sm:w-64 h-0.5 bg-cyan-200/60 blur-[1px] pointer-events-none" />
 
       {/* Conic Light Beams & Glow Halo Stage */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[520px] pointer-events-none select-none overflow-hidden flex justify-center z-10">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-130 pointer-events-none select-none overflow-hidden flex justify-center z-10">
         {/* Left Conic Light Beam (Spreads Down-Left from Center) */}
         <motion.div
           initial={{ opacity: 0.2, scaleX: 0.35 }}
@@ -46,7 +46,7 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
             background:
               "conic-gradient(from 180deg at 100% 0%, #06b6d4 0deg, rgba(6,182,212,0.65) 20deg, rgba(6,182,212,0.18) 45deg, transparent 65deg, transparent 360deg)",
           }}
-          className="absolute right-1/2 h-[480px] w-[320px] sm:w-[420px] text-white"
+          className="absolute right-1/2 h-120 w-[320px] sm:w-105 text-white"
         >
           {/* Soft edge and bottom masks */}
           <div className="absolute w-full left-0 bg-[#07090E] h-32 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
@@ -68,7 +68,7 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
             background:
               "conic-gradient(from 115deg at 0% 0%, transparent 0deg, rgba(6,182,212,0.18) 20deg, rgba(6,182,212,0.65) 45deg, #06b6d4 65deg, transparent 65deg, transparent 360deg)",
           }}
-          className="absolute left-1/2 h-[480px] w-[320px] sm:w-[420px] text-white"
+          className="absolute left-1/2 h-120 w-[320px] sm:w-105 text-white"
         >
           {/* Soft edge and bottom masks */}
           <div className="absolute w-32 h-full right-0 bg-[#07090E] bottom-0 z-20 mask-[linear-gradient(to_left,white,transparent)]" />
@@ -78,7 +78,7 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
         {/* Central Diffuse Cyan Light Cloud */}
         <div
           style={{ top: "0px" }}
-          className="absolute left-1/2 -translate-x-1/2 z-20 h-48 w-[380px] sm:w-[480px] rounded-full bg-cyan-500/25 blur-3xl pointer-events-none"
+          className="absolute left-1/2 -translate-x-1/2 z-20 h-48 w-95 sm:w-120 rounded-full bg-cyan-500/25 blur-3xl pointer-events-none"
         />
 
         {/* Inner Glowing Core */}
@@ -120,8 +120,8 @@ export const LampContainer = ({
       <div className="absolute top-0 left-0 w-full h-16 bg-[#07090E] z-30 pointer-events-none" />
 
       {/* Ambient background glow for atmospheric depth */}
-      <div className="absolute top-24 left-1/4 -translate-x-1/2 w-[500px] h-[400px] bg-cyan-900/15 blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-16 right-1/4 translate-x-1/2 w-[600px] h-[500px] bg-cyan-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-24 left-1/4 -translate-x-1/2 w-125 h-100 bg-cyan-900/15 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-16 right-1/4 translate-x-1/2 w-150 h-125 bg-cyan-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
 
       {/* Children content (Parallel Hero Grid) */}
       {children}

@@ -2,9 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { PRIZE_TIERS } from "@/data/prizes";
 import { EVENT_CONFIG } from "@/data/event";
-import { IconTrophy, IconCheck } from "@/components/hackathon/Icons";
+import { IconTrophy, IconSparkles } from "@/components/hackathon/Icons";
 
 export const PrizesSection: React.FC = () => {
   return (
@@ -14,10 +13,10 @@ export const PrizesSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider mb-3">
             <IconTrophy size={14} />
-            <span>Pool Value: {EVENT_CONFIG.prizePool}</span>
+            <span>POOL VALUE: {EVENT_CONFIG.prizePool}</span>
           </div>
 
           <h2 className="font-heading text-3xl sm:text-6xl font-black tracking-tight text-white uppercase">
@@ -32,85 +31,73 @@ export const PrizesSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Podium: 3 Main Champion Tiers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4 items-stretch">
-          {PRIZE_TIERS.map((tier) => (
-            <motion.div
-              key={tier.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className={`rounded-3xl p-6 sm:p-8 border flex flex-col justify-between relative overflow-hidden backdrop-blur-xl ${
-                tier.featured
-                  ? "bg-linear-to-b from-white/8 to-white/2 border-amber-400/40 shadow-[0_0_40px_rgba(252,195,11,0.15)] md:-translate-y-4"
-                  : "bg-white/3 border border-white/10 hover:border-white/20"
-              }`}
-            >
-              {/* Top Accent Strip */}
-              <div
-                className="absolute top-0 inset-x-0 h-1.5"
-                style={{ backgroundColor: tier.color }}
-              />
+        {/* Single Featured Reward Pool Card: 30 Lakhs+ */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="rounded-3xl p-8 sm:p-12 lg:p-14 border border-cyan-500/30 bg-linear-to-r from-cyan-950/40 via-blue-950/30 to-purple-950/40 backdrop-blur-xl relative overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)]"
+        >
+          {/* Top Gradient Accent Bar */}
+          <div className="absolute top-0 inset-x-0 h-1.5 bg-linear-to-r from-amber-400 via-cyan-400 to-blue-500 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
 
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span
-                    className="font-mono text-xs font-black px-3 py-1 rounded-full"
-                    style={{
-                      backgroundColor: `${tier.color}25`,
-                      color: tier.color,
-                    }}
-                  >
-                    RANK {tier.rank}
-                  </span>
-                  <span className="font-mono text-xs text-gray-400 uppercase tracking-wider">
-                    {tier.tag}
-                  </span>
+          {/* Ambient Cyber Light Spill */}
+          <div className="absolute -right-24 -bottom-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -left-24 -top-24 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+            {/* Left: Giant 30 Lakhs+ Display & Branding */}
+            <div className="flex flex-col items-start text-left max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 font-mono text-xs font-bold uppercase tracking-wider mb-4">
+                <IconSparkles size={13} className="text-cyan-400 animate-pulse" />
+                <span>CUMULATIVE REWARD POOL</span>
+              </div>
+
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-heading text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-200 to-blue-400 drop-shadow-[0_0_35px_rgba(6,182,212,0.35)]">
+                  30 LAKHS+
+                </span>
+              </div>
+
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                Includes cash bounties, domain track prizes, cloud compute credits, developer tooling grants, API vouchers, and fast-track incubation mentorship for all participating finalists.
+              </p>
+            </div>
+
+            {/* Right: 2 Focused Boxes (Cash Prizes & Sponsor Bounties & Vouchers) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:max-w-lg w-full">
+              {/* Box 1: Cash Prizes */}
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-500/35 transition-all duration-300 flex flex-col justify-between gap-3 backdrop-blur-md hover:bg-white/8 shadow-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] shrink-0" />
+                  <h4 className="font-heading text-base sm:text-lg font-bold text-white tracking-tight">
+                    Cash Prizes
+                  </h4>
                 </div>
-
-                <h3 className="font-heading text-xl sm:text-2xl font-black text-white mb-2">
-                  {tier.title}
-                </h3>
-
-                <div
-                  className="font-heading text-4xl sm:text-5xl font-black mb-4 tracking-tight"
-                  style={{ color: tier.color }}
-                >
-                  {tier.amount}
-                </div>
-
-                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
-                  {tier.description}
+                <p className="text-xs sm:text-sm font-mono text-slate-300/80 leading-relaxed">
+                  Top champions, podium placements &amp; category track cash awards.
                 </p>
+              </div>
 
-                <div className="space-y-2.5 pt-4 border-t border-white/10 mb-6">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-gray-400 block">
-                    INCLUDED REWARDS:
-                  </span>
-                  {tier.perks.map((perk, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-stone-300">
-                      <IconCheck size={14} className="text-cyan-400 mt-0.5 shrink-0" />
-                      <span>{perk}</span>
-                    </div>
-                  ))}
+              {/* Box 2: Sponsor Bounties and Vouchers */}
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-500/35 transition-all duration-300 flex flex-col justify-between gap-3 backdrop-blur-md hover:bg-white/8 shadow-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] shrink-0" />
+                  <h4 className="font-heading text-base sm:text-lg font-bold text-white tracking-tight">
+                    Sponsor Bounties &amp; Vouchers
+                  </h4>
                 </div>
+                <p className="text-xs sm:text-sm font-mono text-slate-300/80 leading-relaxed">
+                  Partner track rewards, cloud infrastructure compute credits &amp; tooling vouchers.
+                </p>
               </div>
-
-              <div
-                className="w-full py-2.5 rounded-xl text-center font-mono text-[11px] font-bold uppercase tracking-wider border"
-                style={{
-                  borderColor: `${tier.color}40`,
-                  color: tier.color,
-                  backgroundColor: `${tier.color}10`,
-                }}
-              >
-                Cash + Cloud Credits
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
+
+export default PrizesSection;
