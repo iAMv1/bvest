@@ -706,7 +706,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
           </div>
           <div className="w-px h-6 bg-white/10" />
           <div className="flex flex-col items-center">
-            <span className="font-bold text-white text-sm">36H</span>
+            <span className="font-bold text-white text-sm">24H</span>
             <span className="text-[10px] text-gray-400 uppercase">SPRINT</span>
           </div>
         </div>

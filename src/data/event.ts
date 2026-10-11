@@ -36,7 +36,7 @@ export const EVENT_CONFIG: EventConfig = {
   endDate: "2026-10-23T09:00:00+05:30",
   venue: "BVCOE Delhi Campus, Paschim Vihar",
   city: "New Delhi, India",
-  registrationUrl: "https://unstop.com", // [REGISTRATION PLATFORM URL]
+  registrationUrl: "https://unstop.com/o/odOaLzm?lb=qM7xnnx6&utm_medium=Share&utm_source=online_coding_challenge&utm_campaign=Sakshbud9598", // [REGISTRATION PLATFORM URL]
   discordUrl: "https://discord.gg/hackbvp",
   instagramUrl: "https://instagram.com/hackbvp",
   linkedinUrl: "https://linkedin.com/school/bvcoend",

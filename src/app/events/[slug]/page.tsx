@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { sdgData } from "@/lib/sdg-data";
+import { FEST_EVENTS } from "@/data/festEvents";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       };
     }
   } catch {}
+
+  const fallbackEvent = FEST_EVENTS.find((e) => e.slug === slug);
+  if (fallbackEvent) {
+    return {
+      title: `${fallbackEvent.title} | BVEST XIII`,
+      description: fallbackEvent.description,
+    };
+  }
   const sdgNum = Number(slug);
   if (!Number.isNaN(sdgNum) && sdgNum >= 1 && sdgNum <= 17) {
     const sdg = sdgData.find((s) => s.number === sdgNum);
@@ -48,7 +57,7 @@ export async function generateStaticParams() {
 export default async function EventPage({ params }: Props) {
   const { slug } = await params;
 
-  // Build guard: if DB not available at build time, return 404 softly
+  // Build guard: if DB not available at build time, check static events fallback
   let event: Prisma.EventGetPayload<{ include: { hostSociety: true; results: true } }> | null = null;
   try {
     event = await prisma.event.findUnique({
@@ -56,7 +65,31 @@ export default async function EventPage({ params }: Props) {
       include: { hostSociety: true, results: { orderBy: { rank: "asc" } } },
     });
   } catch {
-    return notFound();
+    event = null;
+  }
+
+  if (!event) {
+    const staticEv = FEST_EVENTS.find((e) => e.slug === slug);
+    if (staticEv) {
+      event = {
+        id: staticEv.id,
+        slug: staticEv.slug,
+        title: staticEv.title,
+        description: staticEv.description,
+        sdgDomainId: String(staticEv.sdgGoal ?? 9),
+        venue: staticEv.venue,
+        startDate: new Date(staticEv.date + "T09:00:00.000Z"),
+        endDate: new Date(staticEv.date + "T18:00:00.000Z"),
+        registrationUrl: staticEv.unstopUrl,
+        status: "CONFIRMED",
+        resultsPublished: false,
+        publishedAt: null,
+        hostSocietyId: null,
+        hostSociety: null,
+        results: [],
+        createdAt: new Date(),
+      };
+    }
   }
 
   if (event) {
@@ -73,6 +106,12 @@ export default async function EventPage({ params }: Props) {
             <Link href="/#featured-events" className="inline-flex items-center gap-2 text-sm text-stone-600 dark:text-gray-400 hover:text-stone-900 dark:hover:text-white mb-6">
               ← Back to events
             </Link>
+
+            {/* Square Event Image Cover */}
+            <div className="relative w-48 sm:w-60 aspect-square rounded-3xl overflow-hidden bg-black border border-black/10 dark:border-white/10 mb-6 shadow-xl flex items-center justify-center">
+              <Image src="/bvest-logo-final.png" alt={event.title} fill className="object-contain p-6" priority />
+            </div>
+
             <div className="flex flex-wrap items-center gap-3 mb-4">
               {sdg && (
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border" style={{ backgroundColor: `${sdg.hex}18`, borderColor: `${sdg.hex}40`, color: sdg.hex }}>
@@ -90,7 +129,6 @@ export default async function EventPage({ params }: Props) {
               {event.hostSociety && <span className="text-xs text-stone-600 dark:text-gray-400">Hosted by <strong>{event.hostSociety.name}</strong></span>}
             </div>
             <h1 className="font-heading text-4xl md:text-5xl font-bold tracking-tight text-stone-900 dark:text-white mb-4">{event.title}</h1>
-            {sdg && <div className="w-14 h-14 rounded-2xl overflow-hidden flex items-center justify-center mb-6" style={{ backgroundColor: sdg.hex }}><Image src={sdg.imageUrl} alt="" width={56} height={56} className="w-full h-full object-contain p-1.5" /></div>}
             <p className="text-stone-700 dark:text-gray-300 leading-relaxed mb-6">{event.description}</p>
             {event.resultsPublished && event.results.length > 0 && (
               <div className="mb-6 rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-orange-500/10 p-6">

@@ -92,12 +92,12 @@ export const HackBvpLampSection: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://devfolio.co"
+                  href="https://unstop.com/o/odOaLzm?lb=qM7xnnx6&utm_medium=Share&utm_source=online_coding_challenge&utm_campaign=Sakshbud9598"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 sm:px-7 sm:py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-500/40 text-white font-medium text-xs sm:text-sm transition-all duration-300 hover:scale-[1.02] backdrop-blur-md"
                 >
-                  <span>Register on Devfolio</span>
+                  <span>Register on Unstop</span>
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                 </a>
               </motion.div>

@@ -10,6 +10,7 @@ import { StatCounter } from '@/components/StatCounter';
 import { BvestLegacySection } from '@/components/BvestLegacySection';
 import { CoreTeamSection } from '@/components/CoreTeamSection';
 import { Footer } from '@/components/Footer';
+import { EventLineupSection } from '@/components/EventLineupSection';
 
 export const dynamic = "force-dynamic";
 
@@ -95,44 +96,8 @@ export default async function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
-          <Reveal className="relative flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div>
-              <span className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-0 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_bottom,black_45%,transparent_85%)]" aria-hidden="true">
-                Events
-              </span>
-              <h2 className="relative font-heading text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">
-                Fest{" "}
-                <span className="bg-linear-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
-                  Events
-                </span>
-              </h2>
-              <p className="relative text-stone-950 dark:text-gray-400 text-lg max-w-xl">
-                Official competitions, hackathons, and society challenges for BVEST XIII will be announced soon.
-              </p>
-            </div>
-          </Reveal>
-
-          {/* Coming Soon Featured Banner */}
           <Reveal>
-            <div className="hard-shell relative rounded-3xl overflow-hidden bg-linear-to-br from-black/5 via-black/2 to-sdg6/10 dark:from-white/10 dark:via-white/2 dark:to-sdg6/10 p-8 md:p-14 border border-black/10 dark:border-white/10 text-center flex flex-col items-center justify-center min-h-70">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sdg6/15 text-sdg6 font-mono text-xs font-bold uppercase tracking-widest mb-4 border border-sdg6/30">
-                <span className="w-2 h-2 rounded-full bg-sdg6 animate-ping" />
-                Coming Soon
-              </div>
-              <h3 className="font-heading text-3xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-                Full Event Lineup To Be Revealed
-              </h3>
-              <p className="text-stone-700 dark:text-gray-300 text-base md:text-lg max-w-2xl leading-relaxed mb-8">
-                30+ Technical, Cultural, and SDG-themed competitions across all 17 UN Sustainable Development Goals are currently being finalized by society leads.
-              </p>
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-stone-900 text-white dark:bg-white dark:text-stone-950 font-semibold text-sm shadow-lg">
-                <svg className="w-4 h-4 text-sdg6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" />
-                  <path d="M16 2v4M8 2v4M3 10h18" />
-                </svg>
-                Mark Your Calendar &middot; Oct 22–23, 2026
-              </div>
-            </div>
+            <EventLineupSection showHeroBanner={true} />
           </Reveal>
         </div>
       </section>
