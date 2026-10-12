@@ -62,7 +62,7 @@ const EVENTS = [
     hostSocietyId: "core-tech",
   },
   {
-    title: "Q-Files",
+    title: "Sherlock Files",
     slug: "q-files",
     description: "An interactive SQL competition combining database challenges with a campus-wide treasure hunt. Participants solve queries, decode clues, navigate checkpoints, and compete in a final rapid-fire round to demonstrate their database expertise and teamwork.",
     startDate: new Date("2026-10-22T09:00:00.000Z"),

@@ -82,9 +82,9 @@ export const FEST_EVENTS: FestEvent[] = [
   {
     id: "q-files",
     slug: "q-files",
-    title: "Q-Files",
+    title: "Sherlock Files",
     description:
-      "An interactive SQL competition combining database challenges with a campus-wide treasure hunt. Participants solve queries, decode clues, navigate checkpoints, and compete in a final rapid-fire round to demonstrate their database expertise and teamwork.",
+      "Sherlock Files is a three-round SQL challenge where teams investigate a fictional scholarship scam, uncover database irregularities, and expose the mastermind through data analysis and forensic deduction. Inspired by SDG 4 and SDG 8.",
     date: "2026-10-22",
     displayDate: "October 22, 2026",
     dayLabel: "Day 1",
