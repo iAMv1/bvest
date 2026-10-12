@@ -92,13 +92,28 @@ export const HackathonNavbar: React.FC = () => {
               </div>
             </Link>
 
-            <span className="hidden md:inline-block text-white/20">|</span>
+            <span className="hidden sm:inline-block text-white/20">|</span>
 
             <Link
               href="/"
-              className="hidden md:inline-flex items-center gap-1 text-[11px] font-mono text-cyan-400/90 hover:text-cyan-300 hover:underline transition-colors"
+              className="btn-shine hidden sm:inline-flex items-center gap-2 pl-3.5 pr-2 py-1.5 bg-white text-black hover:bg-gray-100 rounded-full text-xs font-semibold transition-all duration-200 ease-fluid active:scale-[0.96] group shadow-sm"
+              title="Return to BVEST Main Website"
             >
-              &larr; Fest Portal
+              <span className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:-translate-x-0.5">
+                <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 6H2M6 2L2 6l4 4" />
+                </svg>
+              </span>
+              <span>BVEST</span>
+              <div className="w-5 h-5 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center p-0.5">
+                <Image
+                  src="/apple-touch-icon.png"
+                  alt="BVEST"
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain rounded-full"
+                />
+              </div>
             </Link>
           </div>
 
@@ -186,9 +201,24 @@ export const HackathonNavbar: React.FC = () => {
                 </a>
                 <Link
                   href="/"
-                  className="w-full text-center py-3 rounded-2xl border border-white/15 bg-white/5 text-gray-300 font-mono text-xs uppercase tracking-wider"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-white text-black font-semibold text-xs tracking-wide shadow-sm hover:bg-gray-100 transition-all active:scale-[0.98] group"
                 >
-                  &larr; Back to BVEST Fest Portal
+                  <span className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-200 ease-fluid group-hover:-translate-x-0.5">
+                    <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10 6H2M6 2L2 6l4 4" />
+                    </svg>
+                  </span>
+                  <span>BVEST WEBSITE</span>
+                  <div className="w-5 h-5 rounded-full overflow-hidden shrink-0 bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center p-0.5">
+                    <Image
+                      src="/apple-touch-icon.png"
+                      alt="BVEST"
+                      width={20}
+                      height={20}
+                      className="w-full h-full object-contain rounded-full"
+                    />
+                  </div>
                 </Link>
               </div>
             </div>

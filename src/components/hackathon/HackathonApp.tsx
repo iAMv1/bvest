@@ -18,6 +18,7 @@ import { HackathonFooter } from "@/components/hackathon/HackathonFooter";
 import { EasterEggBanner } from "@/components/hackathon/EasterEggBanner";
 import { HackBvpLampSection } from "@/components/hackathon/HackBvpLampSection";
 import { HackathonBackgroundFlow } from "@/components/hackathon/HackathonBackgroundFlow";
+import DotMatrix from "@/components/hackathon/DotMatrix";
 
 export const HackathonApp: React.FC = () => {
   const [selectedSDG, setSelectedSDG] = useState<SDGItem | null>(null);
@@ -62,6 +63,13 @@ export const HackathonApp: React.FC = () => {
       {/* Interactive Gateway Flow in background strictly for Hackathon */}
       <HackathonBackgroundFlow />
 
+      {/* Interactive DotMatrix reactive grid with cursor proximity glow strictly for Hackathon */}
+      <DotMatrix
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{ position: "fixed" }}
+        opacity={0.85}
+      />
+
       {/* Custom interactive desktop cursor */}
       <CustomCursor />
 
@@ -76,10 +84,13 @@ export const HackathonApp: React.FC = () => {
         {/* 0. Aceternity Lamp Entrance: Glowing Lamp with Subtle Lighting & HackBVP Logo */}
         <HackBvpLampSection />
 
-        {/* 1. Narrative Why HackBVP & SDG Thesis */}
+        {/* 1. Real-Time Registration Deadline Countdown */}
+        <CountdownSection />
+
+        {/* 2. Narrative Why HackBVP & SDG Thesis */}
         <SDGIntroSection />
 
-        {/* 2. Hackathon Tracks 3D Rotating Cylinder */}
+        {/* 3. Hackathon Tracks 3D Rotating Cylinder */}
         <section id="tracks" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-t border-white/10 overflow-hidden">
           <div className="max-w-7xl mx-auto mb-10 flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-3">
@@ -89,7 +100,7 @@ export const HackathonApp: React.FC = () => {
               HACKATHON TRACKS
             </h2>
             <p className="font-mono text-xs sm:text-sm text-gray-400 max-w-xl">
-              5 core challenge tracks mapped to the 17 UN Sustainable Development Goals. Drag to spin the 3D cylinder or click any card to inspect problem statements and tech primitives.
+              7 core challenge domains mapped to real-world impact and the UN Sustainable Development Goals. Drag to spin the 3D cylinder or click any card to inspect problem statements and tech primitives.
             </p>
           </div>
           <div className="max-w-7xl mx-auto">
@@ -101,9 +112,6 @@ export const HackathonApp: React.FC = () => {
             />
           </div>
         </section>
-
-        {/* 3. Large Real-Time Sprint Countdown */}
-        <CountdownSection />
 
         {/* 8. Run of Show / Event Timeline */}
         <EventTimelineSection />
