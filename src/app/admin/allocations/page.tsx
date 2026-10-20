@@ -73,10 +73,10 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
       {/* Backdrop */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -right-40 top-0 w-[30rem] h-[30rem] bg-violet-500/10 rounded-full blur-[170px] animate-drift" />
-        <div className="absolute -left-40 bottom-0 w-[26rem] h-[26rem] bg-sdg16/10 rounded-full blur-[150px] animate-drift-slow" />
+        <div className="absolute -right-40 top-0 w-120 h-120 bg-violet-500/10 rounded-full blur-[170px] animate-drift" />
+        <div className="absolute -left-40 bottom-0 w-104 h-104 bg-sdg16/10 rounded-full blur-[150px] animate-drift-slow" />
         {/* Ghost display splash */}
-        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
+        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
           Ledger
         </span>
       </div>
@@ -86,7 +86,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
             Allocation{" "}
-            <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="text-violet-600 dark:text-violet-400">
               Console
             </span>
           </h1>
@@ -132,7 +132,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 ease-fluid active:scale-[0.97] motion-reduce:active:scale-100 ${
                   active
                     ? "bg-stone-950 text-white dark:bg-white dark:text-stone-950 shadow-[0_8px_24px_rgba(23,21,15,0.25)] dark:shadow-[0_8px_24px_rgba(255,255,255,0.12)]"
-                    : "bg-black/5 dark:bg-white/[0.06] text-stone-950 dark:text-gray-300 border border-black/10 dark:border-white/10 hover:border-black/25 dark:hover:border-white/25"
+                    : "bg-black/5 dark:bg-white/6 text-stone-950 dark:text-gray-300 border border-black/10 dark:border-white/10 hover:border-black/25 dark:hover:border-white/25"
                 }`}
               >
                 {tab.label}
@@ -172,7 +172,7 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
                   {filtered.map((society, idx) => (
                     <tr
                       key={society.id}
-                      className="animate-rise-in transition-colors duration-200 ease-fluid hover:bg-violet-500/[0.04] dark:hover:bg-white/[0.03]"
+                      className="animate-rise-in transition-colors duration-200 ease-fluid hover:bg-violet-500/4 dark:hover:bg-white/3"
                       style={{ animationDelay: `${Math.min(160 + idx * 50, 600)}ms` }}
                     >
                       <td className="px-6 py-4">
@@ -202,9 +202,9 @@ export default async function AdminAllocationsPage({ searchParams }: Props) {
                         return (
                           <td key={rank} className="px-6 py-4">
                             {domain ? (
-                              <span className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.06] shadow-sm">
+                              <span className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-white/6 shadow-sm">
                                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: domain.colorToken }} />
-                                <span className="text-xs font-semibold text-stone-800 dark:text-gray-200 truncate max-w-[150px]">
+                                <span className="text-xs font-semibold text-stone-800 dark:text-gray-200 truncate max-w-37.5">
                                   {domain.name}
                                 </span>
                                 <span className="font-mono text-[10px] font-bold text-stone-500 dark:text-gray-500">R{rank}</span>

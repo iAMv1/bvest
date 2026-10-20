@@ -8,8 +8,8 @@ import { IconMapPin, IconCalendar, IconExternalLink, IconSparkles } from "@/comp
 
 export const HackathonFooter: React.FC = () => {
   return (
-    <footer id="contact" className="relative bg-[#05070B] border-t border-white/10 text-white pt-16 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <footer id="contact" className="relative bg-[#010204] border-t border-white/10 text-white pt-16 pb-12 px-4 sm:px-8 lg:px-12 xl:px-16">
+      <div className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-white/10">
           {/* Brand & Mission Statement */}
           <div className="lg:col-span-5 flex flex-col gap-4">

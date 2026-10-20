@@ -11,9 +11,6 @@ import {
   IconClock,
   IconMapPin,
   IconSparkles,
-  IconTrophy,
-  IconChevronRight,
-  IconChevronLeft,
   IconUsers,
 } from "@/components/hackathon/Icons";
 
@@ -21,23 +18,6 @@ export const EventTimelineSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"all" | "day-1" | "day-2">("all");
   const [viewMode, setViewMode] = useState<"metro" | "feed">("metro");
   const [selectedStationId, setSelectedStationId] = useState<string>("d1-welcome");
-
-  const selectedStation =
-    TIMELINE_METRO_DATA.find((s) => s.id === selectedStationId) || TIMELINE_METRO_DATA[0];
-
-  const currentIdx = TIMELINE_METRO_DATA.findIndex((s) => s.id === selectedStationId);
-
-  const handleNextStation = () => {
-    if (currentIdx < TIMELINE_METRO_DATA.length - 1) {
-      setSelectedStationId(TIMELINE_METRO_DATA[currentIdx + 1].id);
-    }
-  };
-
-  const handlePrevStation = () => {
-    if (currentIdx > 0) {
-      setSelectedStationId(TIMELINE_METRO_DATA[currentIdx - 1].id);
-    }
-  };
 
   const day1Stations = TIMELINE_METRO_DATA.filter((s) => s.day === "day-1");
   const day2Stations = TIMELINE_METRO_DATA.filter((s) => s.day === "day-2");
@@ -50,15 +30,15 @@ export const EventTimelineSection: React.FC = () => {
       : day2Stations;
 
   return (
-    <section id="timeline" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#07090E] overflow-hidden">
+    <section id="timeline" className="relative py-24 px-4 sm:px-6 lg:px-10 bg-[#020306] overflow-hidden">
       {/* Background Cybernetic Auras */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute top-10 left-1/4 w-125 h-125 bg-[#000F9B]/20 rounded-full blur-[140px]" />
-        <div className="absolute bottom-10 right-1/4 w-150 h-150 bg-[#3D008D]/20 rounded-full blur-[160px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-75 bg-cyan-500/8 rounded-full blur-[120px]" />
+        <div className="absolute top-10 left-1/4 w-125 h-125 bg-[#000F9B]/10 rounded-full blur-[140px]" />
+        <div className="absolute bottom-10 right-1/4 w-150 h-150 bg-[#3D008D]/10 rounded-full blur-[160px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-75 bg-cyan-500/5 rounded-full blur-[120px]" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto z-10">
+      <div className="relative w-full z-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
@@ -67,7 +47,7 @@ export const EventTimelineSection: React.FC = () => {
               <span>18TH &amp; 22ND OCTOBER 2026 &bull; 24 HOURS</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-[0.95]">
-              HACKATHON <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-cyan-200 to-blue-500">TIMELINE.</span>
+              HACKATHON <span className="text-cyan-400">TIMELINE.</span>
             </h2>
             <p className="mt-3 text-slate-400 font-sans text-sm sm:text-base max-w-2xl">
               24-Hour Hybrid Route: Online Kickoff &amp; Round 1 on Discord, followed by Grand Finale &amp; In-Person Pitches at BVCOE New Delhi Campus.
@@ -130,8 +110,8 @@ export const EventTimelineSection: React.FC = () => {
             onClick={() => setActiveTab("day-1")}
             className={`cursor-pointer group relative p-5 rounded-2xl border transition-all duration-300 ${
               activeTab === "day-1" || activeTab === "all"
-                ? "bg-linear-to-br from-[#000F9B]/40 via-cyan-950/20 to-black border-cyan-500/40 shadow-[0_0_25px_rgba(0,15,155,0.3)]"
-                : "bg-white/3 border-white/10 opacity-70 hover:opacity-100"
+                ? "bg-[#0A1535] border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.15)]"
+                : "bg-[#060D22] border-white/10 opacity-70 hover:opacity-100 hover:bg-[#0A1535]"
             }`}
           >
             <div className="flex items-center justify-between mb-2">
@@ -156,8 +136,8 @@ export const EventTimelineSection: React.FC = () => {
             onClick={() => setActiveTab("day-2")}
             className={`cursor-pointer group relative p-5 rounded-2xl border transition-all duration-300 ${
               activeTab === "day-2" || activeTab === "all"
-                ? "bg-linear-to-br from-[#3D008D]/40 via-blue-950/20 to-black border-blue-400/40 shadow-[0_0_25px_rgba(61,0,141,0.3)]"
-                : "bg-white/3 border-white/10 opacity-70 hover:opacity-100"
+                ? "bg-[#0A1535] border-blue-400/40 shadow-[0_0_25px_rgba(59,130,246,0.15)]"
+                : "bg-[#060D22] border-white/10 opacity-70 hover:opacity-100 hover:bg-[#0A1535]"
             }`}
           >
             <div className="flex items-center justify-between mb-2">
@@ -189,7 +169,7 @@ export const EventTimelineSection: React.FC = () => {
                   <span className="px-2.5 py-1 rounded-sm bg-[#0011A6] text-white font-bold uppercase tracking-wider">
                     CIRCUIT TRANSIT PROTOCOL
                   </span>
-                  <span className="text-slate-400 hidden sm:inline">Click any station to inspect details</span>
+                  <span className="text-slate-400 hidden sm:inline">24-Hour Hybrid Sprint Track</span>
                 </div>
                 <div className="flex items-center gap-4 text-cyan-400 font-bold">
                   <span>TOTAL STATIONS: {TIMELINE_METRO_DATA.length}</span>
@@ -275,7 +255,7 @@ export const EventTimelineSection: React.FC = () => {
                                   className={`absolute inset-0 rounded-full border-2 transition-all ${
                                     isSelected
                                       ? "border-cyan-300 bg-cyan-500/30 shadow-[0_0_20px_#06b6d4]"
-                                      : "border-cyan-400 bg-[#07090E] group-hover:border-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.4)]"
+                                      : "border-cyan-400 bg-[#020306] group-hover:border-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.4)]"
                                   }`}
                                 />
                                 {/* Inner Solid Dot */}
@@ -381,7 +361,7 @@ export const EventTimelineSection: React.FC = () => {
                                   className={`absolute inset-0 rounded-full border-2 transition-all ${
                                     isSelected
                                       ? "border-cyan-300 bg-cyan-500/30 shadow-[0_0_20px_#06b6d4]"
-                                      : "border-blue-400 bg-[#07090E] group-hover:border-cyan-300 shadow-[0_0_10px_rgba(61,0,141,0.4)]"
+                                      : "border-blue-400 bg-[#020306] group-hover:border-cyan-300 shadow-[0_0_10px_rgba(61,0,141,0.4)]"
                                   }`}
                                 />
                                 <div className={`w-3 h-3 rounded-full ${isSelected ? "bg-cyan-300 shadow-[0_0_8px_#06b6d4]" : "bg-white"}`} />
@@ -397,71 +377,6 @@ export const EventTimelineSection: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div>
-
-            {/* INTERACTIVE STATION INSPECTOR CARD (Pops open for clicked station) */}
-            <div className="mt-6 p-6 rounded-3xl bg-linear-to-r from-cyan-950/40 via-black to-blue-950/40 border border-cyan-500/30 backdrop-blur-xl shadow-[0_0_35px_rgba(6,182,212,0.15)]">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <span className={`px-3 py-1 rounded-md font-mono text-xs font-black uppercase tracking-widest ${
-                    selectedStation.day === "day-1"
-                      ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
-                      : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                  }`}>
-                    {selectedStation.phase} &bull; {selectedStation.mode}
-                  </span>
-                  <div className="flex items-center gap-1.5 text-cyan-400 font-mono text-xs font-bold">
-                    <IconClock size={13} />
-                    <span>{selectedStation.time}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-slate-400 font-mono text-xs">
-                    <IconMapPin size={13} />
-                    <span>{selectedStation.platform}</span>
-                  </div>
-                </div>
-
-                {/* Previous / Next Stepper buttons */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handlePrevStation}
-                    disabled={currentIdx === 0}
-                    className="p-2 rounded-lg bg-white/5 border border-white/10 text-white disabled:opacity-30 hover:bg-white/10 transition-colors"
-                    title="Previous Station"
-                  >
-                    <IconChevronLeft size={16} />
-                  </button>
-                  <span className="font-mono text-xs text-slate-400">
-                    Station {currentIdx + 1} of {TIMELINE_METRO_DATA.length}
-                  </span>
-                  <button
-                    onClick={handleNextStation}
-                    disabled={currentIdx === TIMELINE_METRO_DATA.length - 1}
-                    className="p-2 rounded-lg bg-white/5 border border-white/10 text-white disabled:opacity-30 hover:bg-white/10 transition-colors"
-                    title="Next Station"
-                  >
-                    <IconChevronRight size={16} />
-                  </button>
-                </div>
-              </div>
-
-              <div className="pt-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                  <h3 className="font-heading text-2xl font-black text-white uppercase tracking-tight">
-                    {selectedStation.title}
-                  </h3>
-                  <p className="mt-1 text-slate-300 text-sm max-w-3xl leading-relaxed">
-                    {selectedStation.description}
-                  </p>
-                </div>
-
-                {selectedStation.badge && (
-                  <div className="shrink-0">
-                    <span className="px-3.5 py-1.5 rounded-full bg-cyan-400/15 border border-cyan-400/40 text-cyan-300 font-mono text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.25)]">
-                      {selectedStation.badge}
-                    </span>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         )}
@@ -480,7 +395,7 @@ export const EventTimelineSection: React.FC = () => {
                 onClick={() => setSelectedStationId(item.id)}
               >
                 {/* Station Node on vertical spine */}
-                <div className={`absolute -left-7.75 sm:-left-11.75 top-2 w-4 h-4 rounded-full bg-[#07090E] border-2 transition-transform group-hover:scale-125 flex items-center justify-center ${
+                <div className={`absolute -left-7.75 sm:-left-11.75 top-2 w-4 h-4 rounded-full bg-[#020306] border-2 transition-transform group-hover:scale-125 flex items-center justify-center ${
                   selectedStationId === item.id
                     ? "border-cyan-300 shadow-[0_0_15px_#06b6d4]"
                     : "border-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]"

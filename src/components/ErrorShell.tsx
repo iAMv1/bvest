@@ -40,13 +40,13 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
       {/* Backdrop: dot grid + drifting orbs */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-60" />
-        <div className="absolute top-1/4 -left-32 w-[26rem] h-[26rem] bg-sdg6/8 rounded-full blur-[150px] animate-drift" />
-        <div className="absolute bottom-1/4 -right-32 w-[24rem] h-[24rem] bg-sdg10/8 rounded-full blur-[140px] animate-drift-slow" />
+        <div className="absolute top-1/4 -left-32 w-104 h-104 bg-sdg6/8 rounded-full blur-[150px] animate-drift" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-sdg10/8 rounded-full blur-[140px] animate-drift-slow" />
       </div>
 
       {/* Giant ghost code behind the card */}
       <span
-        className="outline-text pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] font-heading text-[9rem] md:text-[16rem] font-black uppercase tracking-tight whitespace-nowrap"
+        className="outline-text pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-58%] font-heading text-[9rem] md:text-[16rem] font-black uppercase tracking-tight whitespace-nowrap"
         aria-hidden="true"
       >
         {code}
@@ -57,7 +57,7 @@ export const ErrorShell: React.FC<ErrorShellProps> = ({
 
         <h1 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">
           {title}{" "}
-          <span className={`bg-gradient-to-r ${gradientFrom} ${gradientTo} bg-clip-text text-transparent`}>
+          <span className="text-sdg6">
             {gradientWord}
           </span>
         </h1>

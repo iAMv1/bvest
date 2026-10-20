@@ -61,7 +61,7 @@ export default async function Home() {
         <Reveal className="relative">
           <h2 className="font-heading text-4xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white tracking-tight">
             BVEST 13 &mdash;{" "}
-            <span className="bg-linear-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
+            <span className="text-sdg6">
               Engineering a Better Tomorrow
             </span>
           </h2>

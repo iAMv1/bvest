@@ -60,11 +60,11 @@ export const HackathonNavbar: React.FC = () => {
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "py-3 bg-[#07090E]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            ? "py-3 bg-[#020306]/85 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "py-5 bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="w-full px-4 sm:px-6 lg:px-10 flex items-center justify-between">
           {/* Brand Logo & Fest link */}
           <div className="flex items-center gap-3">
             <Link
@@ -173,7 +173,7 @@ export const HackathonNavbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-[#07090E]/95 backdrop-blur-2xl flex flex-col pt-24 px-6 pb-10 lg:hidden overflow-y-auto"
+            className="fixed inset-0 z-40 bg-[#020306]/95 backdrop-blur-2xl flex flex-col pt-24 px-6 pb-10 lg:hidden overflow-y-auto"
           >
             <div className="flex flex-col gap-4 divide-y divide-white/10">
               <div className="flex flex-col gap-3 pb-4">

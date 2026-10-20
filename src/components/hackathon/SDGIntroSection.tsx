@@ -6,11 +6,11 @@ import { SDG_NARRATIVE_STATS } from "@/data/stats";
 
 export const SDGIntroSection: React.FC = () => {
   return (
-    <section id="about" className="relative py-24 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-[#07090E]/60 overflow-hidden">
+    <section id="about" className="relative py-24 px-4 sm:px-8 lg:px-12 xl:px-16 border-t border-white/10 bg-[#020306] overflow-hidden">
       {/* Background ambient gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(38,189,226,0.08),transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(38,189,226,0.05),transparent_50%)] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="w-full relative z-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
           <motion.div
@@ -30,7 +30,7 @@ export const SDGIntroSection: React.FC = () => {
             className="font-heading text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6 uppercase"
           >
             17 GOALS.{" "}
-            <span className="bg-linear-to-r from-cyan-400 via-amber-300 to-rose-400 bg-clip-text text-transparent">
+            <span className="text-cyan-400">
               ONE SHARED FUTURE.
             </span>
           </motion.h2>

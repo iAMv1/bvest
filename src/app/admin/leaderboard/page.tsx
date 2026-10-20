@@ -17,12 +17,12 @@ export default async function AdminLeaderboardPage({ searchParams }: { searchPar
     <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-amber-500/10 rounded-full blur-[160px] animate-drift" />
+        <div className="absolute -left-40 top-0 w-md h-112 bg-amber-500/10 rounded-full blur-[160px] animate-drift" />
       </div>
       <div className="relative max-w-6xl mx-auto">
         <div className="animate-rise-in mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Leaderboard <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Manager</span></h1>
+            <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Leaderboard <span className="text-amber-500 dark:text-amber-400">Manager</span></h1>
             <p className="text-sm font-mono text-stone-600 dark:text-gray-400 mt-2">{allResults.length} results · {published.length} published events · <Link href="/leaderboard" className="underline">Public board →</Link></p>
           </div>
           <Link href="/admin/events" className="px-4 py-2 rounded-full text-xs font-semibold border border-black/10 dark:border-white/10 bg-white dark:bg-black/40 hover:bg-black/5">← Manage events</Link>
@@ -41,7 +41,7 @@ export default async function AdminLeaderboardPage({ searchParams }: { searchPar
                   {allResults.map((r) => {
                     const sdg = sdgData.find((s) => String(s.number) === r.event.sdgDomainId);
                     return (
-                      <tr key={r.id} className="hover:bg-black/[0.02] dark:hover:bg-white/[0.03]">
+                      <tr key={r.id} className="hover:bg-black/2 dark:hover:bg-white/3">
                         <td className="px-6 py-3">
                           <span className="font-semibold text-stone-900 dark:text-white text-xs leading-tight block">{r.event.title}</span>
                           <span className="font-mono text-[11px] text-stone-500">/events/{r.event.slug} {sdg ? `· G${sdg.number}` : ""} {r.event.resultsPublished ? "· 🏆" : "· draft"}</span>

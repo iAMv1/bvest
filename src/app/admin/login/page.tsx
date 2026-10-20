@@ -82,7 +82,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
             <h1 className="font-heading text-4xl font-bold text-stone-950 dark:text-white leading-tight">
               Allocation
               <br />
-              <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
+              <span className="text-violet-600 dark:text-violet-400">
                 Console
               </span>
             </h1>
@@ -115,10 +115,10 @@ export default async function AdminLoginPage({ searchParams }: Props) {
 
         {/* ── Right: glass login card ── */}
         <div className="w-full max-w-md lg:justify-self-center">
-          <div className="animate-card-in hard-shell !rounded-[2rem] bg-gradient-to-b from-black/10 to-black/[0.02] dark:from-white/10 dark:to-white/[0.02] shadow-[0_24px_80px_rgba(23,21,15,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
-            <div className={`hard-core !rounded-[calc(2rem-1.5px)] bg-white/85 dark:bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
+          <div className="animate-card-in hard-shell rounded-4xl! bg-linear-to-b from-black/10 to-black/2 dark:from-white/10 dark:to-white/2 shadow-[0_24px_80px_rgba(23,21,15,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
+            <div className={`hard-core rounded-[calc(2rem-1.5px)]! bg-white/85 dark:bg-black/60 backdrop-blur-2xl p-8 md:p-10 relative overflow-hidden ${errorMessage ? "animate-shake" : ""}`}>
               {/* Subtle top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 dark:via-violet-400/50 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-violet-500/60 dark:via-violet-400/50 to-transparent" />
 
               <div className="mb-8">
                 <h1 className="font-heading text-3xl font-bold text-stone-950 dark:text-white mb-2">

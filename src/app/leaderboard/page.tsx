@@ -35,12 +35,12 @@ export default async function GlobalLeaderboardPage() {
     <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-amber-500/10 rounded-full blur-[160px] animate-drift" />
-        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[4rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden>Board</span>
+        <div className="absolute -left-40 top-0 w-md h-112 bg-amber-500/10 rounded-full blur-[160px] animate-drift" />
+        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[4rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden>Board</span>
       </div>
       <div className="relative max-w-5xl mx-auto">
         <div className="animate-rise-in mb-8">
-          <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Global <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Leaderboard</span></h1>
+          <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Global <span className="text-amber-500 dark:text-amber-400">Leaderboard</span></h1>
           <p className="text-sm text-stone-700 dark:text-gray-400 mt-2 font-mono">{events.length} events with published results · Aggregated across all podiums · <Link href="/events" className="underline">All events</Link></p>
         </div>
 

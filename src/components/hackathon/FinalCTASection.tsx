@@ -15,11 +15,11 @@ export const FinalCTASection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-32 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-t border-white/10 overflow-hidden flex items-center justify-center text-center">
+    <section className="relative py-32 px-4 sm:px-8 lg:px-12 xl:px-16 bg-[#020306] border-t border-white/10 overflow-hidden flex items-center justify-center text-center">
       {/* 17 Converging SDG Particles Animation Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true" suppressHydrationWarning>
         {/* Subtle grid */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,189,226,0.12),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,189,226,0.06),transparent_70%)]" />
 
         {/* 17 Floating Converging Particles representing the 17 SDGs */}
         {mounted && SDGS_DATA.map((sdg, index) => {
@@ -57,7 +57,7 @@ export const FinalCTASection: React.FC = () => {
         })}
       </div>
 
-      <div className="relative max-w-4xl mx-auto z-10 flex flex-col items-center">
+      <div className="relative w-full max-w-5xl mx-auto z-10 flex flex-col items-center">
         {/* HackBVP Logo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -94,7 +94,7 @@ export const FinalCTASection: React.FC = () => {
           className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 uppercase leading-tight"
         >
           READY TO BUILD{" "}
-          <span className="bg-linear-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+          <span className="text-cyan-400">
             THE FUTURE?
           </span>
         </motion.h2>

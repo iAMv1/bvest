@@ -410,7 +410,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="relative w-full min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-hidden bg-radial from-[#0d1527] via-[#07090e] to-[#030508] text-white rounded-3xl border border-white/10 shadow-[0_0_90px_rgba(0,180,255,0.18)] select-none p-4 sm:p-8 cursor-grab active:cursor-grabbing"
+      className="relative w-full min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-hidden bg-radial from-[#080d19] via-[#03050a] to-[#010204] text-white rounded-3xl border border-white/10 shadow-[0_0_90px_rgba(0,180,255,0.18)] select-none p-4 sm:p-8 cursor-grab active:cursor-grabbing"
       style={{ perspective: "1200px" }}
     >
       {/* Background Cyber Grid & Vibrant Glow Accents */}
@@ -433,7 +433,7 @@ export const ArcaHeroAnimation: React.FC<ArcaHeroAnimationProps> = ({
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-heading font-black text-sm tracking-wider uppercase bg-linear-to-r from-white via-cyan-200 to-sky-400 bg-clip-text text-transparent">
+            <span className="font-heading font-black text-sm tracking-wider uppercase text-white">
               HACKATHON TRACKS
             </span>
             <span className="text-[10px] text-gray-400 font-medium tracking-tight">

@@ -39,9 +39,9 @@ export default async function AdminPagesPage({ searchParams }: Props) {
     <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-violet-500/10 rounded-full blur-[160px] animate-drift" />
-        <div className="absolute -right-40 bottom-20 w-[30rem] h-[30rem] bg-sdg16/10 rounded-full blur-[170px] animate-drift-slow" />
-        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
+        <div className="absolute -left-40 top-0 w-md h-112 bg-violet-500/10 rounded-full blur-[160px] animate-drift" />
+        <div className="absolute -right-40 bottom-20 w-120 h-120 bg-sdg16/10 rounded-full blur-[170px] animate-drift-slow" />
+        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
           Navigation
         </span>
       </div>
@@ -49,7 +49,7 @@ export default async function AdminPagesPage({ searchParams }: Props) {
       <div className="relative max-w-6xl mx-auto">
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
-            Pages & <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">Navigation</span>
+            Pages & <span className="text-violet-600 dark:text-violet-400">Navigation</span>
           </h1>
           <p className="text-stone-950 dark:text-gray-400 text-sm max-w-2xl font-mono">
             DYNAMIC NAV &middot; {pages.length} PAGES &middot; CREATE → ORDER (UP/DOWN) → TOGGLE VISIBILITY &middot; CHANGES LIVE INSTANTLY (NO REBUILD)
@@ -191,7 +191,7 @@ export default async function AdminPagesPage({ searchParams }: Props) {
                   {pages.map((p, idx) => {
                     const isEditing = editing?.id === p.id;
                     return (
-                      <tr key={p.id} className={`animate-rise-in transition-colors duration-200 ease-fluid ${isEditing ? "bg-violet-500/10 dark:bg-violet-500/10" : "hover:bg-violet-500/[0.04] dark:hover:bg-white/[0.03]"}`} style={{ animationDelay: `${Math.min(220 + idx * 30, 700)}ms` }}>
+                      <tr key={p.id} className={`animate-rise-in transition-colors duration-200 ease-fluid ${isEditing ? "bg-violet-500/10 dark:bg-violet-500/10" : "hover:bg-violet-500/4 dark:hover:bg-white/3"}`} style={{ animationDelay: `${Math.min(220 + idx * 30, 700)}ms` }}>
                         <td className="px-6 py-4">
                           <span className="block font-semibold text-[14px] leading-tight text-stone-900 dark:text-white tracking-tight">{p.title}</span>
                           <span className="block font-mono text-[11px] text-stone-500 dark:text-gray-500 tracking-wider mt-1">
@@ -200,7 +200,7 @@ export default async function AdminPagesPage({ searchParams }: Props) {
                         </td>
                         <td className="px-6 py-4">
                           <div className="inline-flex items-center gap-1">
-                            <span className="font-mono text-xs tabular-nums min-w-[1.5rem] text-center">{p.order}</span>
+                            <span className="font-mono text-xs tabular-nums min-w-6 text-center">{p.order}</span>
                             <form action={movePage} className="inline">
                               <input type="hidden" name="id" value={p.id} />
                               <input type="hidden" name="dir" value="up" />
@@ -251,7 +251,7 @@ export default async function AdminPagesPage({ searchParams }: Props) {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.03] p-4 text-xs font-mono leading-relaxed text-stone-600 dark:text-gray-400">
+        <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/3 p-4 text-xs font-mono leading-relaxed text-stone-600 dark:text-gray-400">
           <p className="font-bold text-stone-900 dark:text-white mb-1">How it works</p>
           <p>Pages with <span className="font-bold">showInNav + enabled</span> appear in the top island nav (merged after Goals/Events/Core Team/Society Portal/Contact). Dragless ordering via ↑/↓ swaps the <code className="bg-black/5 dark:bg-white/10 px-1 rounded">order</code> value. <span className="font-bold">adminOnly</span> links only render when an admin session cookie exists.</p>
           <p className="mt-2">Reserved slugs are blocked at creation: <code className="bg-black/5 dark:bg-white/10 px-1 rounded">/society/*</code>, <code className="bg-black/5 dark:bg-white/10 px-1 rounded">/admin/*</code>, <code className="bg-black/5 dark:bg-white/10 px-1 rounded">/events/*</code>, <code className="bg-black/5 dark:bg-white/10 px-1 rounded">/leaderboard</code>, <code className="bg-black/5 dark:bg-white/10 px-1 rounded">/</code>.</p>

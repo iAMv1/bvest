@@ -59,7 +59,7 @@ export const BvestLegacySection: React.FC = () => {
       {/* Background Orbs & Grid */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-grid absolute inset-0 opacity-40 dark:opacity-30" />
-        <div className="absolute left-1/3 top-1/2 -translate-y-1/2 w-[32rem] h-[32rem] bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
+        <div className="absolute left-1/3 top-1/2 -translate-y-1/2 w-lg h-128 bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
@@ -68,7 +68,7 @@ export const BvestLegacySection: React.FC = () => {
             Heritage &amp; History
           </span>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-stone-950 dark:text-white tracking-tight mb-4">
-            BVEST <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">Legacy</span>
+            BVEST <span className="text-sdg6">Legacy</span>
           </h2>
           <p className="text-stone-700 dark:text-gray-400 text-base md:text-lg leading-relaxed">
             Exploring past poster editions and logos of BVCOE Delhi&apos;s flagship technical fest through the years.
@@ -99,7 +99,7 @@ export const BvestLegacySection: React.FC = () => {
                     </div>
 
                     {/* Logo / Poster Visual Placeholder Frame */}
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-stone-100 dark:bg-black/50 border border-black/5 dark:border-white/10 flex items-center justify-center p-3 mb-5 group-hover:border-sdg6/50 transition-colors">
+                    <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-stone-100 dark:bg-black/50 border border-black/5 dark:border-white/10 flex items-center justify-center p-3 mb-5 group-hover:border-sdg6/50 transition-colors">
                       {item.version === "BVEST XIII" ? (
                         <>
                           {/* Dark logo in light mode */}

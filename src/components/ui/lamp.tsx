@@ -49,8 +49,8 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
           className="absolute right-1/2 h-120 w-[320px] sm:w-105 text-white"
         >
           {/* Soft edge and bottom masks */}
-          <div className="absolute w-full left-0 bg-[#07090E] h-32 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
-          <div className="absolute w-32 h-full left-0 bg-[#07090E] bottom-0 z-20 mask-[linear-gradient(to_right,white,transparent)]" />
+          <div className="absolute w-full left-0 bg-[#020306] h-32 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
+          <div className="absolute w-32 h-full left-0 bg-[#020306] bottom-0 z-20 mask-[linear-gradient(to_right,white,transparent)]" />
         </motion.div>
 
         {/* Right Conic Light Beam (Spreads Down-Right from Center) */}
@@ -71,8 +71,8 @@ export const LampBarLight: React.FC<{ className?: string }> = ({ className = "" 
           className="absolute left-1/2 h-120 w-[320px] sm:w-105 text-white"
         >
           {/* Soft edge and bottom masks */}
-          <div className="absolute w-32 h-full right-0 bg-[#07090E] bottom-0 z-20 mask-[linear-gradient(to_left,white,transparent)]" />
-          <div className="absolute w-full right-0 bg-[#07090E] h-32 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
+          <div className="absolute w-32 h-full right-0 bg-[#020306] bottom-0 z-20 mask-[linear-gradient(to_left,white,transparent)]" />
+          <div className="absolute w-full right-0 bg-[#020306] h-32 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
         </motion.div>
 
         {/* Central Diffuse Cyan Light Cloud */}
@@ -117,11 +117,11 @@ export const LampContainer = ({
       className={`relative min-h-[calc(100vh-64px)] w-full flex flex-col items-center justify-start overflow-hidden bg-transparent ${className}`}
     >
       {/* Top Ceiling Blocker: Matches the exact navbar height (64px) */}
-      <div className="absolute top-0 left-0 w-full h-16 bg-[#07090E] z-30 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-16 bg-[#020306] z-30 pointer-events-none" />
 
       {/* Ambient background glow for atmospheric depth */}
-      <div className="absolute top-24 left-1/4 -translate-x-1/2 w-125 h-100 bg-cyan-900/15 blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-16 right-1/4 translate-x-1/2 w-150 h-125 bg-cyan-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-24 left-1/4 -translate-x-1/2 w-125 h-100 bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-16 right-1/4 translate-x-1/2 w-150 h-125 bg-cyan-600/6 blur-[140px] rounded-full pointer-events-none z-0" />
 
       {/* Children content (Parallel Hero Grid) */}
       {children}

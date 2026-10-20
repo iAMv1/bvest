@@ -102,7 +102,7 @@ export default function DotMatrix({
             ? 0
             : 0.5 + 0.5 * Math.sin(now * 0.0007 + (c + r) * 0.45);
 
-          const alpha = 0.08 + idle * 0.07 + lv * 0.85;
+          const alpha = 0.03 + idle * 0.03 + lv * 0.75;
           const size = 1 + lv * 2.2;
 
           ctx.beginPath();

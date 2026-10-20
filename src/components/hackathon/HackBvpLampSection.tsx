@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
-import { IconArrowRight, IconSparkles } from "@/components/hackathon/Icons";
+import { IconArrowRight } from "@/components/hackathon/Icons";
 import { EVENT_CONFIG } from "@/data/event";
 
 /**
@@ -115,7 +115,7 @@ export const HackBvpLampSection: React.FC = () => {
   return (
     <section id="hero" className="relative w-full overflow-hidden bg-transparent">
       <LampContainer>
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-20 pb-12 sm:pb-16 flex items-center min-h-[calc(100vh-64px)]">
+        <div className="relative z-20 w-full px-4 sm:px-8 lg:px-12 xl:px-16 pt-20 sm:pt-24 lg:pt-20 pb-12 sm:pb-16 flex items-center min-h-[calc(100vh-64px)]">
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center">
             
             {/* LEFT COLUMN: Large Typography "BUILD FOR A BETTER WORLD" + Narrative + CTAs */}
@@ -128,18 +128,12 @@ export const HackBvpLampSection: React.FC = () => {
               }}
               className="lg:col-span-7 flex flex-col items-start justify-center text-left order-1 lg:order-1 z-20"
             >
-              {/* Badge Pill */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-500/35 text-cyan-300 font-mono text-xs uppercase tracking-wider mb-4 shadow-[0_0_18px_rgba(6,182,212,0.22)] backdrop-blur-md">
-                <IconSparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                <span>National Flagship Hackathon &bull; BVEST XIII</span>
-              </div>
-
               {/* Tagline Heading */}
               <h1 className="font-heading font-black tracking-tight text-white uppercase text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl 2xl:text-[5.5rem] leading-[0.93] text-left">
-                <span className="block text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-50 to-white">
+                <span className="block text-white">
                   BUILD FOR A
                 </span>
-                <span className="block text-transparent bg-clip-text bg-linear-to-r from-cyan-300 via-cyan-400 to-blue-500 drop-shadow-[0_0_35px_rgba(6,182,212,0.45)]">
+                <span className="block text-cyan-400 drop-shadow-[0_0_35px_rgba(6,182,212,0.45)]">
                   BETTER WORLD
                 </span>
               </h1>

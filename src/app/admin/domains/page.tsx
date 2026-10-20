@@ -25,8 +25,8 @@ export default async function AdminDomainsPage({ searchParams }: Props) {
     <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -right-40 top-10 w-[28rem] h-[28rem] bg-sdg3/10 rounded-full blur-[160px] animate-drift" />
-        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
+        <div className="absolute -right-40 top-10 w-md h-112 bg-sdg3/10 rounded-full blur-[160px] animate-drift" />
+        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
           Domains
         </span>
       </div>
@@ -34,7 +34,7 @@ export default async function AdminDomainsPage({ searchParams }: Props) {
       <div className="relative max-w-6xl mx-auto">
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
-            Domain <span className="bg-gradient-to-r from-sdg3 to-sdg6 bg-clip-text text-transparent">Topics</span>
+            Domain <span className="text-sdg6">Topics</span>
           </h1>
           <p className="text-stone-950 dark:text-gray-400 text-sm max-w-2xl font-mono">
             Real topics replace the 12 dummy ones. Upload CSV or JSON, or add one by one. Deployed instantly to the preference picker. {domains.length} ON FILE
@@ -120,7 +120,7 @@ export default async function AdminDomainsPage({ searchParams }: Props) {
                 </thead>
                 <tbody className="divide-y divide-black/5 dark:divide-white/5">
                   {domains.map((d) => (
-                    <tr key={d.id} className="hover:bg-violet-500/[0.04]">
+                    <tr key={d.id} className="hover:bg-violet-500/4">
                       <td className="px-6 py-3 font-mono text-xs">{d.id}</td>
                       <td className="px-6 py-3 font-medium flex items-center gap-2"><span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: d.colorToken }} />{d.name}</td>
                       <td className="px-6 py-3 text-xs text-stone-600 dark:text-gray-400 max-w-[320px] truncate">{d.description}</td>

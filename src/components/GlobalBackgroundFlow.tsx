@@ -22,7 +22,7 @@ export const GlobalBackgroundFlow: React.FC = () => {
     <div
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none"
       aria-hidden="true"
-      style={{ opacity: 0.28 }}
+      style={{ opacity: 0.16 }}
     >
       <GatewayFlow
         className="w-full h-full"

@@ -43,8 +43,8 @@ export default async function AdminEventsPage({ searchParams }: Props) {
     <div className="relative flex-1 px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-dots absolute inset-0 md:opacity-40" />
-        <div className="absolute -left-40 top-0 w-[28rem] h-[28rem] bg-sdg7/10 rounded-full blur-[160px] animate-drift" />
-        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
+        <div className="absolute -left-40 top-0 w-md h-112 bg-sdg7/10 rounded-full blur-[160px] animate-drift" />
+        <span className="outline-text pointer-events-none select-none absolute -top-3 md:-top-5 right-0 font-heading text-[5rem] md:text-[9rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_left,black_45%,transparent_90%)]" aria-hidden="true">
           Program
         </span>
       </div>
@@ -53,7 +53,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
 
         <div className="animate-rise-in mb-8">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
-            Event <span className="bg-gradient-to-r from-sdg7 to-sdg9 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent">Program</span>
+            Event <span className="text-amber-500 dark:text-amber-400">Program</span>
           </h1>
           <p className="text-stone-950 dark:text-gray-400 text-sm max-w-2xl font-mono">
             EVENTS &middot; HOSTED BY ORGANISATIONS &middot; {events.length} ON FILE &middot; Click a row to edit — or change status inline
@@ -149,7 +149,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                 </label>
                 <label className="block">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Start date</span>
-                  <input name="startDate" type="date" defaultValue={editing?.startDate ? new Date(editing.startDate).toISOString().split("T")[0] : ""} className="w-full rounded-xl px-4 py-2.5 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 dark:[color-scheme:dark]" />
+                  <input name="startDate" type="date" defaultValue={editing?.startDate ? new Date(editing.startDate).toISOString().split("T")[0] : ""} className="w-full rounded-xl px-4 py-2.5 text-sm bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/60 dark:scheme-dark" />
                 </label>
                 <label className="block">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-stone-950 dark:text-gray-500 font-mono mb-1.5">Status</span>
@@ -200,7 +200,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                     const sdg = sdgData.find((s) => String(s.number) === event.sdgDomainId);
                     const isEditing = editing?.id === event.id;
                     return (
-                      <tr key={event.id} className={`animate-rise-in transition-colors duration-200 ease-fluid ${isEditing ? "bg-violet-500/10 dark:bg-violet-500/10" : "hover:bg-violet-500/[0.04] dark:hover:bg-white/[0.03]"}`} style={{ animationDelay: `${Math.min(220 + idx * 40, 700)}ms` }}>
+                      <tr key={event.id} className={`animate-rise-in transition-colors duration-200 ease-fluid ${isEditing ? "bg-violet-500/10 dark:bg-violet-500/10" : "hover:bg-violet-500/4 dark:hover:bg-white/3"}`} style={{ animationDelay: `${Math.min(220 + idx * 40, 700)}ms` }}>
                         <td className="px-6 py-4">
                           <span className="block font-semibold text-[14px] leading-tight text-stone-900 dark:text-white tracking-tight">{event.title}</span>
                           <span className="block font-mono text-[11px] text-stone-500 dark:text-gray-500 tracking-wider mt-1">
@@ -209,7 +209,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                         </td>
                         <td className="px-6 py-4">
                           {sdg ? (
-                            <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04]">
+                            <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/3 dark:bg-white/4">
                               <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: sdg.hex }} />
                               <span className="text-xs font-medium text-stone-950 dark:text-gray-300">Goal {sdg.number}</span>
                             </span>
@@ -267,7 +267,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
             </div>
             <p className="text-xs text-stone-700 dark:text-gray-400 mb-6 font-mono leading-relaxed">Save team names for ranks 1–3, then Publish. Published results show “Results Live” on cards and a podium on the event page. Unpublish to edit again.</p>
             {events.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] p-8 text-center">
+              <div className="rounded-2xl border border-dashed border-black/10 dark:border-white/10 bg-black/2 dark:bg-white/2 p-8 text-center">
                 <p className="text-sm font-medium text-stone-700 dark:text-gray-300">No events yet</p>
                 <p className="text-xs font-mono text-stone-500 dark:text-gray-500 mt-1">Create an event above to start adding podium results.</p>
               </div>
@@ -276,7 +276,7 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                 {events.map((event) => {
                   const publishedCount = event.results.length;
                   return (
-                    <div key={event.id} className={`rounded-2xl border p-5 transition-colors ${event.resultsPublished ? "border-amber-500/20 bg-amber-500/[0.04] dark:bg-amber-500/[0.06]" : "border-black/10 dark:border-white/10 bg-white dark:bg-black/20"}`}>
+                    <div key={event.id} className={`rounded-2xl border p-5 transition-colors ${event.resultsPublished ? "border-amber-500/20 bg-amber-500/4 dark:bg-amber-500/6" : "border-black/10 dark:border-white/10 bg-white dark:bg-black/20"}`}>
                       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                         <div className="min-w-0">
                           <p className="font-semibold text-[14px] leading-tight text-stone-900 dark:text-white tracking-tight truncate">{event.title} <span className="font-mono text-xs font-normal text-stone-500">/events/{event.slug}</span></p>
@@ -328,9 +328,9 @@ export default async function AdminEventsPage({ searchParams }: Props) {
                               const r = event.results.find((x) => x.rank === rank);
                               if (!r) return null;
                               return (
-                                <div key={rank} className={`rounded-xl p-3.5 border ${rank === 1 ? "bg-amber-500 text-white border-amber-500 shadow-md" : rank === 2 ? "bg-white dark:bg-white/5 border-black/10 dark:border-white/10" : "bg-stone-50 dark:bg-white/[0.03] border-black/10 dark:border-white/10"}`}>
+                                <div key={rank} className={`rounded-xl p-3.5 border ${rank === 1 ? "bg-amber-500 text-white border-amber-500 shadow-md" : rank === 2 ? "bg-white dark:bg-white/5 border-black/10 dark:border-white/10" : "bg-stone-50 dark:bg-white/3 border-black/10 dark:border-white/10"}`}>
                                   <p className={`text-[10px] font-bold uppercase tracking-widest ${rank === 1 ? "text-white/80" : "text-stone-500"}`}>{rank === 1 ? "Gold" : rank === 2 ? "Silver" : "Bronze"}</p>
-                                  <p className={`font-semibold mt-1 leading-tight break-words ${rank === 1 ? "text-white" : "text-stone-900 dark:text-white"}`}>{r.teamName}</p>
+                                  <p className={`font-semibold mt-1 leading-tight wrap-break-word ${rank === 1 ? "text-white" : "text-stone-900 dark:text-white"}`}>{r.teamName}</p>
                                   {r.points != null && <p className={`text-xs font-mono mt-1 ${rank === 1 ? "text-white/80" : "text-stone-500"}`}>{r.points} pts</p>}
                                 </div>
                               );

@@ -27,28 +27,28 @@ export const CoreTeamSection: React.FC = () => {
   return (
     <section
       id="core-team"
-      className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg6/[0.03] dark:bg-transparent border-t border-black/10 dark:border-white/5"
+      className="relative py-24 md:py-28 w-full overflow-hidden scroll-mt-24 bg-sdg6/3 dark:bg-transparent border-t border-black/10 dark:border-white/5"
     >
       {/* Background ambient lighting */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="bg-grid absolute inset-0 md:opacity-40" />
         <div className="bg-dots absolute inset-0 opacity-40" />
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[30rem] h-[30rem] bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[24rem] h-[24rem] bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-120 h-120 bg-sdg6/10 rounded-full blur-[160px] animate-drift" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-sdg3/10 rounded-full blur-[140px] animate-drift-slow" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <Reveal className="text-center mb-12 md:mb-16 relative">
           <span
-            className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap [mask-image:linear-gradient(to_bottom,black_45%,transparent_85%)]"
+            className="outline-text pointer-events-none select-none absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 font-heading text-[4.5rem] md:text-[8rem] font-black uppercase tracking-tight whitespace-nowrap mask-[linear-gradient(to_bottom,black_45%,transparent_85%)]"
             aria-hidden="true"
           >
             Core Team
           </span>
           <h2 className="relative font-heading text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight">
             Student{" "}
-            <span className="bg-gradient-to-r from-sdg6 to-sdg3 bg-clip-text text-transparent">
+            <span className="text-sdg6">
               Coordinators
             </span>
           </h2>
@@ -140,7 +140,7 @@ export const CoreTeamSection: React.FC = () => {
                     </div>
 
                     {/* Compact Left Photo/Avatar Container */}
-                    <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-xl overflow-hidden shrink-0 border border-white/20 bg-gradient-to-b from-stone-900 to-[#18191E] flex items-center justify-center">
+                    <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-xl overflow-hidden shrink-0 border border-white/20 bg-linear-to-b from-stone-900 to-[#18191E] flex items-center justify-center">
                       {member.image ? (
                         <Image
                           src={member.image}
@@ -239,7 +239,7 @@ export const CoreTeamSection: React.FC = () => {
                     </div>
 
                     {/* PHOTO / AVATAR AREA */}
-                    <div className="relative w-full h-64 sm:h-72 bg-gradient-to-b from-stone-900 to-[#18191E] overflow-hidden border-b border-white/10 shrink-0">
+                    <div className="relative w-full h-64 sm:h-72 bg-linear-to-b from-stone-900 to-[#18191E] overflow-hidden border-b border-white/10 shrink-0">
                       {/* Ambient Color Glow */}
                       <div
                         className="absolute inset-0 opacity-40 mix-blend-screen transition-opacity group-hover:opacity-75 duration-300"
@@ -263,7 +263,7 @@ export const CoreTeamSection: React.FC = () => {
                             priority={idx < 4}
                           />
                           {/* Gradient Vignette */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#121316] via-transparent to-black/20" />
+                          <div className="absolute inset-0 bg-linear-to-t from-[#121316] via-transparent to-black/20" />
                         </div>
                       ) : (
                         /* Initials Artwork Canvas */

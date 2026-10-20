@@ -37,7 +37,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
-          className="fixed inset-0 z-99999 flex flex-col items-center justify-center bg-[#07090E] text-white select-none"
+          className="fixed inset-0 z-99999 flex flex-col items-center justify-center bg-[#020306] text-white select-none"
         >
           {/* Subtle cosmic background grid */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(38,189,226,0.15),transparent_70%)] pointer-events-none" />
@@ -72,7 +72,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                       className="h-24 w-auto object-contain drop-shadow-[0_0_25px_rgba(56,189,248,0.8)]"
                     />
                   </div>
-                  <div className="font-heading text-4xl sm:text-5xl font-black tracking-tighter bg-linear-to-r from-cyan-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
+                  <div className="font-heading text-4xl sm:text-5xl font-black tracking-tighter text-white">
                     HACKBVP 8.0
                   </div>
                   <span className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400/80">
@@ -93,7 +93,7 @@ export const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                   <div className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-tight text-white">
                     17 GOALS.
                   </div>
-                  <div className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-tight bg-linear-to-r from-amber-300 via-orange-400 to-rose-500 bg-clip-text text-transparent">
+                  <div className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-tight text-cyan-400">
                     ONE FUTURE.
                   </div>
                 </motion.div>

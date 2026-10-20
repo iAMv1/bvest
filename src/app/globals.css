@@ -79,14 +79,14 @@ html {
 }
 
 .dark {
-  --background: #050505;
+  --background: #020204;
   --foreground: #F3F4F6;
   --accent: #26BDE2;
   --accent-warm: #FCC30B;
   --accent-rose: #DD1367;
-  --surface: #0B0B0C;
-  --surface-subtle: #101012;
-  --screen: #050505;
+  --surface: #08080A;
+  --surface-subtle: #0E0E12;
+  --screen: #020204;
   --ink: #F3F4F6;
   --ink-soft: #9CA3AF;
   --stroke: rgba(255, 255, 255, 0.1);

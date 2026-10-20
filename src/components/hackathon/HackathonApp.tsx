@@ -59,7 +59,7 @@ export const HackathonApp: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#07090E] text-white selection:bg-cyan-400 selection:text-black font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#020306] text-white selection:bg-cyan-400 selection:text-black font-sans antialiased overflow-x-hidden">
       {/* Interactive Gateway Flow in background strictly for Hackathon */}
       <HackathonBackgroundFlow />
 
@@ -67,7 +67,7 @@ export const HackathonApp: React.FC = () => {
       <DotMatrix
         className="fixed inset-0 pointer-events-none z-0"
         style={{ position: "fixed" }}
-        opacity={0.85}
+        opacity={0.45}
       />
 
       {/* Custom interactive desktop cursor */}
@@ -91,8 +91,8 @@ export const HackathonApp: React.FC = () => {
         <SDGIntroSection />
 
         {/* 3. Hackathon Tracks 3D Rotating Cylinder */}
-        <section id="tracks" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-t border-white/10 overflow-hidden">
-          <div className="max-w-7xl mx-auto mb-10 flex flex-col items-center text-center">
+        <section id="tracks" className="relative py-20 px-4 sm:px-8 lg:px-12 xl:px-16 bg-[#020306] border-t border-white/10 overflow-hidden">
+          <div className="w-full mb-10 flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider mb-3">
               <span>Interactive 3D Stage</span>
             </div>
@@ -103,7 +103,7 @@ export const HackathonApp: React.FC = () => {
               7 core challenge domains mapped to real-world impact and the UN Sustainable Development Goals. Drag to spin the 3D cylinder or click any card to inspect problem statements and tech primitives.
             </p>
           </div>
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full">
             <ArcaHeroAnimation
               onExploreTracks={() => {
                 const el = document.getElementById("tracks");

@@ -48,7 +48,7 @@ export const EventLineupSection: React.FC<EventLineupSectionProps> = ({
           </div>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight">
             Official{" "}
-            <span className="bg-gradient-to-r from-sdg6 via-sdg3 to-sdg7 bg-clip-text text-transparent">
+            <span className="text-sdg6">
               Event Lineup
             </span>
           </h2>
@@ -249,7 +249,7 @@ const EventCard: React.FC<{ event: FestEvent }> = ({ event }) => {
 
           {/* Meta Info: Date & Venue */}
           <div className="flex flex-wrap items-center gap-2.5 my-3 text-xs text-stone-600 dark:text-gray-400 font-medium">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/3 dark:bg-white/4 border border-black/5 dark:border-white/5">
               <svg
                 className="w-3.5 h-3.5 text-sdg6 shrink-0"
                 viewBox="0 0 24 24"
@@ -265,7 +265,7 @@ const EventCard: React.FC<{ event: FestEvent }> = ({ event }) => {
               <span>{event.displayDate}</span>
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/3 dark:bg-white/4 border border-black/5 dark:border-white/5">
               <svg
                 className="w-3.5 h-3.5 text-sdg7 shrink-0"
                 viewBox="0 0 24 24"

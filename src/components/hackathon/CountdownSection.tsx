@@ -54,8 +54,8 @@ export const CountdownSection: React.FC = () => {
   ];
 
   return (
-    <section id="countdown" className="relative py-16 px-4 sm:px-6 lg:px-8 bg-[#07090E] border-y border-white/10 overflow-hidden">
-      <div className="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
+    <section id="countdown" className="relative py-16 px-4 sm:px-8 lg:px-12 xl:px-16 bg-[#020306] border-y border-white/10 overflow-hidden">
+      <div className="w-full flex flex-col items-center text-center relative z-10">
         {timeLeft.isLive ? (
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
